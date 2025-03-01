@@ -1,22 +1,18 @@
 {
-  "name": "@coreui/coreui-free-react-admin-template",
-  "version": "5.4.0",
-  "description": "CoreUI Free React Admin Template",
+  "name": "d.church.admin",
+  "version": "0",
+  "description": "D.Church Admin panel",
   "homepage": ".",
-  "bugs": {
-    "url": "https://github.com/coreui/coreui-free-react-admin-template/issues"
-  },
   "repository": {
     "type": "git",
-    "url": "git@github.com:coreui/coreui-free-react-admin-template.git"
+    "url": "git@github.com:ascentman/d.church.admin.git"
   },
-  "license": "MIT",
-  "author": "The CoreUI Team (https://github.com/orgs/coreui/people)",
+  "author": "D.Church dev team",
   "scripts": {
     "build": "vite build",
     "lint": "eslint",
     "serve": "vite preview",
-    "start": "vite"
+    "dev": "vite"
   },
   "dependencies": {
     "@coreui/chartjs": "^4.1.0",
