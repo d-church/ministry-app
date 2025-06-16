@@ -1,12 +1,7 @@
-import { createRoot } from 'react-dom/client'
-import { Provider } from 'react-redux'
-import 'core-js'
+import { createRoot } from "react-dom/client";
 
-import App from './App'
-import store from './store'
+import App from "./bootstrap";
 
-createRoot(document.getElementById('root')!).render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
-)
+const rootContainer = document.getElementById("root")!;
+
+createRoot(rootContainer).render(<App />);

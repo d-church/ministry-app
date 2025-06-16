@@ -12,7 +12,8 @@
     "build": "vite build",
     "lint": "eslint",
     "serve": "vite preview",
-    "dev": "vite"
+    "dev": "vite",
+    "pretty": "npx prettier --write \"src/**/*.{js,jsx,ts,tsx}\""
   },
   "dependencies": {
     "@coreui/chartjs": "^4.1.0",
@@ -29,9 +30,7 @@
     "prop-types": "^15.8.1",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
-    "react-redux": "^9.2.0",
     "react-router-dom": "^7.6.2",
-    "redux": "5.0.1",
     "simplebar-react": "^3.3.1"
   },
   "devDependencies": {
