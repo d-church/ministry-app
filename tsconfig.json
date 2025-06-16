@@ -27,7 +27,9 @@
     "baseUrl": ".",
     "paths": {
       "src/*": ["src/*"]
-    }
+    },
+
+    /* Experimental Features */
   },
   "include": ["src"]
 }

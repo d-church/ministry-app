@@ -1,4 +1,4 @@
-import React from 'react'
+import { observer } from "mobx-react-lite";
 
 import {
   CCloseButton,
@@ -7,34 +7,28 @@ import {
   CSidebarFooter,
   CSidebarHeader,
   CSidebarToggler,
-} from '@coreui/react'
-import CIcon from '@coreui/icons-react'
+} from "@coreui/react";
+import CIcon from "@coreui/icons-react";
 
-// import { AppSidebarNav } from './AppSidebarNav';
+import { AppSidebarNav } from "./AppSidebarNav";
 
-import { AppSidebarNav } from 'src/components/AppSidebarNav';
+import { logo } from "src/assets/brand/logo";
+import { sygnet } from "src/assets/brand/sygnet";
+import navigation from "../_nav";
 
-import { logo } from 'src/assets/brand/logo'
-import { sygnet } from 'src/assets/brand/sygnet'
+import { LayoutState } from "src/layout/LayoutState";
 
-// sidebar nav config
-import navigation from '../_nav'
-
-const AppSidebar = () => {
-  // const unfoldable = useSelector((state) => state.sidebarUnfoldable)
-  // const sidebarShow = useSelector((state) => state.sidebarShow)
-
+const AppSidebar = observer(() => {
   return (
     <CSidebar
       className="border-end"
       colorScheme="dark"
       position="fixed"
-      // unfoldable={unfoldable}
-      // visible={sidebarShow}
-      visible={true}
-      // onVisibleChange={(visible) => {
-      //   dispatch({ type: 'set', sidebarShow: visible })
-      // }}
+      unfoldable={LayoutState.isSidebarUnfoldable}
+      visible={LayoutState.isSidebarOpen}
+      onVisibleChange={(visible) => {
+        LayoutState.setSideBarState(visible);
+      }}
     >
       <CSidebarHeader className="border-bottom">
         <CSidebarBrand to="/">
@@ -44,17 +38,15 @@ const AppSidebar = () => {
         <CCloseButton
           className="d-lg-none"
           dark
-          // onClick={() => dispatch({ type: 'set', sidebarShow: false })}
+          onClick={() => LayoutState.setSideBarState(false)}
         />
       </CSidebarHeader>
       <AppSidebarNav items={navigation} />
       <CSidebarFooter className="border-top d-none d-lg-flex">
-        <CSidebarToggler
-          // onClick={() => dispatch({ type: 'set', sidebarUnfoldable: !unfoldable })}
-        />
+        <CSidebarToggler onClick={() => LayoutState.toggleSidebarUnfoldableState()} />
       </CSidebarFooter>
     </CSidebar>
-  )
-}
+  );
+});
 
-export default React.memo(AppSidebar)
+export default AppSidebar;

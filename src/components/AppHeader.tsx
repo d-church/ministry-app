@@ -26,6 +26,8 @@ import {
 import { AppBreadcrumb } from "./index";
 import { AppHeaderDropdown } from "./header/index";
 
+import { LayoutState } from "src/layout/LayoutState";
+
 const AppHeader = () => {
   const headerRef = useRef();
   const colorMode = "light";
@@ -45,7 +47,7 @@ const AppHeader = () => {
     <CHeader position="sticky" className="mb-4 p-0" ref={headerRef}>
       <CContainer className="border-bottom px-4" fluid>
         <CHeaderToggler
-          // onClick={() => dispatch({ type: "set", sidebarShow: !sidebarShow })}
+          onClick={() => LayoutState.toggleSidebarState()}
           style={{ marginInlineStart: "-14px" }}
         >
           <CIcon icon={cilMenu} size="lg" />
