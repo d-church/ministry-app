@@ -1,5 +1,8 @@
-import 'core-js'
+/// <reference types="../../type-declarations/global.d.ts" />
 
-import RootRouter from '../RootRouter'
+import "core-js";
+import RootRouter from "../RootRouter";
 
-export default () => <RootRouter />
+import "../style/style.scss";
+
+export default () => <RootRouter />;
