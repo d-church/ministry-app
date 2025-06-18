@@ -32,9 +32,6 @@ const AppHeader = () => {
   const headerRef = useRef();
   const colorMode = "light";
 
-  // TODO:
-  // const sidebarShow =true;
-
   useEffect(() => {
     document.addEventListener("scroll", () => {
       headerRef.current &&

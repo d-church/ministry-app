@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import path from 'node:path'
-import autoprefixer from 'autoprefixer'
+import tailwindcss from '@tailwindcss/vite'
+import path from 'node:path';
 
 export default defineConfig(() => {
   return {
@@ -9,7 +9,7 @@ export default defineConfig(() => {
     build: {
       outDir: 'build',
     },
-    plugins: [react()],
+    plugins: [react(), tailwindcss()],
     resolve: {
       alias: [
         {
@@ -24,6 +24,6 @@ export default defineConfig(() => {
     },
     esbuild: {
       target: "es2024"
-  }
+    }
   }
 })

@@ -410,6 +410,12 @@ const _nav = [
     },
   },
   {
+    component: CNavItem,
+    name: 'Tailwind Test',
+    to: '/tailwind-test',
+    icon: <CIcon icon={cilStar} customClassName="nav-icon" />,
+  },
+  {
     component: CNavTitle,
     name: 'Extras',
   },
