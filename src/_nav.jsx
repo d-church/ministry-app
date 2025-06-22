@@ -444,6 +444,12 @@ const _nav = [
         name: 'Error 500',
         to: '/500',
       },
+      {
+        component: CNavItem,
+        name: 'Posts',
+        to: '/posts',
+        icon: <CIcon icon={cilNotes} customClassName="nav-icon" />,
+      },
     ],
   },
   {

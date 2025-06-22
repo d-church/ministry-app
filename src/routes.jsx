@@ -55,6 +55,8 @@ const Widgets = React.lazy(() => import('./views/widgets/Widgets'))
 const TailwindTest = React.lazy(() => import('./views/tailwind-test/TailwindTest'))
 const SimpleTest = React.lazy(() => import('./views/tailwind-test/SimpleTest'))
 
+const Posts = React.lazy(() => import('./views/pages/posts/Posts'))
+
 const routes = [
   { path: '/', exact: true, name: 'Home' },
   { path: '/dashboard', name: 'Dashboard', element: Dashboard },
@@ -103,6 +105,7 @@ const routes = [
   { path: '/widgets', name: 'Widgets', element: Widgets },
   { path: '/tailwind-test', name: 'Tailwind Test', element: TailwindTest },
   { path: '/simple-test', name: 'Simple Test', element: SimpleTest },
+  { path: '/posts', name: 'Пости', element: Posts },
 ]
 
 export default routes
