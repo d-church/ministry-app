@@ -16,7 +16,7 @@ import { logo } from "src/assets/brand/logo";
 import { sygnet } from "src/assets/brand/sygnet";
 import navigation from "../_nav";
 
-import { LayoutState } from "src/layout/LayoutState";
+import { LayoutState } from "src/components/AppLayout/LayoutState";
 
 const AppSidebar = observer(() => {
   return (
@@ -31,7 +31,7 @@ const AppSidebar = observer(() => {
       }}
     >
       <CSidebarHeader className="border-bottom">
-        <CSidebarBrand to="/">
+        <CSidebarBrand>
           <CIcon customClassName="sidebar-brand-full" icon={logo} height={32} />
           <CIcon customClassName="sidebar-brand-narrow" icon={sygnet} height={32} />
         </CSidebarBrand>

@@ -4,6 +4,6 @@ import "core-js";
 import "../style/tailwind.css";
 import "../style/style.scss";
 
-import RootRouter from "../RootRouter";
+import Router from "../Router";
 
-export default () => <RootRouter />;
+export default () => <Router />;

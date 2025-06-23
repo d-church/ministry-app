@@ -21,7 +21,7 @@ import {
 import { AppBreadcrumb } from "./index";
 import { AppHeaderDropdown } from "./header/index";
 
-import { LayoutState } from "src/layout/LayoutState";
+import { LayoutState } from "src/components/AppLayout/LayoutState";
 
 const AppHeader = () => {
   const headerRef = useRef();

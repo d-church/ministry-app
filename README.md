@@ -1,11 +1,11 @@
-# D.Church Admin Panel
+# D.Church App
 
-D.Church Admin - це адміністративна панель Львівської церкви D.Church для
+D.Church App - це апка Львівської церкви D.Church
 
 ## Встановлення
 
 Вимоги:
-- Node.js 18
+- Node.js 20.18.1
 
 ```sh
 npm install
@@ -17,6 +17,11 @@ npm install
 - `npm run build` - Збирає проект для продакшену.
 - `npm run serve` - Запускає зібрану версію для перегляду.
 - `npm run lint` - Виконує перевірку коду за допомогою ESLint.
+- `npm run pretty` - Форматує код за допомогою Prettier.
+
+## CONTRIBUTING
+
+Будь ласка, ознайомтеся з [CONTRIBUTING.md](CONTRIBUTING.md) перед тим, як робити внески до репозиторію. У цьому файлі описані правила іменування файлів, змінних, а також інші рекомендації щодо стилю коду.
 
 ## Репозиторій
 [GitHub](git@github.com:ascentman/d.church.admin.git)
