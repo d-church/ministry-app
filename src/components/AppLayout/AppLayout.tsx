@@ -1,29 +1,27 @@
 import { Suspense, type FC } from "react";
 import { CContainer, CSpinner } from "@coreui/react";
 
-import { AppSidebar, AppFooter, AppHeader } from "..";
+import AppSidebar from "../AppSidebar";
+import Footer from "./Footer";
+import Header from "./Header";
 
 const DefaultLayout: FC<{
   content: JSX.Element;
-}> = ({ content }) => {
-  return (
-    <div>
-      <AppSidebar />
-      <div className="wrapper d-flex flex-column min-vh-100">
-        <AppHeader />
+}> = ({ content }) => (
+  <div>
+    <AppSidebar />
+    <div className="wrapper d-flex flex-column min-vh-100">
+      <Header />
 
-        <div className="body flex-grow-1">
-          <CContainer className="px-4" lg>
-            <Suspense fallback={<CSpinner color="primary" />}>
-              {content}
-            </Suspense>
-          </CContainer>
-        </div>
-
-        <AppFooter />
+      <div className="body flex-grow-1">
+        <CContainer className="px-4" lg>
+          <Suspense fallback={<CSpinner color="primary" />}>{content}</Suspense>
+        </CContainer>
       </div>
+
+      <Footer />
     </div>
-  );
-};
+  </div>
+);
 
 export default DefaultLayout;
