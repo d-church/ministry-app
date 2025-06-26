@@ -11,13 +11,7 @@ import {
   CDropdownToggle,
   CAvatar,
 } from "@coreui/react";
-import CIcon from "@coreui/icons-react";
-import {
-  cilMenu,
-  cilUser,
-  cilSettings,
-  cilLockLocked,
-} from "@coreui/icons";
+import { FaRegUser, FaGear, FaDoorOpen, FaBars } from "react-icons/fa6";
 import avatar8 from "./../../assets/images/avatars/8.jpg";
 
 import AppBreadcrumb from "../AppBreadcrumb";
@@ -48,8 +42,9 @@ const Header = () => {
           onClick={() => LayoutState.toggleSidebarState()}
           style={{ marginInlineStart: "-14px" }}
           aria-label="Toggle sidebar"
+           className="opacity-55"
         >
-          <CIcon icon={cilMenu} size="lg" />
+          <FaBars />
         </CHeaderToggler>
 
         <CHeaderNav>
@@ -61,18 +56,18 @@ const Header = () => {
             <CDropdownToggle className="py-0 pe-0" caret={false}>
               <CAvatar src={avatar8} size="md" />
             </CDropdownToggle>
-            <CDropdownMenu className="pt-0">
-              <CDropdownItem href="#">
-                <CIcon icon={cilUser} className="me-2" />
+            <CDropdownMenu className="pt-0 overflow-hidden">
+              <CDropdownItem href="#" className="d-flex align-items-center">
+                <FaRegUser className="me-2 inline" />
                 Профіль
               </CDropdownItem>
-              <CDropdownItem href="#">
-                <CIcon icon={cilSettings} className="me-2" />
+              <CDropdownItem href="#" className="d-flex align-items-center">
+                <FaGear className="me-2 inline" />
                 Налаштування
               </CDropdownItem>
               <CDropdownDivider />
-              <CDropdownItem href="#">
-                <CIcon icon={cilLockLocked} className="me-2" />
+              <CDropdownItem href="#" className="d-flex align-items-center">
+                <FaDoorOpen className="me-2 inline" />
                 Вийти
               </CDropdownItem>
             </CDropdownMenu>
