@@ -15,7 +15,7 @@ const AppBreadcrumb = () => {
   const getBreadcrumbs = (location) => {
     const breadcrumbs = [];
     location.split("/").reduce((prev, curr, index, array) => {
-      // if (curr === "church") return "";
+      if (curr === "church") return "";
       const currentPathname = `${prev}/${curr}`;
       const routeName = getRouteName(currentPathname, routes);
 

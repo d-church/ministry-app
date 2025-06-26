@@ -1,13 +1,12 @@
-import CIcon from "@coreui/icons-react";
-import { cilHome, cilFeaturedPlaylist, cilNotes } from "@coreui/icons";
 import { CNavGroup, CNavItem, CNavTitle } from "@coreui/react";
+import { FaChurch, FaInternetExplorer, FaList } from "react-icons/fa6";
 
 const _nav = [
   {
     component: CNavItem,
     name: "Церква",
     to: "/church/overview",
-    icon: <CIcon icon={cilHome} customClassName="nav-icon" />,
+    icon: <FaChurch className="nav-icon" />,
   },
   {
     component: CNavTitle,
@@ -16,14 +15,14 @@ const _nav = [
   {
     component: CNavGroup,
     name: "Вебсайт",
-    to: "/church/posts",
-    icon: <CIcon icon={cilFeaturedPlaylist} customClassName="nav-icon" />,
+    to: "/church/website",
+    icon: <FaInternetExplorer className="nav-icon" />,
     items: [
       {
         component: CNavItem,
         name: "Пости",
-        to: "/church/posts",
-        icon: <CIcon icon={cilNotes} customClassName="nav-icon" />,
+        to: "/church/website/posts",
+        icon: <FaList className="nav-icon" />,
       },
     ],
   },
