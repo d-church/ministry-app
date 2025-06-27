@@ -1,5 +1,4 @@
 import { observer } from "mobx-react-lite";
-
 import {
   CCloseButton,
   CSidebar,
@@ -8,17 +7,20 @@ import {
   CSidebarHeader,
   CSidebarToggler,
 } from "@coreui/react";
-import CIcon from "@coreui/icons-react";
 
-import { AppSidebarNav } from "./AppSidebarNav";
+import logoFull from "src/assets/brand/logo-full.svg";
+import logoMain from "src/assets/brand/logo-main.svg";
 
-import { logo } from "src/assets/brand/logo";
-import { sygnet } from "src/assets/brand/sygnet";
-import navigation from "../_nav";
+import config from "./config";
+import { LayoutState } from "../LayoutState";
 
-import { LayoutState } from "src/components/AppLayout/LayoutState";
+import { SidebarNav } from "./SidebarNav";
 
-const AppSidebar = observer(() => {
+const Sidebar = observer(() => {
+  console.log({
+    isSidebarUnfoldable: LayoutState.isSidebarUnfoldable,
+    isSidebarOpen: LayoutState.isSidebarOpen,
+  });
   return (
     <CSidebar
       className="border-end"
@@ -29,11 +31,16 @@ const AppSidebar = observer(() => {
       onVisibleChange={(visible) => {
         LayoutState.setSideBarState(visible);
       }}
+      onMouseEnter={() => LayoutState.setSideBarHovered(true)}
+      onMouseLeave={() => LayoutState.setSideBarHovered(false)}
     >
       <CSidebarHeader className="border-bottom">
         <CSidebarBrand>
-          <CIcon customClassName="sidebar-brand-full" icon={logo} height={32} />
-          <CIcon customClassName="sidebar-brand-narrow" icon={sygnet} height={32} />
+          <img
+            src={LayoutState.logoType === "full" ? logoFull : logoMain}
+            alt="Logo"
+            className="d-inline-block align-top scale-75"
+          />
         </CSidebarBrand>
         <CCloseButton
           className="d-lg-none"
@@ -41,7 +48,7 @@ const AppSidebar = observer(() => {
           onClick={() => LayoutState.setSideBarState(false)}
         />
       </CSidebarHeader>
-      <AppSidebarNav items={navigation} />
+      <SidebarNav items={config} />
       <CSidebarFooter className="border-top d-none d-lg-flex">
         <CSidebarToggler onClick={() => LayoutState.toggleSidebarUnfoldableState()} />
       </CSidebarFooter>
@@ -49,4 +56,4 @@ const AppSidebar = observer(() => {
   );
 });
 
-export default AppSidebar;
+export default Sidebar;

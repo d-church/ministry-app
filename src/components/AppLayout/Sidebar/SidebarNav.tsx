@@ -1,14 +1,34 @@
-import React from 'react'
-import { NavLink } from 'react-router-dom'
-import PropTypes from 'prop-types'
+import { NavLink } from "react-router-dom";
+import type { ReactElement } from "react";
 
-import SimpleBar from 'simplebar-react'
-import 'simplebar-react/dist/simplebar.min.css'
+// @ts-ignore
+import SimpleBar from "simplebar-react";
+import "simplebar-react/dist/simplebar.min.css";
 
-import { CBadge, CNavLink, CSidebarNav } from '@coreui/react'
+import { CBadge, CNavLink, CSidebarNav } from "@coreui/react";
 
-export const AppSidebarNav = ({ items }) => {
-  const navLink = (name, icon, badge, indent = false) => {
+interface Badge {
+  color: string;
+  text: string;
+}
+
+interface NavItem {
+  component: React.ComponentType<any>;
+  name?: string;
+  to?: string;
+  href?: string;
+  icon?: ReactElement;
+  badge?: Badge;
+  items?: NavItem[];
+  [key: string]: any;
+}
+
+interface SidebarNavProps {
+  items: NavItem[];
+}
+
+export const SidebarNav = ({ items }: SidebarNavProps) => {
+  const navLink = (name?: string, icon?: ReactElement, badge?: Badge, indent = false) => {
     return (
       <>
         {icon
@@ -25,18 +45,18 @@ export const AppSidebarNav = ({ items }) => {
           </CBadge>
         )}
       </>
-    )
-  }
+    );
+  };
 
-  const navItem = (item, index, indent = false) => {
-    const { component, name, badge, icon, ...rest } = item
-    const Component = component
+  const navItem = (item: NavItem, index: number, indent = false) => {
+    const { component, name, badge, icon, ...rest } = item;
+    const Component = component;
     return (
       <Component as="div" key={index}>
         {rest.to || rest.href ? (
           <CNavLink
             {...(rest.to && { as: NavLink })}
-            {...(rest.href && { target: '_blank', rel: 'noopener noreferrer' })}
+            {...(rest.href && { target: "_blank", rel: "noopener noreferrer" })}
             {...rest}
           >
             {navLink(name, icon, badge, indent)}
@@ -45,29 +65,25 @@ export const AppSidebarNav = ({ items }) => {
           navLink(name, icon, badge, indent)
         )}
       </Component>
-    )
-  }
+    );
+  };
 
-  const navGroup = (item, index) => {
-    const { component, name, icon, items, to, ...rest } = item
-    const Component = component
+  const navGroup = (item: NavItem, index: number) => {
+    const { component, name, icon, items, to, ...rest } = item;
+    const Component = component;
     return (
       <Component compact as="div" key={index} toggler={navLink(name, icon)} {...rest}>
         {items?.map((item, index) =>
           item.items ? navGroup(item, index) : navItem(item, index, true),
         )}
       </Component>
-    )
-  }
+    );
+  };
 
   return (
     <CSidebarNav as={SimpleBar}>
       {items &&
         items.map((item, index) => (item.items ? navGroup(item, index) : navItem(item, index)))}
     </CSidebarNav>
-  )
-}
-
-AppSidebarNav.propTypes = {
-  items: PropTypes.arrayOf(PropTypes.any).isRequired,
-}
+  );
+};

@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   CContainer,
   CHeader,
@@ -16,7 +16,6 @@ import avatar8 from "./../../assets/images/avatars/8.jpg";
 
 import AppBreadcrumb from "../AppBreadcrumb";
 
-
 import { LayoutState } from "./LayoutState";
 
 const Header = () => {
@@ -24,10 +23,7 @@ const Header = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      headerRef.current?.classList.toggle(
-        "shadow-sm",
-        document.documentElement.scrollTop > 0
-      );
+      headerRef.current?.classList.toggle("shadow-sm", document.documentElement.scrollTop > 0);
     };
     document.addEventListener("scroll", handleScroll);
     return () => {
@@ -42,7 +38,7 @@ const Header = () => {
           onClick={() => LayoutState.toggleSidebarState()}
           style={{ marginInlineStart: "-14px" }}
           aria-label="Toggle sidebar"
-           className="opacity-55"
+          className="opacity-55"
         >
           <FaBars />
         </CHeaderToggler>

@@ -1,7 +1,7 @@
 import { CNavGroup, CNavItem, CNavTitle } from "@coreui/react";
 import { FaChurch, FaInternetExplorer, FaList } from "react-icons/fa6";
 
-const _nav = [
+const config = [
   {
     component: CNavItem,
     name: "Церква",
@@ -28,4 +28,4 @@ const _nav = [
   },
 ];
 
-export default _nav;
+export default config;

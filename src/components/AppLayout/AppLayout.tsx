@@ -1,7 +1,7 @@
 import { Suspense, type FC } from "react";
 import { CContainer, CSpinner } from "@coreui/react";
 
-import AppSidebar from "../AppSidebar";
+import Sidebar from "./Sidebar";
 import Footer from "./Footer";
 import Header from "./Header";
 
@@ -9,7 +9,7 @@ const DefaultLayout: FC<{
   content: JSX.Element;
 }> = ({ content }) => (
   <div>
-    <AppSidebar />
+    <Sidebar />
     <div className="wrapper d-flex flex-column min-vh-100">
       <Header />
 
