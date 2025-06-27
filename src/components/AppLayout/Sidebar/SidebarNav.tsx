@@ -1,13 +1,13 @@
 import { NavLink } from "react-router-dom";
 import type { ReactElement } from "react";
+import clsx from "clsx";
 
 // @ts-ignore
 import SimpleBar from "simplebar-react";
-import "simplebar-react/dist/simplebar.min.css";
 
 import { CBadge, CNavLink, CSidebarNav } from "@coreui/react";
 
-
+import "simplebar-react/dist/simplebar.min.css";
 
 export const SidebarNav = ({ items }: SidebarNavProps) => {
   const navLink = (name?: string, icon?: ReactElement, badge?: Badge, indent = false) => {
@@ -34,7 +34,7 @@ export const SidebarNav = ({ items }: SidebarNavProps) => {
     const { component, name, badge, icon, ...rest } = item;
     const Component = component;
     return (
-      <Component as="div" key={index}>
+      <Component as="div" key={index} className={clsx({ "pl-3": indent })}>
         {rest.to || rest.href ? (
           <CNavLink
             {...(rest.to && { as: NavLink })}
