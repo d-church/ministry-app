@@ -71,4 +71,4 @@ interface LayoutStateData {
 
 const layoutState = new LayoutState();
 
-export { layoutState as LayoutState };
+export default layoutState;

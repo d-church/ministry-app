@@ -1,7 +1,7 @@
 import { CNavGroup, CNavItem, CNavTitle } from "@coreui/react";
 import { FaChurch, FaInternetExplorer, FaList } from "react-icons/fa6";
 
-const config = [
+const config: SidebarNavConfigItem[] = [
   {
     component: CNavItem,
     name: "Церква",
@@ -27,5 +27,15 @@ const config = [
     ],
   },
 ];
+
+interface SidebarNavConfigItem {
+  component: React.ComponentType<any>;
+  name?: string;
+  to?: string;
+  href?: string;
+  icon?: React.ReactElement;
+  badge?: { color: string; text: string };
+  items?: SidebarNavConfigItem[];
+}
 
 export default config;

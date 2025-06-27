@@ -1,15 +1,12 @@
-import { NavLink } from "react-router-dom";
 import type { ReactElement } from "react";
+import { NavLink } from "react-router-dom";
 import clsx from "clsx";
-
-// @ts-ignore
 import SimpleBar from "simplebar-react";
-
 import { CBadge, CNavLink, CSidebarNav } from "@coreui/react";
 
 import "simplebar-react/dist/simplebar.min.css";
 
-export const SidebarNav = ({ items }: SidebarNavProps) => {
+const SidebarNav = ({ items }: SidebarNavProps) => {
   const navLink = (name?: string, icon?: ReactElement, badge?: Badge, indent = false) => {
     return (
       <>
@@ -69,6 +66,8 @@ export const SidebarNav = ({ items }: SidebarNavProps) => {
     </CSidebarNav>
   );
 };
+
+export default SidebarNav;
 
 interface Badge {
   color: string;

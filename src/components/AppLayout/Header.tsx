@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import {
   CContainer,
   CHeader,
@@ -9,14 +9,14 @@ import {
   CDropdownItem,
   CDropdownMenu,
   CDropdownToggle,
-  CAvatar,
 } from "@coreui/react";
-import { FaRegUser, FaGear, FaDoorOpen, FaBars } from "react-icons/fa6";
-import avatar8 from "./../../assets/images/avatars/8.jpg";
+import { FaRegUser, FaGear, FaDoorOpen, FaBars, FaCircleUser } from "react-icons/fa6";
+
+import LayoutState from "./LayoutState";
 
 import AppBreadcrumb from "../AppBreadcrumb";
 
-import { LayoutState } from "./LayoutState";
+
 
 const Header = () => {
   const headerRef = useRef<HTMLDivElement | null>(null);
@@ -50,7 +50,7 @@ const Header = () => {
 
           <CDropdown variant="nav-item">
             <CDropdownToggle className="py-0 pe-0" caret={false}>
-              <CAvatar src={avatar8} size="md" />
+              <FaCircleUser size="35px"/>
             </CDropdownToggle>
             <CDropdownMenu className="pt-0 overflow-hidden">
               <CDropdownItem href="#" className="d-flex align-items-center">
