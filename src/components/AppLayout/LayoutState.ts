@@ -1,9 +1,8 @@
-import { observable, action, reaction, computed } from "mobx";
+import { observable, action, reaction } from "mobx";
 
 class LayoutState {
   @observable public accessor isSidebarOpen = true;
   @observable public accessor isSidebarUnfoldable = true;
-  @observable public accessor isSideBarHovered = false;
 
   private readonly STORAGE_KEY = 'layoutState';
 
@@ -28,22 +27,10 @@ class LayoutState {
     this.isSidebarUnfoldable = !this.isSidebarUnfoldable;
   }
 
-  @action public setSideBarHovered(isHovered: boolean) {
-    this.isSideBarHovered = isHovered;
-  }
 
   @action public resetToDefaults() {
     this.isSidebarOpen = true;
     this.isSidebarUnfoldable = true;
-    this.isSideBarHovered = false;
-  }
-
-  @computed public get logoType(): 'main' | 'full' {
-    if (!this.isSidebarUnfoldable) {
-      return 'full';
-    }
-
-    return this.isSideBarHovered ? 'full' : 'main';
   }
 
   private setupReactions() {
@@ -80,7 +67,6 @@ class LayoutState {
 interface LayoutStateData {
   isSidebarOpen: boolean;
   isSidebarUnfoldable: boolean;
-  isSideBarHovered?: boolean;
 }
 
 const layoutState = new LayoutState();

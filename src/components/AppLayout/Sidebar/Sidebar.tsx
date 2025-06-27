@@ -1,4 +1,5 @@
 import { observer } from "mobx-react-lite";
+import cn from "clsx";
 import {
   CCloseButton,
   CSidebar,
@@ -16,11 +17,9 @@ import { LayoutState } from "../LayoutState";
 
 import { SidebarNav } from "./SidebarNav";
 
+import "./style.scss";
+
 const Sidebar = observer(() => {
-  console.log({
-    isSidebarUnfoldable: LayoutState.isSidebarUnfoldable,
-    isSidebarOpen: LayoutState.isSidebarOpen,
-  });
   return (
     <CSidebar
       className="border-end"
@@ -31,15 +30,22 @@ const Sidebar = observer(() => {
       onVisibleChange={(visible) => {
         LayoutState.setSideBarState(visible);
       }}
-      onMouseEnter={() => LayoutState.setSideBarHovered(true)}
-      onMouseLeave={() => LayoutState.setSideBarHovered(false)}
     >
       <CSidebarHeader className="border-bottom">
         <CSidebarBrand>
           <img
-            src={LayoutState.logoType === "full" ? logoFull : logoMain}
+            src={logoFull}
             alt="Logo"
-            className="d-inline-block align-top scale-75"
+            className={cn("logo", "full", "scale-75", {
+              "d-none": LayoutState.isSidebarUnfoldable,
+            })}
+          />
+          <img
+            src={logoMain}
+            alt="Logo"
+            className={cn("logo", "main", "scale-75", {
+              "d-none": !LayoutState.isSidebarUnfoldable,
+            })}
           />
         </CSidebarBrand>
         <CCloseButton

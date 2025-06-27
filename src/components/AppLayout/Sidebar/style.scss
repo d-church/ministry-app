@@ -1,0 +1,26 @@
+.sidebar {
+  .logo.full {
+    @media (max-width: 992px) {
+      display: block !important;
+    }
+  }
+
+  .logo.main {
+    @media (max-width: 992px) {
+      display: none !important;
+    }
+  }
+
+  &:hover {
+    .logo.full {
+      display: block !important;
+    }
+
+    .logo.main {
+      display: none !important;
+    }
+  }
+}
+
+
+

@@ -7,25 +7,7 @@ import "simplebar-react/dist/simplebar.min.css";
 
 import { CBadge, CNavLink, CSidebarNav } from "@coreui/react";
 
-interface Badge {
-  color: string;
-  text: string;
-}
 
-interface NavItem {
-  component: React.ComponentType<any>;
-  name?: string;
-  to?: string;
-  href?: string;
-  icon?: ReactElement;
-  badge?: Badge;
-  items?: NavItem[];
-  [key: string]: any;
-}
-
-interface SidebarNavProps {
-  items: NavItem[];
-}
 
 export const SidebarNav = ({ items }: SidebarNavProps) => {
   const navLink = (name?: string, icon?: ReactElement, badge?: Badge, indent = false) => {
@@ -87,3 +69,23 @@ export const SidebarNav = ({ items }: SidebarNavProps) => {
     </CSidebarNav>
   );
 };
+
+interface Badge {
+  color: string;
+  text: string;
+}
+
+interface NavItem {
+  component: React.ComponentType<any>;
+  name?: string;
+  to?: string;
+  href?: string;
+  icon?: ReactElement;
+  badge?: Badge;
+  items?: NavItem[];
+  [key: string]: any;
+}
+
+interface SidebarNavProps {
+  items: NavItem[];
+}
