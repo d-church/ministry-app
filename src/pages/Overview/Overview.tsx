@@ -1,299 +1,211 @@
-import React, { useState } from 'react'
+import { useState } from "react";
+import { CBadge, CAvatar } from "@coreui/react";
 import {
-  CCard,
-  CCardBody,
-  CCardHeader,
-  CCardTitle,
-  CCol,
-  CRow,
-  CButton,
-  CTable,
-  CTableBody,
-  CTableDataCell,
-  CTableHead,
-  CTableHeaderCell,
-  CTableRow,
-  CProgress,
-  CBadge,
-  CAlert,
-  CForm,
-  CFormInput,
-  CFormLabel,
-  CFormTextarea,
-  CModal,
-  CModalHeader,
-  CModalTitle,
-  CModalBody,
-  CModalFooter,
-  CSpinner,
-  CWidgetStatsF,
-} from '@coreui/react'
-import CIcon from '@coreui/icons-react'
-import {
-  cilUser,
-  cilChart,
-  cilSpeedometer,
-  cilPeople,
-  cilPlus,
-  cilPencil,
-  cilTrash,
-} from '@coreui/icons'
+  FaRegEnvelope,
+  FaUsers,
+  FaBell,
+  FaCalendarAlt,
+  FaUserFriends,
+  FaNewspaper,
+} from "react-icons/fa";
+
+const userProfile = {
+  name: "Олена Коваленко",
+  email: "worship@d.church",
+  role: "Прославлення",
+  about:
+    "Керує командою прославлення, організовує репетиції та концерти. Любить співати та навчати інших.",
+  avatar: "https://ui-avatars.com/api/?name=Олена+Коваленко&background=F59E42&color=fff&size=128",
+};
+
+const userMinistries = [
+  { id: 1, name: "Прославлення", status: "active" },
+  { id: 2, name: "Молитовна група", status: "pending" },
+];
+
+const friends = [
+  {
+    id: 1,
+    name: "Іван Петренко",
+    avatar: "https://ui-avatars.com/api/?name=Іван+Петренко&background=0D8ABC&color=fff&size=64",
+  },
+  {
+    id: 2,
+    name: "Марія Іваненко",
+    avatar: "https://ui-avatars.com/api/?name=Марія+Іваненко&background=F59E42&color=fff&size=64",
+  },
+  {
+    id: 3,
+    name: "Андрій Мельник",
+    avatar: "https://ui-avatars.com/api/?name=Андрій+Мельник&background=4ADE80&color=fff&size=64",
+  },
+];
+
+const events = [
+  { id: 1, title: "Репетиція прославлення", date: "2024-07-10", place: "Церква, головний зал" },
+  { id: 2, title: "Молитовне зібрання", date: "2024-07-12", place: "Мала зала" },
+];
+
+const news = [
+  { id: 1, title: "Запуск нового дитячого табору", date: "2024-06-20" },
+  { id: 2, title: "Збір коштів на ремонт", date: "2024-06-15" },
+];
 
 const Overview = () => {
-  const [visible, setVisible] = useState(false)
-  const [loading, setLoading] = useState(false)
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: ''
-  })
+  const [notifications, setNotifications] = useState([{ id: 1, ministry: "Молитовна група" }]);
 
-  const mockUsers = [
-    { id: 1, name: 'О. Іван Петренко', email: 'pastor@d.church', status: 'active', role: 'Пастор' },
-    { id: 2, name: 'Олена Коваленко', email: 'worship@d.church', status: 'active', role: 'Музичне служіння' },
-    { id: 3, name: 'Петро Сидоренко', email: 'youth@d.church', status: 'active', role: 'Молодіжне служіння' },
-    { id: 4, name: 'Марія Іваненко', email: 'children@d.church', status: 'active', role: 'Дитяче служіння' },
-    { id: 5, name: 'Андрій Мельник', email: 'admin@d.church', status: 'active', role: 'Адміністратор' },
-  ]
+  const handleAccept = (id: number) => {
+    setNotifications((prev) => prev.filter((n) => n.id !== id));
+    // Тут можна додати логіку додавання служіння до userMinistries
+  };
 
-  const mockStats = [
-    { title: 'Прихожани', value: '156', icon: cilUser, color: 'primary' },
-    { title: 'Служіння', value: '23', icon: cilChart, color: 'success' },
-    { title: 'Молитовні запити', value: '89', icon: cilSpeedometer, color: 'warning' },
-    { title: 'Відвідувачі сайту', value: '1,247', icon: cilPeople, color: 'info' },
-  ]
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    setLoading(true)
-    setTimeout(() => {
-      setLoading(false)
-      setVisible(false)
-      setFormData({ name: '', email: '', message: '' })
-    }, 2000)
-  }
+  const handleDecline = (id: number) => {
+    setNotifications((prev) => prev.filter((n) => n.id !== id));
+  };
 
   const getStatusBadge = (status: string) => {
-    return status === 'active' ? (
-      <CBadge color="success">Активний</CBadge>
+    return status === "active" ? (
+      <CBadge color="success" className="text-xs px-2 py-1">
+        Активний
+      </CBadge>
     ) : (
-      <CBadge color="secondary">Неактивний</CBadge>
-    )
-  }
-
-  const getRoleBadge = (role: string) => {
-    const colors = {
-      'Пастор': 'danger',
-      'Музичне служіння': 'warning',
-      'Молодіжне служіння': 'info',
-      'Дитяче служіння': 'success',
-      'Адміністратор': 'primary'
-    }
-    return <CBadge color={colors[role as keyof typeof colors]}>{role}</CBadge>
-  }
+      <CBadge color="warning" className="text-xs px-2 py-1">
+        Очікує підтвердження
+      </CBadge>
+    );
+  };
 
   return (
-    <div className="p-4">
-
-      {/* Статистика */}
-      <CRow className="mb-4">
-        {mockStats.map((stat, index) => (
-          <CCol key={index} sm={6} lg={3}>
-            <CWidgetStatsF
-              className="mb-3"
-              icon={<CIcon icon={stat.icon} height={24} />}
-              title={stat.title}
-              value={stat.value}
-              color={stat.color}
-            />
-          </CCol>
-        ))}
-      </CRow>
-
-      {/* Алерти */}
-      <CRow className="mb-4">
-        <CCol>
-          <CAlert color="success" className="mb-2">
-            <strong>Успіх!</strong> Операція виконана успішно.
-          </CAlert>
-          <CAlert color="warning" className="mb-2">
-            <strong>Увага!</strong> Будь ласка, перевірте введені дані.
-          </CAlert>
-          <CAlert color="info">
-            <strong>Інформація!</strong> Це тестова сторінка для демонстрації компонентів.
-          </CAlert>
-        </CCol>
-      </CRow>
-
-      {/* Основні картки */}
-      <CRow className="mb-4">
-        <CCol lg={8}>
-          <CCard className="mb-4">
-            <CCardHeader className="d-flex justify-content-between align-items-center">
-              <CCardTitle className="mb-0">Список користувачів</CCardTitle>
-              <CButton
-                color="primary"
-                size="sm"
-                onClick={() => setVisible(true)}
-                className="d-flex align-items-center gap-2"
-              >
-                <CIcon icon={cilPlus} size="sm" />
-                Додати користувача
-              </CButton>
-            </CCardHeader>
-            <CCardBody>
-              <CTable hover responsive>
-                <CTableHead>
-                  <CTableRow>
-                    <CTableHeaderCell>ID</CTableHeaderCell>
-                    <CTableHeaderCell>Ім'я</CTableHeaderCell>
-                    <CTableHeaderCell>Email</CTableHeaderCell>
-                    <CTableHeaderCell>Статус</CTableHeaderCell>
-                    <CTableHeaderCell>Роль</CTableHeaderCell>
-                    <CTableHeaderCell>Дії</CTableHeaderCell>
-                  </CTableRow>
-                </CTableHead>
-                <CTableBody>
-                  {mockUsers.map((user) => (
-                    <CTableRow key={user.id}>
-                      <CTableDataCell>{user.id}</CTableDataCell>
-                      <CTableDataCell>{user.name}</CTableDataCell>
-                      <CTableDataCell>{user.email}</CTableDataCell>
-                      <CTableDataCell>{getStatusBadge(user.status)}</CTableDataCell>
-                      <CTableDataCell>{getRoleBadge(user.role)}</CTableDataCell>
-                      <CTableDataCell>
-                        <div className="d-flex gap-2">
-                          <CButton color="info" size="sm">
-                            <CIcon icon={cilPencil} size="sm" />
-                          </CButton>
-                          <CButton color="danger" size="sm">
-                            <CIcon icon={cilTrash} size="sm" />
-                          </CButton>
-                        </div>
-                      </CTableDataCell>
-                    </CTableRow>
-                  ))}
-                </CTableBody>
-              </CTable>
-            </CCardBody>
-          </CCard>
-        </CCol>
-
-        <CCol lg={4}>
-          <CCard className="mb-4">
-            <CCardHeader>
-              <CCardTitle className="mb-0">Прогрес завдань</CCardTitle>
-            </CCardHeader>
-            <CCardBody>
-              <div className="mb-3">
-                <div className="d-flex justify-content-between mb-1">
-                  <span>Підготовка до служіння</span>
-                  <span>85%</span>
-                </div>
-                <CProgress value={85} className="mb-3" />
+    <div className="p-4 max-w-5xl mx-auto">
+      {/* Сповіщення */}
+      {notifications.length > 0 && (
+        <div className="mb-6">
+          {notifications.map((notif) => (
+            <div
+              key={notif.id}
+              className="flex items-center justify-between bg-blue-50 border border-blue-200 rounded-lg px-4 py-3 shadow-sm mb-2"
+            >
+              <div className="flex items-center gap-2">
+                <FaBell className="text-blue-400 text-lg" />
+                <span className="text-blue-900 font-medium">
+                  Вас запросили в "{notif.ministry}"
+                </span>
               </div>
-              <div className="mb-3">
-                <div className="d-flex justify-content-between mb-1">
-                  <span>Молодіжна конференція</span>
-                  <span>60%</span>
-                </div>
-                <CProgress value={60} color="warning" className="mb-3" />
+              <div className="flex gap-2">
+                <button
+                  className="bg-green-500 hover:bg-green-600 text-white text-xs font-semibold px-3 py-1 rounded transition"
+                  onClick={() => handleAccept(notif.id)}
+                >
+                  Прийняти
+                </button>
+                <button
+                  className="bg-gray-200 hover:bg-gray-300 text-gray-700 text-xs font-semibold px-3 py-1 rounded transition border border-gray-300"
+                  onClick={() => handleDecline(notif.id)}
+                >
+                  Відхилити
+                </button>
               </div>
-              <div className="mb-3">
-                <div className="d-flex justify-content-between mb-1">
-                  <span>Дитячий табір</span>
-                  <span>95%</span>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Профіль та служіння */}
+      <div className="flex flex-col md:flex-row gap-6 mb-8">
+        <div className="flex-1 flex flex-col items-center md:items-start bg-white rounded-xl shadow p-6 border border-gray-100">
+          <CAvatar src={userProfile.avatar} size="xl" className="mb-3 shadow" />
+          <h4 className="mb-1 text-xl font-bold text-gray-900">{userProfile.name}</h4>
+          <div className="mb-2 text-gray-500 flex items-center gap-1">
+            <FaRegEnvelope className="text-base" />
+            <span className="text-sm">{userProfile.email}</span>
+          </div>
+          <span className="inline-block mb-2 text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded font-semibold">
+            {userProfile.role}
+          </span>
+          <p className="mt-2 text-gray-700 text-sm text-center md:text-left">{userProfile.about}</p>
+        </div>
+        <div className="flex-[2]">
+          <div className="bg-white rounded-xl shadow p-6 border border-gray-100 h-full">
+            <div className="flex items-center gap-2 mb-4">
+              <FaUsers className="text-gray-400 text-lg" />
+              <span className="font-semibold text-gray-800 text-lg">Мої служіння</span>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {userMinistries.map((ministry) => (
+                <div
+                  key={ministry.id}
+                  className="bg-gray-50 border border-gray-200 rounded-lg p-4 flex flex-col gap-2 shadow-sm"
+                >
+                  <span className="font-medium text-gray-700">{ministry.name}</span>
+                  {getStatusBadge(ministry.status)}
                 </div>
-                <CProgress value={95} color="success" className="mb-3" />
-              </div>
+              ))}
+              {userMinistries.length === 0 && (
+                <div className="text-gray-400">Ви ще не приєдналися до жодного служіння.</div>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Мої події */}
+      <div className="bg-white rounded-xl shadow p-6 border border-gray-100 mb-8">
+        <div className="flex items-center gap-2 mb-4">
+          <FaCalendarAlt className="text-gray-400 text-lg" />
+          <span className="font-semibold text-gray-800 text-lg">Мої події</span>
+        </div>
+        <ul className="divide-y divide-gray-100">
+          {events.map((event) => (
+            <li
+              key={event.id}
+              className="py-2 flex flex-col sm:flex-row sm:items-center sm:justify-between"
+            >
               <div>
-                <div className="d-flex justify-content-between mb-1">
-                  <span>Ремонт приміщення</span>
-                  <span>35%</span>
-                </div>
-                <CProgress value={35} color="danger" />
+                <span className="font-medium text-gray-700">{event.title}</span>
+                <span className="ml-2 text-xs text-gray-400">{event.place}</span>
               </div>
-            </CCardBody>
-          </CCard>
+              <span className="text-xs text-gray-500 mt-1 sm:mt-0">{event.date}</span>
+            </li>
+          ))}
+          {events.length === 0 && <li className="text-gray-400">Немає запланованих подій.</li>}
+        </ul>
+      </div>
 
-          <CCard>
-            <CCardHeader>
-              <CCardTitle className="mb-0">Швидкі дії</CCardTitle>
-            </CCardHeader>
-            <CCardBody>
-              <div className="d-grid gap-2">
-                <CButton color="primary" variant="outline">
-                  Створити оголошення
-                </CButton>
-                <CButton color="success" variant="outline">
-                  Додати молитовний запит
-                </CButton>
-                <CButton color="warning" variant="outline">
-                  Планування служіння
-                </CButton>
-                <CButton color="info" variant="outline">
-                  Звіт про відвідуваність
-                </CButton>
-              </div>
-            </CCardBody>
-          </CCard>
-        </CCol>
-      </CRow>
+      {/* Мої друзі */}
+      <div className="bg-white rounded-xl shadow p-6 border border-gray-100 mb-8">
+        <div className="flex items-center gap-2 mb-4">
+          <FaUserFriends className="text-gray-400 text-lg" />
+          <span className="font-semibold text-gray-800 text-lg">Мої друзі</span>
+        </div>
+        <div className="flex gap-4 flex-wrap">
+          {friends.map((friend) => (
+            <div key={friend.id} className="flex flex-col items-center">
+              <CAvatar src={friend.avatar} size="lg" className="mb-1 shadow" />
+              <span className="text-xs text-gray-700 font-medium">{friend.name}</span>
+            </div>
+          ))}
+          {friends.length === 0 && <div className="text-gray-400">У вас ще немає друзів.</div>}
+        </div>
+      </div>
 
-      {/* Модальне вікно */}
-      <CModal visible={visible} onClose={() => setVisible(false)}>
-        <CModalHeader>
-          <CModalTitle>Додати нового користувача</CModalTitle>
-        </CModalHeader>
-        <CModalBody>
-          <CForm onSubmit={handleSubmit}>
-            <div className="mb-3">
-              <CFormLabel htmlFor="name">Ім'я</CFormLabel>
-              <CFormInput
-                id="name"
-                value={formData.name}
-                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                required
-              />
-            </div>
-            <div className="mb-3">
-              <CFormLabel htmlFor="email">Email</CFormLabel>
-              <CFormInput
-                id="email"
-                type="email"
-                value={formData.email}
-                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                required
-              />
-            </div>
-            <div className="mb-3">
-              <CFormLabel htmlFor="message">Повідомлення</CFormLabel>
-              <CFormTextarea
-                id="message"
-                rows={3}
-                value={formData.message}
-                onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-              />
-            </div>
-          </CForm>
-        </CModalBody>
-        <CModalFooter>
-          <CButton color="secondary" onClick={() => setVisible(false)}>
-            Скасувати
-          </CButton>
-          <CButton
-            color="primary"
-            onClick={handleSubmit}
-            disabled={loading}
-            className="d-flex align-items-center gap-2"
-          >
-            {loading && <CSpinner size="sm" />}
-            {loading ? 'Збереження...' : 'Зберегти'}
-          </CButton>
-        </CModalFooter>
-      </CModal>
+      {/* Останні новини церкви */}
+      <div className="bg-white rounded-xl shadow p-6 border border-gray-100">
+        <div className="flex items-center gap-2 mb-4">
+          <FaNewspaper className="text-gray-400 text-lg" />
+          <span className="font-semibold text-gray-800 text-lg">Останні новини церкви</span>
+        </div>
+        <ul className="divide-y divide-gray-100">
+          {news.map((item) => (
+            <li key={item.id} className="py-2 flex items-center justify-between">
+              <span className="text-gray-700 font-medium">{item.title}</span>
+              <span className="text-xs text-gray-500">{item.date}</span>
+            </li>
+          ))}
+          {news.length === 0 && <li className="text-gray-400">Новин поки немає.</li>}
+        </ul>
+      </div>
     </div>
-  )
-}
+  );
+};
 
 export default Overview;

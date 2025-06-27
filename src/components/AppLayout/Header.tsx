@@ -16,8 +16,6 @@ import LayoutState from "./LayoutState";
 
 import AppBreadcrumb from "../AppBreadcrumb";
 
-
-
 const Header = () => {
   const headerRef = useRef<HTMLDivElement | null>(null);
 
@@ -50,7 +48,7 @@ const Header = () => {
 
           <CDropdown variant="nav-item">
             <CDropdownToggle className="py-0 pe-0" caret={false}>
-              <FaCircleUser size="35px"/>
+              <FaCircleUser size="35px" />
             </CDropdownToggle>
             <CDropdownMenu className="pt-0 overflow-hidden">
               <CDropdownItem href="#" className="d-flex align-items-center">

@@ -50,7 +50,7 @@ class LayoutState {
     try {
       const stored = localStorage.getItem(this.STORAGE_KEY);
       if (stored) {
-        const data: LayoutStateData = JSON.parse(stored);
+        const data: SidebarStateData = JSON.parse(stored);
         this.isSidebarOpen = data.isSidebarOpen ?? true;
         this.isSidebarUnfoldable = data.isSidebarUnfoldable ?? true;
       }
@@ -59,12 +59,12 @@ class LayoutState {
     }
   }
 
-  private saveToStorage(data: LayoutStateData) {
+  private saveToStorage(data: SidebarStateData) {
     localStorage.setItem(this.STORAGE_KEY, JSON.stringify(data));
   }
 }
 
-interface LayoutStateData {
+interface SidebarStateData {
   isSidebarOpen: boolean;
   isSidebarUnfoldable: boolean;
 }
