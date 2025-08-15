@@ -26,7 +26,6 @@ jobs:
               set -e
               cd /root/apps/d.church.admin
               git pull origin main
-              source ~/.bashrc || source ~/.profile || true
-              which node && which npm || (echo "Node.js/npm not found in PATH" && exit 1)
-              npm install
+              command -v node && command -v npm
+              npm i
               npm run build
