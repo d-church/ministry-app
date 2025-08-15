@@ -28,5 +28,6 @@ jobs:
               set -e
               cd /root/apps/d.church.admin
               git pull origin main
+              nvm use
               npm i
               npm run build
