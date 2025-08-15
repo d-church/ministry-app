@@ -22,10 +22,11 @@ jobs:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USERNAME }}
           password: ${{ secrets.VPS_PASSWORD }}
+          script_stop: true
           script: |
+              source ~/.bashrc || source ~/.profile
               set -e
               cd /root/apps/d.church.admin
               git pull origin main
-              command -v node && command -v npm
               npm i
               npm run build
