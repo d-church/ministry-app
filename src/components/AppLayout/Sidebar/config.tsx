@@ -1,6 +1,5 @@
 import { CNavGroup, CNavItem, CNavTitle } from "@coreui/react";
 import { FaChurch, FaInternetExplorer, FaList } from "react-icons/fa6";
-import { FaPray } from "react-icons/fa";
 
 const config: SidebarNavConfigItem[] = [
   {
@@ -24,20 +23,6 @@ const config: SidebarNavConfigItem[] = [
         name: "Пости",
         to: "/church/website/posts",
         icon: <FaList className="nav-icon" />,
-      },
-    ],
-  },
-  {
-    component: CNavGroup,
-    name: "Молитва",
-    to: "/church/prayer",
-    icon: <FaPray className="nav-icon" />,
-    items: [
-      {
-        component: CNavItem,
-        name: "Молитовні потреби",
-        to: "/church/prayer/requests",
-        icon: <FaPray className="nav-icon" />,
       },
     ],
   },
