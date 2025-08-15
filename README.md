@@ -5,7 +5,7 @@ D.Church App - це апка Львівської церкви D.Church
 ## Встановлення
 
 Вимоги:
-- Node.js 20.18.1
+- Node.js 22.4.0
 
 ```sh
 npm install
