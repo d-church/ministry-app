@@ -1,7 +1,7 @@
 {
   "name": "d.church.admin",
-  "version": "0.0.0g",
-  "description": "D.Church Admin panel",
+  "version": "0.1.0",
+  "description": "D.Church App",
   "homepage": ".",
   "repository": {
     "type": "git",
@@ -9,7 +9,7 @@
   },
   "author": "D.Church dev team",
   "scripts": {
-    "build": "vite build",
+    "build": "rm -rf ./build && vite build",
     "lint": "eslint",
     "serve": "vite preview",
     "dev": "vite",
