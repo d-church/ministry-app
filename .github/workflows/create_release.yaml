@@ -23,7 +23,10 @@ jobs:
           username: ${{ secrets.VPS_USERNAME }}
           password: ${{ secrets.VPS_PASSWORD }}
           script: |
-            cd /root/apps/d.church.admin
-            git pull origin main
-            npm install
-            npm run build
+              set -e
+              cd /root/apps/d.church.admin
+              git pull origin main
+              source ~/.bashrc || source ~/.profile || true
+              which node && which npm || (echo "Node.js/npm not found in PATH" && exit 1)
+              npm install
+              npm run build
