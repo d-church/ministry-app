@@ -24,7 +24,8 @@ jobs:
           password: ${{ secrets.VPS_PASSWORD }}
           script_stop: true
           script: |
-              source ~/.bashrc || source ~/.profile
+              export NVM_DIR=~/.nvm
+              source ~/.nvm/nvm.sh
               set -e
               cd /root/apps/d.church.admin
               git pull origin main
