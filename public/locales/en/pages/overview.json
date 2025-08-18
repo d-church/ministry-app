@@ -1,0 +1,46 @@
+{
+  "profile": {
+    "title": "Profile and Ministries",
+    "role": "Worship",
+    "about": "Leads the worship team, organizes rehearsals and concerts. Loves to sing and teach others."
+  },
+  "ministries": {
+    "title": "My Ministries",
+    "active": "Active",
+    "pending": "Pending Confirmation",
+    "empty": "You haven't joined any ministry yet.",
+    "names": {
+      "worship": "Worship",
+      "prayer": "Prayer Group"
+    }
+  },
+  "events": {
+    "title": "My Events",
+    "empty": "No scheduled events.",
+    "items": {
+      "worshipRehearsal": "Worship Rehearsal",
+      "prayerMeeting": "Prayer Meeting"
+    },
+    "places": {
+      "mainHall": "Church, Main Hall",
+      "smallHall": "Small Hall"
+    }
+  },
+  "friends": {
+    "title": "My Friends",
+    "empty": "You don't have any friends yet."
+  },
+  "news": {
+    "title": "Latest Church News",
+    "empty": "No news yet.",
+    "items": {
+      "childrenCamp": "Launch of New Children's Camp",
+      "renovation": "Fundraising for Renovation"
+    }
+  },
+  "notifications": {
+    "invited": "You have been invited to",
+    "accept": "Accept",
+    "decline": "Decline"
+  }
+}

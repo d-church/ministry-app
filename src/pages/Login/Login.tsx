@@ -11,8 +11,11 @@ import {
   CRow,
 } from "@coreui/react";
 import { FaUser, FaLock } from "react-icons/fa6";
+import { useTranslation } from "react-i18next";
 
 const Login = () => {
+  const { t } = useTranslation("pages/login");
+
   return (
     <div className="bg-body-tertiary min-vh-100 d-flex flex-row align-items-center">
       <CContainer>
@@ -21,13 +24,13 @@ const Login = () => {
             <CCard className="p-4">
               <CCardBody>
                 <CForm>
-                  <h1>Login</h1>
-                  <p className="text-body-secondary">Sign In to your account</p>
+                  <h1>{t("title")}</h1>
+                  <p className="text-body-secondary">{t("subtitle")}</p>
                   <CInputGroup className="mb-3">
                     <CInputGroupText>
                       <FaUser />
                     </CInputGroupText>
-                    <CFormInput placeholder="Username" autoComplete="username" />
+                    <CFormInput placeholder={t("username")} autoComplete="username" />
                   </CInputGroup>
                   <CInputGroup className="mb-4">
                     <CInputGroupText>
@@ -35,19 +38,19 @@ const Login = () => {
                     </CInputGroupText>
                     <CFormInput
                       type="password"
-                      placeholder="Password"
+                      placeholder={t("password")}
                       autoComplete="current-password"
                     />
                   </CInputGroup>
                   <CRow>
                     <CCol xs={6}>
                       <CButton color="primary" className="px-4">
-                        Login
+                        {t("loginButton")}
                       </CButton>
                     </CCol>
                     <CCol xs={6} className="text-right">
                       <CButton color="link" className="px-0">
-                        Forgot password?
+                        {t("forgotPassword")}
                       </CButton>
                     </CCol>
                   </CRow>

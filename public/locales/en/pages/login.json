@@ -1,0 +1,8 @@
+{
+  "title": "Login",
+  "subtitle": "Sign In to your account",
+  "username": "Username",
+  "password": "Password",
+  "loginButton": "Login",
+  "forgotPassword": "Forgot password?"
+}

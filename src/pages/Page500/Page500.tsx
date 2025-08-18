@@ -1,20 +1,23 @@
 import { Link } from "react-router-dom";
 import { CButton, CContainer } from "@coreui/react";
+import { useTranslation } from "react-i18next";
 
 const Page500 = () => {
+  const { t } = useTranslation("pages/500");
+
   return (
     <div className="min-vh-100 d-flex align-items-center justify-content-center">
       <CContainer>
         <div className="text-center">
-          <h1 className="display-1 fw-light text-muted mb-4">500</h1>
-          <h2 className="h4 fw-normal mb-4">Помилка сервера</h2>
+          <h1 className="display-1 fw-light text-muted mb-4">{t("title")}</h1>
+          <h2 className="h4 fw-normal mb-4">{t("heading")}</h2>
           <p className="text-muted mb-4">
-            Сталася технічна помилка. Спробуйте пізніше.
+            {t("description")}
           </p>
           <div className="d-flex gap-3 justify-content-center">
             <Link to="/" className="text-decoration-none">
               <CButton color="primary" variant="outline">
-                Головна
+                {t("home")}
               </CButton>
             </Link>
             <CButton
@@ -22,7 +25,7 @@ const Page500 = () => {
               variant="outline"
               onClick={() => window.location.reload()}
             >
-              Оновити
+              {t("refresh")}
             </CButton>
           </div>
         </div>

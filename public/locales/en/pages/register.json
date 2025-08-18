@@ -1,0 +1,9 @@
+{
+  "title": "Register",
+  "subtitle": "Create your account",
+  "username": "Username",
+  "email": "Email",
+  "password": "Password",
+  "repeatPassword": "Repeat password",
+  "createAccount": "Create Account"
+}

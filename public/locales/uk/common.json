@@ -13,5 +13,10 @@
   },
   "breadcrumb": {
     "home": "Головна"
+  },
+  "header": {
+    "profile": "Профіль",
+    "settings": "Налаштування",
+    "logout": "Вийти"
   }
 }

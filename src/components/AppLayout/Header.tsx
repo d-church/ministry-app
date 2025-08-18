@@ -11,6 +11,7 @@ import {
   CDropdownToggle,
 } from "@coreui/react";
 import { FaRegUser, FaGear, FaDoorOpen, FaBars, FaCircleUser } from "react-icons/fa6";
+import { useTranslation } from "react-i18next";
 
 import LayoutState from "./LayoutState";
 import Breadcrumb from "../Breadcrumb";
@@ -18,6 +19,7 @@ import { LanguageSwitcher } from "../common";
 
 const Header = () => {
   const headerRef = useRef<HTMLDivElement | null>(null);
+  const { t } = useTranslation("common");
 
   useEffect(() => {
     const handleScroll = () => {
@@ -55,16 +57,16 @@ const Header = () => {
             <CDropdownMenu className="pt-0 overflow-hidden">
               <CDropdownItem href="#" className="d-flex align-items-center">
                 <FaRegUser className="me-2 inline" />
-                Профіль
+                {t("header.profile")}
               </CDropdownItem>
               <CDropdownItem href="#" className="d-flex align-items-center">
                 <FaGear className="me-2 inline" />
-                Налаштування
+                {t("header.settings")}
               </CDropdownItem>
               <CDropdownDivider />
               <CDropdownItem href="#" className="d-flex align-items-center">
                 <FaDoorOpen className="me-2 inline" />
-                Вийти
+                {t("header.logout")}
               </CDropdownItem>
             </CDropdownMenu>
           </CDropdown>

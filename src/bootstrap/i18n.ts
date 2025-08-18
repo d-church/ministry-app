@@ -11,7 +11,7 @@ i18n
     fallbackLng: "uk",
     debug: false,
 
-    ns: ["common", "pages/404", "pages/posts"],
+    ns: ["common", "pages/404", "pages/500", "pages/login", "pages/register", "pages/posts", "pages/overview"],
     defaultNS: "common",
 
     interpolation: {
@@ -21,12 +21,15 @@ i18n
     backend: {
       loadPath: "/locales/{{lng}}/{{ns}}.json",
     },
+
     detection: {
       order: ["localStorage", "navigator", "htmlTag"],
       lookupLocalStorage: "i18nextLng",
       caches: ["localStorage"],
     },
+
     supportedLngs: ["uk", "en"],
+
     react: {
       useSuspense: true,
     },

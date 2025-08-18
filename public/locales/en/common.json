@@ -13,5 +13,10 @@
   },
   "breadcrumb": {
     "home": "Home"
+  },
+  "header": {
+    "profile": "Profile",
+    "settings": "Settings",
+    "logout": "Logout"
   }
 }
