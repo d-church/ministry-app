@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { CButton, CContainer } from "@coreui/react";
 
 const Page404 = () => (
-  <div className="min-vh-100 d-flex align-items-center justify-content-center">
+  <div className="d-flex align-items-center justify-content-center min-h-[80vh]">
     <CContainer>
       <div className="text-center">
         <h1 className="display-1 fw-light text-muted mb-4">404</h1>
