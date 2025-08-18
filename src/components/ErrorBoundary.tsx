@@ -1,6 +1,6 @@
 import React, { Component, Suspense } from "react";
 import type { ReactNode } from "react";
-import { CSpinner } from "@coreui/react";
+import { LoadingSpinner } from "./common";
 
 const Page500 = React.lazy(() => import("../pages/Page500"));
 
@@ -20,13 +20,7 @@ class ErrorBoundary extends Component<Props, State> {
   public render() {
     if (this.state.hasError) {
       return (
-        <Suspense
-          fallback={
-            <div className="min-vh-100 d-flex align-items-center justify-content-center">
-              <CSpinner color="primary" variant="grow" />
-            </div>
-          }
-        >
+        <Suspense fallback={<LoadingSpinner fullHeight centered />}>
           <Page500 />
         </Suspense>
       );

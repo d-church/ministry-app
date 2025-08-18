@@ -1,5 +1,7 @@
 import { Suspense, type FC } from "react";
-import { CContainer, CSpinner } from "@coreui/react";
+import { CContainer } from "@coreui/react";
+
+import { LoadingSpinner } from "../common";
 
 import Sidebar from "./Sidebar";
 import Footer from "./Footer";
@@ -17,7 +19,7 @@ const DefaultLayout: FC<{
       <div className="body flex-grow-1">
         <CContainer className="px-4" lg>
           <ErrorBoundary>
-            <Suspense fallback={<CSpinner color="primary" />}>{content}</Suspense>
+            <Suspense fallback={<LoadingSpinner />}>{content}</Suspense>
           </ErrorBoundary>
         </CContainer>
       </div>
