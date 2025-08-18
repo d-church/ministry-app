@@ -9,27 +9,30 @@ const LanguageSwitcher: React.FC = () => {
     i18n.changeLanguage(lng);
   };
 
-  const getCurrentLanguageLabel = () => {
-    return t(`language.${i18n.language}`);
+  const getCurrentLanguageWithFlag = () => {
+    // TODO: move to constants
+    return i18n.language === "uk" ? "🇺🇦" : "🇺🇸";
   };
 
   return (
     <CDropdown variant="nav-item">
-      <CDropdownToggle className="nav-link">
-        {getCurrentLanguageLabel()}
+      <CDropdownToggle className="nav-link text-3xl">
+        {getCurrentLanguageWithFlag()}
       </CDropdownToggle>
       <CDropdownMenu>
         <CDropdownItem
           onClick={() => changeLanguage("uk")}
+          className="cursor-pointer"
           active={i18n.language === "uk"}
         >
-          {t("language.uk")}
+          🇺🇦 {t("language.uk")}
         </CDropdownItem>
         <CDropdownItem
           onClick={() => changeLanguage("en")}
+          className="cursor-pointer"
           active={i18n.language === "en"}
         >
-          {t("language.en")}
+          🇺🇸 {t("language.en")}
         </CDropdownItem>
       </CDropdownMenu>
     </CDropdown>

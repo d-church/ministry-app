@@ -15,7 +15,7 @@ import { useTranslation } from "react-i18next";
 
 import LayoutState from "./LayoutState";
 import Breadcrumb from "../Breadcrumb";
-import { LanguageSwitcher } from "../common";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 const Header = () => {
   const headerRef = useRef<HTMLDivElement | null>(null);

@@ -11,6 +11,7 @@ i18n
     fallbackLng: "uk",
     debug: false,
 
+    // TODO: check to include all subfiles
     ns: ["common", "pages/404", "pages/500", "pages/login", "pages/register", "pages/posts", "pages/overview"],
     defaultNS: "common",
 
