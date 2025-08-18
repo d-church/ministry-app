@@ -1,5 +1,6 @@
 import React, { Component, Suspense } from "react";
 import type { ReactNode } from "react";
+
 import { LoadingSpinner } from "./common";
 
 const Page500 = React.lazy(() => import("../pages/Page500"));

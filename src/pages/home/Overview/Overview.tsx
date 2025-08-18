@@ -4,10 +4,10 @@ import {
   FaRegEnvelope,
   FaUsers,
   FaBell,
-  FaCalendarAlt,
-  FaUserFriends,
+  FaCalendar,
+  FaPeopleGroup,
   FaNewspaper,
-} from "react-icons/fa";
+} from "react-icons/fa6";
 
 const userProfile = {
   name: "Олена Коваленко",
@@ -151,7 +151,7 @@ const Overview = () => {
       {/* Мої події */}
       <div className="bg-white rounded-xl shadow p-6 border border-gray-100 mb-8">
         <div className="flex items-center gap-2 mb-4">
-          <FaCalendarAlt className="text-gray-400 text-lg" />
+                          <FaCalendar className="text-gray-400 text-lg" />
           <span className="font-semibold text-gray-800 text-lg">Мої події</span>
         </div>
         <ul className="divide-y divide-gray-100">
@@ -174,7 +174,7 @@ const Overview = () => {
       {/* Мої друзі */}
       <div className="bg-white rounded-xl shadow p-6 border border-gray-100 mb-8">
         <div className="flex items-center gap-2 mb-4">
-          <FaUserFriends className="text-gray-400 text-lg" />
+                          <FaPeopleGroup className="text-gray-400 text-lg" />
           <span className="font-semibold text-gray-800 text-lg">Мої друзі</span>
         </div>
         <div className="flex gap-4 flex-wrap">

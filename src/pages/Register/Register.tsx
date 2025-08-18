@@ -10,7 +10,7 @@ import {
   CInputGroupText,
   CRow,
 } from '@coreui/react'
-import { FaUser, FaLock, FaEnvelope } from 'react-icons/fa'
+import { FaUser, FaLock, FaEnvelope } from 'react-icons/fa6'
 
 const Register = () => {
   return (
