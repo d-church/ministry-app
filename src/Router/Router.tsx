@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import { CSpinner } from "@coreui/react";
 
 import routes from "./application-routes";
+import ErrorBoundary from "../components/ErrorBoundary";
 
 const AppLayout = React.lazy(() => import("../components/AppLayout"));
 
@@ -13,40 +14,42 @@ const Page500 = React.lazy(() => import("../pages/Page500"));
 
 const Router = () => {
   return (
-    <BrowserRouter>
-      <Suspense
-        fallback={
-          <div className="pt-3 text-center">
-            <CSpinner color="primary" variant="grow" />
-          </div>
-        }
-      >
-        <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
+    <ErrorBoundary>
+      <BrowserRouter>
+        <Suspense
+          fallback={
+            <div className="pt-3 text-center">
+              <CSpinner color="primary" variant="grow" />
+            </div>
+          }
+        >
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
 
-          <Route
-            path="/church/*"
-            element={
-              <AppLayout
-                content={
-                  <Routes>
-                    {routes.map((route) => (
-                      route.element && <Route key={route.path} path={route.path} element={route.element} />
-                    ))}
-                    <Route path="/" element={<Navigate to="overview" replace />} />
-                  </Routes>
-                }
-              />
-            }
-          />
+            <Route
+              path="/church/*"
+              element={
+                <AppLayout
+                  content={
+                    <Routes>
+                      {routes.map((route) => (
+                        route.element && <Route key={route.path} path={route.path} element={route.element} />
+                      ))}
+                      <Route path="/" element={<Navigate to="overview" replace />} />
+                    </Routes>
+                  }
+                />
+              }
+            />
 
-          <Route path="/" element={<Navigate to="church" replace />} />
-          <Route path="/error" element={<Page500 />} />
-          <Route path="*" element={<Page404 />} />
-        </Routes>
-      </Suspense>
-    </BrowserRouter>
+            <Route path="/" element={<Navigate to="church" replace />} />
+            <Route path="/error" element={<Page500 />} />
+            <Route path="*" element={<Page404 />} />
+          </Routes>
+        </Suspense>
+      </BrowserRouter>
+    </ErrorBoundary>
   );
 };
 

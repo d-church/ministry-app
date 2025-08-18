@@ -4,6 +4,7 @@ import { CContainer, CSpinner } from "@coreui/react";
 import Sidebar from "./Sidebar";
 import Footer from "./Footer";
 import Header from "./Header";
+import ErrorBoundary from "../ErrorBoundary";
 
 const DefaultLayout: FC<{
   content: JSX.Element;
@@ -15,7 +16,9 @@ const DefaultLayout: FC<{
 
       <div className="body flex-grow-1">
         <CContainer className="px-4" lg>
-          <Suspense fallback={<CSpinner color="primary" />}>{content}</Suspense>
+          <ErrorBoundary>
+            <Suspense fallback={<CSpinner color="primary" />}>{content}</Suspense>
+          </ErrorBoundary>
         </CContainer>
       </div>
 
