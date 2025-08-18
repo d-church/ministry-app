@@ -1,4 +1,3 @@
-import React from 'react'
 import {
   CButton,
   CCol,
@@ -7,9 +6,8 @@ import {
   CInputGroup,
   CInputGroupText,
   CRow,
-} from '@coreui/react'
-import CIcon from '@coreui/icons-react'
-import { cilMagnifyingGlass } from '@coreui/icons'
+} from "@coreui/react";
+import { FaSearch } from "react-icons/fa";
 
 const Page404 = () => {
   return (
@@ -26,7 +24,7 @@ const Page404 = () => {
             </div>
             <CInputGroup className="input-prepend">
               <CInputGroupText>
-                <CIcon icon={cilMagnifyingGlass} />
+                <FaSearch />
               </CInputGroupText>
               <CFormInput type="text" placeholder="What are you looking for?" />
               <CButton color="info">Search</CButton>
@@ -35,7 +33,7 @@ const Page404 = () => {
         </CRow>
       </CContainer>
     </div>
-  )
-}
+  );
+};
 
-export default Page404
+export default Page404;

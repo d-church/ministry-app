@@ -8,7 +8,7 @@ const AppLayout = React.lazy(() => import("../components/AppLayout"));
 
 const Login = React.lazy(() => import("../pages/Login"));
 const Register = React.lazy(() => import("../pages/Register"));
-const Page404 = React.lazy(() => import("../pages/page404/Page404"));
+const Page404 = React.lazy(() => import("../pages/Page404"));
 
 const Router = () => {
   return (
