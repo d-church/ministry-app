@@ -14,7 +14,7 @@ import { FaRegUser, FaGear, FaDoorOpen, FaBars, FaCircleUser } from "react-icons
 
 import LayoutState from "./LayoutState";
 
-import AppBreadcrumb from "../AppBreadcrumb";
+import Breadcrumb from "../Breadcrumb";
 
 const Header = () => {
   const headerRef = useRef<HTMLDivElement | null>(null);
@@ -70,7 +70,7 @@ const Header = () => {
       </CContainer>
 
       <CContainer className="px-4" fluid>
-        <AppBreadcrumb />
+        <Breadcrumb />
       </CContainer>
     </CHeader>
   );
