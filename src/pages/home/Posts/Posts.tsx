@@ -19,13 +19,13 @@ const mockPosts: Post[] = [
 ]
 
 const Posts: React.FC = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation("pages/posts");
 
   const getStatusBadge = (status: Post['status']) => {
     if (status === 'published') {
-      return <CBadge color="success" className="text-xs">{t('pages.posts.status.published')}</CBadge>
+      return <CBadge color="success" className="text-xs">{t('status.published')}</CBadge>
     }
-    return <CBadge color="warning" className="text-xs">{t('pages.posts.status.draft')}</CBadge>
+    return <CBadge color="warning" className="text-xs">{t('status.draft')}</CBadge>
   }
 
   const handleEdit = (id: number) => {
@@ -44,9 +44,9 @@ const Posts: React.FC = () => {
     <div className="px-4 sm:px-6 lg:px-8">
       <div className="sm:flex sm:items-center mb-6">
         <div className="sm:flex-auto">
-          <h1 className="text-2xl font-semibold text-gray-900">{t('pages.posts.title')}</h1>
+          <h1 className="text-2xl font-semibold text-gray-900">{t('title')}</h1>
           <p className="mt-2 text-sm text-gray-700">
-            {t('pages.posts.description')}
+            {t('description')}
           </p>
         </div>
         <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
@@ -55,7 +55,7 @@ const Posts: React.FC = () => {
             onClick={handleAddPost}
             className="shadow-sm hover:shadow-md transition-shadow"
           >
-            {t('pages.posts.addPost')}
+            {t('addPost')}
           </CButton>
         </div>
       </div>
@@ -63,13 +63,13 @@ const Posts: React.FC = () => {
       <CCard className="shadow-lg border-0">
         <CCardHeader className="bg-gray-50 border-b border-gray-200">
           <div className="flex items-center justify-between">
-            <h3 className="text-lg font-medium text-gray-900">{t('pages.posts.allPosts')}</h3>
+            <h3 className="text-lg font-medium text-gray-900">{t('allPosts')}</h3>
             <div className="flex space-x-2">
               <CButton color="outline" size="sm" className="text-xs">
-                {t('pages.posts.export')}
+                {t('export')}
               </CButton>
               <CButton color="outline" size="sm" className="text-xs">
-                {t('pages.posts.filter')}
+                {t('filter')}
               </CButton>
             </div>
           </div>
@@ -80,22 +80,22 @@ const Posts: React.FC = () => {
               <thead className="bg-gray-50">
                 <tr>
                   <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    {t('pages.posts.table.id')}
+                    {t('table.id')}
                   </th>
                   <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    {t('pages.posts.table.title')}
+                    {t('table.title')}
                   </th>
                   <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    {t('pages.posts.table.author')}
+                    {t('table.author')}
                   </th>
                   <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    {t('pages.posts.table.date')}
+                    {t('table.date')}
                   </th>
                   <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    {t('pages.posts.table.status')}
+                    {t('table.status')}
                   </th>
                   <th scope="col" className="relative px-6 py-3">
-                    <span className="sr-only">{t('pages.posts.table.actions')}</span>
+                    <span className="sr-only">{t('table.actions')}</span>
                   </th>
                 </tr>
               </thead>
@@ -134,7 +134,7 @@ const Posts: React.FC = () => {
                           onClick={() => handleEdit(post.id)}
                           className="text-blue-600 hover:text-blue-900 p-0"
                         >
-                          {t('pages.posts.edit')}
+                          {t('edit')}
                         </CButton>
                         <CButton
                           color="link"
@@ -142,7 +142,7 @@ const Posts: React.FC = () => {
                           onClick={() => handleDelete(post.id)}
                           className="text-red-600 hover:text-red-900 p-0"
                         >
-                          {t('pages.posts.delete')}
+                          {t('delete')}
                         </CButton>
                       </div>
                     </td>
@@ -156,14 +156,14 @@ const Posts: React.FC = () => {
 
       <div className="mt-6 flex items-center justify-between">
         <div className="text-sm text-gray-700">
-          {t('pages.posts.showing')} <span className="font-medium">{mockPosts.length}</span> {t('pages.posts.of')} <span className="font-medium">{mockPosts.length}</span> {t('pages.posts.results')}
+          {t('showing')} <span className="font-medium">{mockPosts.length}</span> {t('of')} <span className="font-medium">{mockPosts.length}</span> {t('results')}
         </div>
         <div className="flex space-x-2">
           <CButton color="outline" size="sm" disabled>
-            {t('pages.posts.previous')}
+            {t('previous')}
           </CButton>
           <CButton color="outline" size="sm" disabled>
-            {t('pages.posts.next')}
+            {t('next')}
           </CButton>
         </div>
       </div>

@@ -1,8 +1,7 @@
-import React, { Suspense } from "react";
+import React from "react";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 
 import ErrorBoundary from "../components/ErrorBoundary";
-import { LoadingSpinner } from "../components/common";
 import { HOME_ROUTE } from "../constants";
 
 import routes from "./application-routes";
@@ -17,35 +16,33 @@ const Router = () => {
   return (
     <ErrorBoundary>
       <BrowserRouter>
-        <Suspense fallback={<LoadingSpinner fullHeight centered />}>
-          <Routes>
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
 
-            <Route
-              path={`${HOME_ROUTE}/*`}
-              element={
-                <AppLayout
-                  content={
-                    <Routes>
-                      {routes.map(
-                        (route) =>
-                          route.element && (
-                            <Route key={route.path} path={route.path} element={route.element} />
-                          ),
-                      )}
-                      <Route path="/" element={<Navigate to="overview" replace />} />
-                      <Route path="*" element={<Page404 />} />
-                    </Routes>
-                  }
-                />
-              }
-            />
+          <Route
+            path={`${HOME_ROUTE}/*`}
+            element={
+              <AppLayout
+                content={
+                  <Routes>
+                    {routes.map(
+                      (route) =>
+                        route.element && (
+                          <Route key={route.path} path={route.path} element={route.element} />
+                        ),
+                    )}
+                    <Route path="/" element={<Navigate to="overview" replace />} />
+                    <Route path="*" element={<Page404 />} />
+                  </Routes>
+                }
+              />
+            }
+          />
 
-            <Route path="/" element={<Navigate to={HOME_ROUTE.slice(1)} replace />} />
-            <Route path="*" element={<Page404 />} />
-          </Routes>
-        </Suspense>
+          <Route path="/" element={<Navigate to={HOME_ROUTE.slice(1)} replace />} />
+          <Route path="*" element={<Page404 />} />
+        </Routes>
       </BrowserRouter>
     </ErrorBoundary>
   );

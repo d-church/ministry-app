@@ -1,0 +1,17 @@
+{
+  "navigation": {
+    "church": "Church",
+    "website": "Website",
+    "posts": "Posts"
+  },
+  "language": {
+    "uk": "Українська",
+    "en": "English"
+  },
+  "sidebar": {
+    "menu": "Menu"
+  },
+  "breadcrumb": {
+    "home": "Home"
+  }
+}

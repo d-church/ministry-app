@@ -8,9 +8,11 @@ i18n
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
-    lng: "uk",
     fallbackLng: "uk",
     debug: false,
+
+    ns: ["common", "pages/404", "pages/posts"],
+    defaultNS: "common",
 
     interpolation: {
       escapeValue: false,
@@ -19,15 +21,12 @@ i18n
     backend: {
       loadPath: "/locales/{{lng}}/{{ns}}.json",
     },
-
     detection: {
       order: ["localStorage", "navigator", "htmlTag"],
       lookupLocalStorage: "i18nextLng",
       caches: ["localStorage"],
     },
-
     supportedLngs: ["uk", "en"],
-
     react: {
       useSuspense: true,
     },

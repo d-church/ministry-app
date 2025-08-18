@@ -1,0 +1,17 @@
+{
+  "navigation": {
+    "church": "Церква",
+    "website": "Вебсайт",
+    "posts": "Пости"
+  },
+  "language": {
+    "uk": "Українська",
+    "en": "English"
+  },
+  "sidebar": {
+    "menu": "Меню"
+  },
+  "breadcrumb": {
+    "home": "Головна"
+  }
+}

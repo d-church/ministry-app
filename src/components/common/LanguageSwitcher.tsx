@@ -3,7 +3,7 @@ import { CDropdown, CDropdownToggle, CDropdownMenu, CDropdownItem } from "@coreu
 import { useTranslation } from "react-i18next";
 
 const LanguageSwitcher: React.FC = () => {
-  const { i18n, t } = useTranslation();
+  const { i18n, t } = useTranslation("common");
 
   const changeLanguage = (lng: string) => {
     i18n.changeLanguage(lng);

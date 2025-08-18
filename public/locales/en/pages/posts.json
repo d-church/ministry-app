@@ -1,0 +1,27 @@
+{
+  "title": "Posts List",
+  "description": "Manage posts and publications on the website",
+  "addPost": "Add Post",
+  "allPosts": "All Posts",
+  "export": "Export",
+  "filter": "Filter",
+  "edit": "Edit",
+  "delete": "Delete",
+  "showing": "Showing",
+  "of": "of",
+  "results": "results",
+  "previous": "Previous",
+  "next": "Next",
+  "table": {
+    "id": "ID",
+    "title": "Title",
+    "author": "Author",
+    "date": "Date",
+    "status": "Status",
+    "actions": "Actions"
+  },
+  "status": {
+    "published": "Published",
+    "draft": "Draft"
+  }
+}

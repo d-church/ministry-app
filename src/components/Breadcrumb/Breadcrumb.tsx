@@ -10,7 +10,7 @@ import "./style.scss";
 
 const AppBreadcrumb = () => {
   const currentLocation = useLocation().pathname;
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
 
   const getRouteConfig = (url: string): RouteConfig | undefined => {
     const routePath = url.startsWith(HOME_ROUTE) ? url.replace(HOME_ROUTE, "") : url;

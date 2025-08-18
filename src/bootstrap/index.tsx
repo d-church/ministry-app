@@ -1,6 +1,6 @@
 /// <reference types="../../type-declarations/global.d.ts" />
 import "core-js";
-import React, { Suspense } from "react";
+import { Suspense } from "react";
 
 import "../style/tailwind.css";
 import "../style/style.scss";
