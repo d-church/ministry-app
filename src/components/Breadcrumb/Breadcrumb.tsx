@@ -9,36 +9,54 @@ import "./style.scss";
 const AppBreadcrumb = () => {
   const currentLocation = useLocation().pathname;
 
-  const getRouteName = (pathname: string, routes: RouteConfig[]): string | false => {
-    const currentRoute = routes.find((route: RouteConfig) => route.path === pathname);
-    return currentRoute?.name || false;
+  const getRouteConfig = (url: string): RouteConfig | undefined => {
+    const routePath = url.startsWith("/church") ? url.replace("/church", "") : url;
+    return routes.find((route) => route.path === routePath);
   };
 
-  const getBreadcrumbs = (location: string): BreadcrumbItem[] => {
-    const breadcrumbs: BreadcrumbItem[] = [];
-    location.split("/").reduce((prev: string, curr: string, index: number, array: string[]) => {
-      if (curr === "church") return "";
-      const currentPathname = `${prev}/${curr}`;
-      const routeName = getRouteName(currentPathname, routes);
+  const getBreadcrumbItems = (): BreadcrumbItem[] => {
+    const asPathWithoutQuery = currentLocation.split("?")[0];
 
-      routeName &&
-        breadcrumbs.push({
-          pathname: currentPathname,
-          name: routeName,
-          active: index + 1 === array.length,
-        });
-      return currentPathname;
-    });
-    return breadcrumbs;
+    if (asPathWithoutQuery === "/") {
+      const homeRoute = getRouteConfig("/");
+      return [{ pathname: "/", name: homeRoute?.name!, active: true }];
+    }
+
+    const asPathNestedRoutes = asPathWithoutQuery.split("/").filter((v) => v.length > 0);
+
+    const crumbList: BreadcrumbItem[] = asPathNestedRoutes
+      .map((subpath, idx) => {
+        const href = "/" + asPathNestedRoutes.slice(0, idx + 1).join("/");
+        const routeConfig = getRouteConfig(href);
+
+        if (subpath === "church") {
+          return null;
+        }
+
+        if (!routeConfig?.name) {
+          return null;
+        }
+
+        return {
+          pathname: href,
+          name: routeConfig.name,
+          active: idx === asPathNestedRoutes.length - 1,
+        };
+      })
+      .filter(Boolean) as BreadcrumbItem[];
+
+    const homeRoute = getRouteConfig("/");
+    return [
+      { pathname: "/church", name: homeRoute?.name!, active: false },
+      ...crumbList,
+    ];
   };
 
-  const breadcrumbs = getBreadcrumbs(currentLocation);
+  const breadcrumbItems = getBreadcrumbItems();
 
   return (
-    <CBreadcrumb className="breadcrumb my-0">
-      <CBreadcrumbItem href="/">Церква</CBreadcrumbItem>
-
-      {breadcrumbs.map((breadcrumb, index) => {
+    <CBreadcrumb className="ms-2">
+      {breadcrumbItems.map((breadcrumb, index) => {
         return (
           <CBreadcrumbItem
             {...(breadcrumb.active ? { active: true } : { href: breadcrumb.pathname })}
