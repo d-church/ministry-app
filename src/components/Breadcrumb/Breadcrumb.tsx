@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import { CBreadcrumb, CBreadcrumbItem } from "@coreui/react";
 
 import { routes } from "../../Router";
+import { HOME_ROUTE } from "../../constants";
 
 import "./style.scss";
 
@@ -10,26 +11,25 @@ const AppBreadcrumb = () => {
   const currentLocation = useLocation().pathname;
 
   const getRouteConfig = (url: string): RouteConfig | undefined => {
-    const routePath = url.startsWith("/church") ? url.replace("/church", "") : url;
+    const routePath = url.startsWith(HOME_ROUTE) ? url.replace(HOME_ROUTE, "") : url;
     return routes.find((route) => route.path === routePath);
   };
 
   const getBreadcrumbItems = (): BreadcrumbItem[] => {
-    const asPathWithoutQuery = currentLocation.split("?")[0];
-
-    if (asPathWithoutQuery === "/") {
+    const path = currentLocation.split("?")[0];
+    if (path === "/") {
       const homeRoute = getRouteConfig("/");
       return [{ pathname: "/", name: homeRoute?.name!, active: true }];
     }
 
-    const asPathNestedRoutes = asPathWithoutQuery.split("/").filter((v) => v.length > 0);
+    const pathRoutes = path.split("/").filter((el) => el.length);
 
-    const crumbList: BreadcrumbItem[] = asPathNestedRoutes
+    const crumbList: BreadcrumbItem[] = pathRoutes
       .map((subpath, idx) => {
-        const href = "/" + asPathNestedRoutes.slice(0, idx + 1).join("/");
+        const href = "/" + pathRoutes.slice(0, idx + 1).join("/");
         const routeConfig = getRouteConfig(href);
 
-        if (subpath === "church") {
+        if (subpath === HOME_ROUTE.slice(1)) {
           return null;
         }
 
@@ -40,16 +40,13 @@ const AppBreadcrumb = () => {
         return {
           pathname: href,
           name: routeConfig.name,
-          active: idx === asPathNestedRoutes.length - 1,
+          active: idx === pathRoutes.length - 1,
         };
       })
       .filter(Boolean) as BreadcrumbItem[];
 
     const homeRoute = getRouteConfig("/");
-    return [
-      { pathname: "/church", name: homeRoute?.name!, active: false },
-      ...crumbList,
-    ];
+    return [{ pathname: HOME_ROUTE, name: homeRoute?.name!, active: false }, ...crumbList];
   };
 
   const breadcrumbItems = getBreadcrumbItems();

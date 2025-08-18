@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 
 import ErrorBoundary from "../components/ErrorBoundary";
 import { LoadingSpinner } from "../components/common";
+import { HOME_ROUTE } from "../constants";
 
 import routes from "./application-routes";
 
@@ -22,7 +23,7 @@ const Router = () => {
             <Route path="/register" element={<Register />} />
 
             <Route
-              path="/church/*"
+              path={`${HOME_ROUTE}/*`}
               element={
                 <AppLayout
                   content={
@@ -40,7 +41,7 @@ const Router = () => {
               }
             />
 
-            <Route path="/" element={<Navigate to="church" replace />} />
+            <Route path="/" element={<Navigate to={HOME_ROUTE.slice(1)} replace />} />
             <Route path="*" element={<Page404 />} />
           </Routes>
         </Suspense>
