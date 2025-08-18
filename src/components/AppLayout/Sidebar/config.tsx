@@ -4,23 +4,23 @@ import { FaChurch, FaInternetExplorer, FaList } from "react-icons/fa6";
 const config: SidebarNavConfigItem[] = [
   {
     component: CNavItem,
-    name: "Церква",
+    nameKey: "sidebar.church",
     to: "/church/overview",
     icon: <FaChurch className="nav-icon" />,
   },
   {
     component: CNavTitle,
-    name: "Служіння",
+    nameKey: "sidebar.ministries",
   },
   {
     component: CNavGroup,
-    name: "Вебсайт",
+    nameKey: "sidebar.website",
     to: "/church/website",
     icon: <FaInternetExplorer className="nav-icon" />,
     items: [
       {
         component: CNavItem,
-        name: "Пости",
+        nameKey: "sidebar.posts",
         to: "/church/website/posts",
         icon: <FaList className="nav-icon" />,
       },
@@ -31,6 +31,7 @@ const config: SidebarNavConfigItem[] = [
 interface SidebarNavConfigItem {
   component: React.ComponentType<any>;
   name?: string;
+  nameKey?: string;
   to?: string;
   href?: string;
   icon?: React.ReactElement;

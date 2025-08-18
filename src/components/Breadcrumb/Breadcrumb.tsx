@@ -21,7 +21,13 @@ const AppBreadcrumb = () => {
     const path = currentLocation.split("?")[0];
     if (path === "/") {
       const homeRoute = getRouteConfig("/");
-      return [{ pathname: "/", name: homeRoute?.nameKey ? t(homeRoute.nameKey) : t("navigation.church"), active: true }];
+      return [
+        {
+          pathname: "/",
+          name: homeRoute?.nameKey ? t(homeRoute.nameKey) : t("navigation.church"),
+          active: true,
+        },
+      ];
     }
 
     const pathRoutes = path.split("/").filter((el) => el.length);
@@ -48,7 +54,14 @@ const AppBreadcrumb = () => {
       .filter(Boolean) as BreadcrumbItem[];
 
     const homeRoute = getRouteConfig("/");
-    return [{ pathname: HOME_ROUTE, name: homeRoute?.nameKey ? t(homeRoute.nameKey) : t("navigation.church"), active: false }, ...crumbList];
+    return [
+      {
+        pathname: HOME_ROUTE,
+        name: homeRoute?.nameKey ? t(homeRoute.nameKey) : t("navigation.church"),
+        active: false,
+      },
+      ...crumbList,
+    ];
   };
 
   const breadcrumbItems = getBreadcrumbItems();

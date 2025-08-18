@@ -9,7 +9,11 @@
     "en": "English"
   },
   "sidebar": {
-    "menu": "Menu"
+    "menu": "Menu",
+    "church": "Church",
+    "ministries": "Ministries",
+    "website": "Website",
+    "posts": "Posts"
   },
   "breadcrumb": {
     "home": "Home"

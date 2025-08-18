@@ -3,11 +3,16 @@ import { NavLink } from "react-router-dom";
 import clsx from "clsx";
 import SimpleBar from "simplebar-react";
 import { CBadge, CNavLink, CSidebarNav } from "@coreui/react";
+import { useTranslation } from "react-i18next";
 
 import "simplebar-react/dist/simplebar.min.css";
 
 const SidebarNav = ({ items }: SidebarNavProps) => {
-  const navLink = (name?: string, icon?: ReactElement, badge?: Badge, indent = false) => {
+  const { t } = useTranslation("common");
+
+  const navLink = (name?: string, nameKey?: string, icon?: ReactElement, badge?: Badge, indent = false) => {
+    const displayName = nameKey ? t(nameKey) : name;
+
     return (
       <>
         {icon
@@ -17,7 +22,7 @@ const SidebarNav = ({ items }: SidebarNavProps) => {
                 <span className="nav-icon-bullet"></span>
               </span>
             )}
-        {name && name}
+        {displayName && displayName}
         {badge && (
           <CBadge color={badge.color} className="ms-auto" size="sm">
             {badge.text}
@@ -28,7 +33,7 @@ const SidebarNav = ({ items }: SidebarNavProps) => {
   };
 
   const navItem = (item: NavItem, index: number, indent = false) => {
-    const { component, name, badge, icon, ...rest } = item;
+    const { component, name, nameKey, badge, icon, ...rest } = item;
     const Component = component;
     return (
       <Component as="div" key={index} className={clsx({ "pl-3": indent })}>
@@ -38,20 +43,20 @@ const SidebarNav = ({ items }: SidebarNavProps) => {
             {...(rest.href && { target: "_blank", rel: "noopener noreferrer" })}
             {...rest}
           >
-            {navLink(name, icon, badge, indent)}
+            {navLink(name, nameKey, icon, badge, indent)}
           </CNavLink>
         ) : (
-          navLink(name, icon, badge, indent)
+          navLink(name, nameKey, icon, badge, indent)
         )}
       </Component>
     );
   };
 
   const navGroup = (item: NavItem, index: number) => {
-    const { component, name, icon, items, to, ...rest } = item;
+    const { component, name, nameKey, icon, items, to, ...rest } = item;
     const Component = component;
     return (
-      <Component compact as="div" key={index} toggler={navLink(name, icon)} {...rest}>
+      <Component compact as="div" key={index} toggler={navLink(name, nameKey, icon)} {...rest}>
         {items?.map((item, index) =>
           item.items ? navGroup(item, index) : navItem(item, index, true),
         )}
@@ -77,6 +82,7 @@ interface Badge {
 interface NavItem {
   component: React.ComponentType<any>;
   name?: string;
+  nameKey?: string;
   to?: string;
   href?: string;
   icon?: ReactElement;
