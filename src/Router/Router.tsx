@@ -35,6 +35,7 @@ const Router = () => {
                           ),
                       )}
                       <Route path="/" element={<Navigate to="overview" replace />} />
+                      <Route path="*" element={<Page404 />} />
                     </Routes>
                   }
                 />
