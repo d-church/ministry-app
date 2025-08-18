@@ -1,9 +1,16 @@
 /// <reference types="../../type-declarations/global.d.ts" />
 import "core-js";
+import React, { Suspense } from "react";
 
 import "../style/tailwind.css";
 import "../style/style.scss";
 
+import "./i18n";
 import Router from "../Router";
+import { LoadingSpinner } from "../components/common";
 
-export default () => <Router />;
+export default () => (
+  <Suspense fallback={<LoadingSpinner fullHeight centered />}>
+    <Router />
+  </Suspense>
+);

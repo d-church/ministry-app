@@ -1,6 +1,7 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
 import { CBreadcrumb, CBreadcrumbItem } from "@coreui/react";
+import { useTranslation } from "react-i18next";
 
 import { routes } from "../../Router";
 import { HOME_ROUTE } from "../../constants";
@@ -9,6 +10,7 @@ import "./style.scss";
 
 const AppBreadcrumb = () => {
   const currentLocation = useLocation().pathname;
+  const { t } = useTranslation();
 
   const getRouteConfig = (url: string): RouteConfig | undefined => {
     const routePath = url.startsWith(HOME_ROUTE) ? url.replace(HOME_ROUTE, "") : url;
@@ -19,7 +21,7 @@ const AppBreadcrumb = () => {
     const path = currentLocation.split("?")[0];
     if (path === "/") {
       const homeRoute = getRouteConfig("/");
-      return [{ pathname: "/", name: homeRoute?.name!, active: true }];
+      return [{ pathname: "/", name: homeRoute?.nameKey ? t(homeRoute.nameKey) : t("navigation.church"), active: true }];
     }
 
     const pathRoutes = path.split("/").filter((el) => el.length);
@@ -33,20 +35,20 @@ const AppBreadcrumb = () => {
           return null;
         }
 
-        if (!routeConfig?.name) {
+        if (!routeConfig?.nameKey) {
           return null;
         }
 
         return {
           pathname: href,
-          name: routeConfig.name,
+          name: t(routeConfig.nameKey),
           active: idx === pathRoutes.length - 1,
         };
       })
       .filter(Boolean) as BreadcrumbItem[];
 
     const homeRoute = getRouteConfig("/");
-    return [{ pathname: HOME_ROUTE, name: homeRoute?.name!, active: false }, ...crumbList];
+    return [{ pathname: HOME_ROUTE, name: homeRoute?.nameKey ? t(homeRoute.nameKey) : t("navigation.church"), active: false }, ...crumbList];
   };
 
   const breadcrumbItems = getBreadcrumbItems();
@@ -69,7 +71,7 @@ const AppBreadcrumb = () => {
 
 interface RouteConfig {
   path: string;
-  name?: string;
+  nameKey?: string;
   element?: React.JSX.Element;
 }
 

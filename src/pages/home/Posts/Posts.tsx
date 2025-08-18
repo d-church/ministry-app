@@ -1,5 +1,6 @@
 import React from 'react'
 import { CCard, CCardBody, CCardHeader, CButton, CBadge } from '@coreui/react'
+import { useTranslation } from 'react-i18next'
 
 interface Post {
   id: number
@@ -18,11 +19,13 @@ const mockPosts: Post[] = [
 ]
 
 const Posts: React.FC = () => {
+  const { t } = useTranslation();
+
   const getStatusBadge = (status: Post['status']) => {
     if (status === 'published') {
-      return <CBadge color="success" className="text-xs">Опубліковано</CBadge>
+      return <CBadge color="success" className="text-xs">{t('pages.posts.status.published')}</CBadge>
     }
-    return <CBadge color="warning" className="text-xs">Чернетка</CBadge>
+    return <CBadge color="warning" className="text-xs">{t('pages.posts.status.draft')}</CBadge>
   }
 
   const handleEdit = (id: number) => {
@@ -41,9 +44,9 @@ const Posts: React.FC = () => {
     <div className="px-4 sm:px-6 lg:px-8">
       <div className="sm:flex sm:items-center mb-6">
         <div className="sm:flex-auto">
-          <h1 className="text-2xl font-semibold text-gray-900">Список постів</h1>
+          <h1 className="text-2xl font-semibold text-gray-900">{t('pages.posts.title')}</h1>
           <p className="mt-2 text-sm text-gray-700">
-            Управління постами та публікаціями на сайті
+            {t('pages.posts.description')}
           </p>
         </div>
         <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
@@ -52,7 +55,7 @@ const Posts: React.FC = () => {
             onClick={handleAddPost}
             className="shadow-sm hover:shadow-md transition-shadow"
           >
-            Додати пост
+            {t('pages.posts.addPost')}
           </CButton>
         </div>
       </div>
@@ -60,13 +63,13 @@ const Posts: React.FC = () => {
       <CCard className="shadow-lg border-0">
         <CCardHeader className="bg-gray-50 border-b border-gray-200">
           <div className="flex items-center justify-between">
-            <h3 className="text-lg font-medium text-gray-900">Всі пости</h3>
+            <h3 className="text-lg font-medium text-gray-900">{t('pages.posts.allPosts')}</h3>
             <div className="flex space-x-2">
               <CButton color="outline" size="sm" className="text-xs">
-                Експорт
+                {t('pages.posts.export')}
               </CButton>
               <CButton color="outline" size="sm" className="text-xs">
-                Фільтр
+                {t('pages.posts.filter')}
               </CButton>
             </div>
           </div>
@@ -77,22 +80,22 @@ const Posts: React.FC = () => {
               <thead className="bg-gray-50">
                 <tr>
                   <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    ID
+                    {t('pages.posts.table.id')}
                   </th>
                   <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Заголовок
+                    {t('pages.posts.table.title')}
                   </th>
                   <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Автор
+                    {t('pages.posts.table.author')}
                   </th>
                   <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Дата
+                    {t('pages.posts.table.date')}
                   </th>
                   <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Статус
+                    {t('pages.posts.table.status')}
                   </th>
                   <th scope="col" className="relative px-6 py-3">
-                    <span className="sr-only">Дії</span>
+                    <span className="sr-only">{t('pages.posts.table.actions')}</span>
                   </th>
                 </tr>
               </thead>
@@ -131,7 +134,7 @@ const Posts: React.FC = () => {
                           onClick={() => handleEdit(post.id)}
                           className="text-blue-600 hover:text-blue-900 p-0"
                         >
-                          Редагувати
+                          {t('pages.posts.edit')}
                         </CButton>
                         <CButton
                           color="link"
@@ -139,7 +142,7 @@ const Posts: React.FC = () => {
                           onClick={() => handleDelete(post.id)}
                           className="text-red-600 hover:text-red-900 p-0"
                         >
-                          Видалити
+                          {t('pages.posts.delete')}
                         </CButton>
                       </div>
                     </td>
@@ -153,14 +156,14 @@ const Posts: React.FC = () => {
 
       <div className="mt-6 flex items-center justify-between">
         <div className="text-sm text-gray-700">
-          Показано <span className="font-medium">{mockPosts.length}</span> з <span className="font-medium">{mockPosts.length}</span> результатів
+          {t('pages.posts.showing')} <span className="font-medium">{mockPosts.length}</span> {t('pages.posts.of')} <span className="font-medium">{mockPosts.length}</span> {t('pages.posts.results')}
         </div>
         <div className="flex space-x-2">
           <CButton color="outline" size="sm" disabled>
-            Попередня
+            {t('pages.posts.previous')}
           </CButton>
           <CButton color="outline" size="sm" disabled>
-            Наступна
+            {t('pages.posts.next')}
           </CButton>
         </div>
       </div>

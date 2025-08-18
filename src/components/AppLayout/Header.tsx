@@ -13,8 +13,8 @@ import {
 import { FaRegUser, FaGear, FaDoorOpen, FaBars, FaCircleUser } from "react-icons/fa6";
 
 import LayoutState from "./LayoutState";
-
 import Breadcrumb from "../Breadcrumb";
+import { LanguageSwitcher } from "../common";
 
 const Header = () => {
   const headerRef = useRef<HTMLDivElement | null>(null);
@@ -42,6 +42,8 @@ const Header = () => {
         </CHeaderToggler>
 
         <CHeaderNav>
+          <LanguageSwitcher />
+
           <li className="nav-item py-1">
             <div className="vr h-100 mx-2 text-body text-opacity-75"></div>
           </li>
