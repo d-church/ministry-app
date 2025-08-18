@@ -1,4 +1,3 @@
-import React from 'react'
 import {
   CButton,
   CCard,
@@ -11,8 +10,7 @@ import {
   CInputGroupText,
   CRow,
 } from '@coreui/react'
-import CIcon from '@coreui/icons-react'
-import { cilLockLocked, cilUser } from '@coreui/icons'
+import { FaUser, FaLock, FaEnvelope } from 'react-icons/fa'
 
 const Register = () => {
   return (
@@ -27,17 +25,19 @@ const Register = () => {
                   <p className="text-body-secondary">Create your account</p>
                   <CInputGroup className="mb-3">
                     <CInputGroupText>
-                      <CIcon icon={cilUser} />
+                      <FaUser />
                     </CInputGroupText>
                     <CFormInput placeholder="Username" autoComplete="username" />
                   </CInputGroup>
                   <CInputGroup className="mb-3">
-                    <CInputGroupText>@</CInputGroupText>
+                    <CInputGroupText>
+                      <FaEnvelope />
+                    </CInputGroupText>
                     <CFormInput placeholder="Email" autoComplete="email" />
                   </CInputGroup>
                   <CInputGroup className="mb-3">
                     <CInputGroupText>
-                      <CIcon icon={cilLockLocked} />
+                      <FaLock />
                     </CInputGroupText>
                     <CFormInput
                       type="password"
@@ -47,7 +47,7 @@ const Register = () => {
                   </CInputGroup>
                   <CInputGroup className="mb-4">
                     <CInputGroupText>
-                      <CIcon icon={cilLockLocked} />
+                      <FaLock />
                     </CInputGroupText>
                     <CFormInput
                       type="password"
