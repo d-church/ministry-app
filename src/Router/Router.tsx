@@ -9,6 +9,7 @@ const AppLayout = React.lazy(() => import("../components/AppLayout"));
 const Login = React.lazy(() => import("../pages/Login"));
 const Register = React.lazy(() => import("../pages/Register"));
 const Page404 = React.lazy(() => import("../pages/Page404"));
+const Page500 = React.lazy(() => import("../pages/Page500"));
 
 const Router = () => {
   return (
@@ -41,6 +42,7 @@ const Router = () => {
           />
 
           <Route path="/" element={<Navigate to="church" replace />} />
+          <Route path="/error" element={<Page500 />} />
           <Route path="*" element={<Page404 />} />
         </Routes>
       </Suspense>

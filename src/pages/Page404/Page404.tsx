@@ -1,36 +1,22 @@
-import {
-  CButton,
-  CCol,
-  CContainer,
-  CFormInput,
-  CInputGroup,
-  CInputGroupText,
-  CRow,
-} from "@coreui/react";
-import { FaSearch } from "react-icons/fa";
+import { Link } from "react-router-dom";
+import { CButton, CContainer } from "@coreui/react";
 
 const Page404 = () => {
   return (
-    <div className="bg-body-tertiary min-vh-100 d-flex flex-row align-items-center">
+    <div className="min-vh-100 d-flex align-items-center justify-content-center">
       <CContainer>
-        <CRow className="justify-content-center">
-          <CCol md={6}>
-            <div className="clearfix">
-              <h1 className="float-start display-3 me-4">404</h1>
-              <h4 className="pt-3">Oops! You{"'"}re lost.</h4>
-              <p className="text-body-secondary float-start">
-                The page you are looking for was not found.
-              </p>
-            </div>
-            <CInputGroup className="input-prepend">
-              <CInputGroupText>
-                <FaSearch />
-              </CInputGroupText>
-              <CFormInput type="text" placeholder="What are you looking for?" />
-              <CButton color="info">Search</CButton>
-            </CInputGroup>
-          </CCol>
-        </CRow>
+        <div className="text-center">
+          <h1 className="display-1 fw-light text-muted mb-4">404</h1>
+          <h2 className="h4 fw-normal mb-4">Сторінку не знайдено</h2>
+          <p className="text-muted mb-4">
+            Сторінка, яку ви шукаєте, не існує.
+          </p>
+          <Link to="/" className="text-decoration-none">
+            <CButton color="primary" variant="outline">
+              Повернутися додому
+            </CButton>
+          </Link>
+        </div>
       </CContainer>
     </div>
   );
