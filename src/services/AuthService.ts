@@ -4,7 +4,7 @@ import type { AxiosResponse } from "axios";
 import type { User } from "./UserService";
 
 class AuthService extends ApiService {
-  async login(credentials: LoginCredentials) {
+  public async login(credentials: LoginCredentials) {
     const response = await this.api.post<{
       user: User;
       accessToken: string;
@@ -19,15 +19,15 @@ class AuthService extends ApiService {
     return response.data?.user;
   }
 
-  async logout(): Promise<void> {
+  public async logout(): Promise<void> {
     TokenStorage.clearTokens();
   }
 
-  async getCurrentUser(): Promise<AxiosResponse> {
+  public async getCurrentUser(): Promise<AxiosResponse> {
     return this.api.get("/auth/me");
   }
 
-  isAuthenticated(): boolean {
+  public isAuthenticated(): boolean {
     return TokenStorage.hasValidTokens();
   }
 }

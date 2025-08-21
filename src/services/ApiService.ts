@@ -5,8 +5,6 @@ import axios, {
 } from "axios";
 import TokenStorage from "../utils/TokenStorage";
 
-console.log(import.meta.env?.VITE_API_URL)
-
 abstract class ApiService {
   protected api: AxiosInstance = axios.create({
     baseURL: import.meta.env?.VITE_API_URL as string,
