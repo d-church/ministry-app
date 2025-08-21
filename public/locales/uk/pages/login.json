@@ -1,8 +1,14 @@
 {
   "title": "Вхід",
   "subtitle": "Увійдіть до вашого акаунта",
-  "username": "Ім'я користувача",
+  "username": "Email",
   "password": "Пароль",
   "loginButton": "Увійти",
-  "forgotPassword": "Забули пароль?"
+  "forgotPassword": "Забули пароль?",
+  "emailRequired": "Email обов'язковий",
+  "emailInvalid": "Невірний формат email",
+  "passwordRequired": "Пароль обов'язковий",
+  "passwordMinLength": "Мінімум 6 символів",
+  "loggingIn": "Вхід...",
+  "errorMessage": "Помилка авторизації"
 }

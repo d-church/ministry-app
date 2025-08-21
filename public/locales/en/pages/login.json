@@ -1,8 +1,14 @@
 {
   "title": "Login",
   "subtitle": "Sign In to your account",
-  "username": "Username",
+  "username": "Email",
   "password": "Password",
   "loginButton": "Login",
-  "forgotPassword": "Forgot password?"
+  "forgotPassword": "Forgot password?",
+  "emailRequired": "Email is required",
+  "emailInvalid": "Invalid email format",
+  "passwordRequired": "Password is required",
+  "passwordMinLength": "Minimum 6 characters",
+  "loggingIn": "Logging in...",
+  "errorMessage": "Authentication error"
 }
