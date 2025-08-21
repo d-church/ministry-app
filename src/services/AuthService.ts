@@ -1,6 +1,7 @@
-import ApiService from "./ApiService";
 import TokenStorage from "../utils/TokenStorage";
-import type { AxiosResponse } from "axios";
+
+import ApiService from "./abstracts/ApiService";
+import UserService from "./UserService";
 import type { User } from "./UserService";
 
 class AuthService extends ApiService {
@@ -23,8 +24,8 @@ class AuthService extends ApiService {
     TokenStorage.clearTokens();
   }
 
-  public async getCurrentUser(): Promise<AxiosResponse> {
-    return this.api.get("/auth/me");
+  public async getCurrentUser(): Promise<User> {
+    return UserService.getMe();
   }
 
   public isAuthenticated(): boolean {

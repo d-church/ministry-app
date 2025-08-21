@@ -1,9 +1,5 @@
-import axios, {
-  type AxiosInstance,
-  type AxiosResponse,
-  AxiosError,
-} from "axios";
-import TokenStorage from "../utils/TokenStorage";
+import axios, { type AxiosInstance, type AxiosResponse, AxiosError } from "axios";
+import TokenStorage from "../../utils/TokenStorage";
 
 abstract class ApiService {
   protected api: AxiosInstance = axios.create({
