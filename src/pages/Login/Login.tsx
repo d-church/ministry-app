@@ -16,12 +16,14 @@ import { FaUser, FaLock } from "react-icons/fa6";
 import { useTranslation } from "react-i18next";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-import AuthService from "../../services/AuthService";
+import AccountStore from "../../stores/AccountStore";
 import type { LoginCredentials } from "../../services/AuthService";
 
 const Login = () => {
   const { t } = useTranslation("pages/login");
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string>("");
 
@@ -38,9 +40,9 @@ const Login = () => {
     setError("");
 
     try {
-      const result = await AuthService.login(data);
-      // TODO: Save user
-      console.log(result);
+      await AccountStore.login(data);
+      // Перенаправляємо на головну сторінку після успішного входу
+      navigate("/");
     } catch (err: any) {
       setError(err.response?.data?.message || t("errorMessage"));
     } finally {
