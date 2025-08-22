@@ -1,5 +1,5 @@
 import { observable, action } from "mobx";
-import GlobalStore from "../../../stores/GlobalStore";
+import GlobalStore from "../GlobalStore";
 
 abstract class Store<T = any> {
   @observable public accessor data: T;

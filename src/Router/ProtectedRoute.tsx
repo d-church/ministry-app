@@ -1,7 +1,7 @@
 import { Navigate } from "react-router-dom";
 import { observer } from "mobx-react-lite";
 
-import AccountStore from "../stores/AccountStore";
+import AccountStore from "../store/AccountStore";
 
 const ProtectedRoute = observer(
   ({ children, redirectTo = "/login" }: { children: React.ReactNode; redirectTo?: string }) => {

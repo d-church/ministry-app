@@ -1,6 +1,5 @@
 import { action, observable } from "mobx";
-
-import type Store from "../utils/abstracts/store/Store";
+import type Store from "./abstracts/Store";
 
 class GlobalStore {
   @observable private static accessor stores: Set<Store> = new Set();

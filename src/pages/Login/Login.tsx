@@ -18,7 +18,7 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import AccountStore from "../../stores/AccountStore";
+import AccountStore from "../../store/AccountStore";
 import type { LoginCredentials } from "../../services/AuthService";
 
 const Login = () => {

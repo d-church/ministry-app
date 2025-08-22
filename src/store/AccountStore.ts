@@ -1,6 +1,6 @@
 import { action } from "mobx";
 
-import { ObjectStore } from "../utils/abstracts/store";
+import { ObjectStore } from "./abstracts";
 import AuthService from "../services/AuthService";
 import GlobalStore from "./GlobalStore";
 import type { User } from "../services/UserService";

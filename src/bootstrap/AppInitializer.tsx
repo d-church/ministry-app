@@ -1,5 +1,5 @@
 import React from "react";
-import AccountStore from "../stores/AccountStore";
+import AccountStore from "../store/AccountStore";
 
 let initializationPromise: Promise<void> | null = null;
 
