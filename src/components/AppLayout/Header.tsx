@@ -12,12 +12,14 @@ import {
 } from "@coreui/react";
 import { FaRegUser, FaGear, FaDoorOpen, FaBars, FaCircleUser } from "react-icons/fa6";
 import { useTranslation } from "react-i18next";
+import { observer } from "mobx-react-lite";
 
 import LayoutState from "./LayoutState";
 import Breadcrumb from "../Breadcrumb";
 import LanguageSwitcher from "./LanguageSwitcher";
+import AccountStore from "../../store/AccountStore";
 
-const Header = () => {
+const Header = observer(() => {
   const headerRef = useRef<HTMLDivElement | null>(null);
   const { t } = useTranslation("common");
 
@@ -64,7 +66,11 @@ const Header = () => {
                 {t("header.settings")}
               </CDropdownItem>
               <CDropdownDivider />
-              <CDropdownItem href="#" className="d-flex align-items-center">
+              <CDropdownItem
+                onClick={() => AccountStore.logout()}
+                className="d-flex align-items-center"
+                style={{ cursor: 'pointer' }}
+              >
                 <FaDoorOpen className="me-2 inline" />
                 {t("header.logout")}
               </CDropdownItem>
@@ -78,6 +84,6 @@ const Header = () => {
       </CContainer>
     </CHeader>
   );
-};
+});
 
 export default Header;
