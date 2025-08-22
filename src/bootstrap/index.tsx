@@ -2,13 +2,15 @@
 import "core-js";
 import { Suspense } from "react";
 
+import Router from "../Router";
+
+import { LoadingSpinner } from "../components/common";
+
+import AppInitializer from "./AppInitializer";
+import "./i18n";
+
 import "../style/tailwind.css";
 import "../style/style.scss";
-
-import "./i18n";
-import Router from "../Router";
-import AppInitializer from "../components/AppInitializer";
-import { LoadingSpinner } from "../components/common";
 
 export default () => (
   <Suspense fallback={<LoadingSpinner fullHeight centered />}>
