@@ -2,6 +2,8 @@ import React from "react";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 
 import ErrorBoundary from "../components/ErrorBoundary";
+import ProtectedRoute from "./ProtectedRoute";
+import PublicRoute from "./PublicRoute";
 import { HOME_ROUTE } from "../constants";
 
 import routes from "./application-routes";
@@ -17,26 +19,42 @@ const Router = () => {
     <ErrorBoundary>
       <BrowserRouter>
         <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
+          <Route
+            path="/login"
+            element={
+              <PublicRoute>
+                <Login />
+              </PublicRoute>
+            }
+          />
+          <Route
+            path="/register"
+            element={
+              <PublicRoute>
+                <Register />
+              </PublicRoute>
+            }
+          />
 
           <Route
             path={`${HOME_ROUTE}/*`}
             element={
-              <AppLayout
-                content={
-                  <Routes>
-                    {routes.map(
-                      (route) =>
-                        route.element && (
-                          <Route key={route.path} path={route.path} element={route.element} />
-                        ),
-                    )}
-                    <Route path="/" element={<Navigate to="overview" replace />} />
-                    <Route path="*" element={<Page404 />} />
-                  </Routes>
-                }
-              />
+              <ProtectedRoute>
+                <AppLayout
+                  content={
+                    <Routes>
+                      {routes.map(
+                        (route) =>
+                          route.element && (
+                            <Route key={route.path} path={route.path} element={route.element} />
+                          ),
+                      )}
+                      <Route path="/" element={<Navigate to="overview" replace />} />
+                      <Route path="*" element={<Page404 />} />
+                    </Routes>
+                  }
+                />
+              </ProtectedRoute>
             }
           />
 
