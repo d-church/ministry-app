@@ -41,7 +41,7 @@ const Login = () => {
 
     try {
       await AccountStore.login(data);
-      // Перенаправляємо на головну сторінку після успішного входу
+
       navigate("/");
     } catch (err: any) {
       setError(err.response?.data?.message || t("errorMessage"));

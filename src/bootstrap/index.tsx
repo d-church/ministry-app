@@ -7,10 +7,13 @@ import "../style/style.scss";
 
 import "./i18n";
 import Router from "../Router";
+import AppInitializer from "../components/AppInitializer";
 import { LoadingSpinner } from "../components/common";
 
 export default () => (
   <Suspense fallback={<LoadingSpinner fullHeight centered />}>
-    <Router />
+    <AppInitializer>
+      <Router />
+    </AppInitializer>
   </Suspense>
 );

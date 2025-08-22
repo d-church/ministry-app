@@ -4,7 +4,7 @@ class UserService extends RestService<User> {
   protected anchor = "users";
 
   public async getMe(): Promise<User> {
-    const response = await this.api.get<User>("/users/get-me");
+    const response = await this.api.get<User>(`/${this.anchor}/get-me`);
     return response.data;
   }
 }
