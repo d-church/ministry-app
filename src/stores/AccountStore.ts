@@ -2,6 +2,7 @@ import { action } from "mobx";
 
 import { ObjectStore } from "../utils/abstracts/store";
 import AuthService from "../services/AuthService";
+import GlobalStore from "./GlobalStore";
 import type { User } from "../services/UserService";
 import type { LoginCredentials } from "../services/AuthService";
 
@@ -14,11 +15,14 @@ class AccountStore extends ObjectStore<User> {
   }
 
   @action public async logout(): Promise<void> {
-    await AuthService.logout();
-    this.removeData();
+    try {
+      await AuthService.logout();
+    } finally {
+      GlobalStore.clearAllStores();
+    }
   }
 
-  @action public async loadCurrentUser(): Promise<any> {
+  @action public async loadCurrentUser(): Promise<void> {
     if (!AuthService.isAuthenticated()) {
       return;
     }
@@ -31,8 +35,6 @@ class AccountStore extends ObjectStore<User> {
       console.error('Failed to load current user:', error);
       await this.logout();
     }
-
-    return "lel"
   }
 
   public get isAuthenticated(): boolean {
