@@ -18,6 +18,20 @@ class AccountStore extends ObjectStore<User> {
     this.removeData();
   }
 
+  @action public async loadCurrentUser(): Promise<void> {
+    if (!AuthService.isAuthenticated()) {
+      return;
+    }
+
+    try {
+      const user = await AuthService.getCurrentUser();
+      this.setData(user);
+    } catch (error) {
+      console.error('Failed to load current user:', error);
+      await this.logout();
+    }
+  }
+
   public get isAuthenticated(): boolean {
     return AuthService.isAuthenticated() && this.isDataExist;
   }
