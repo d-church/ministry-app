@@ -33,8 +33,8 @@ abstract class ApiService {
 
           try {
             if (TokenStorage.refreshToken) {
-              const response = await this.refreshToken(TokenStorage.refreshToken);
-              const { accessToken, refreshToken: newRefreshToken } = response.data;
+              const refreshData = await this.refreshToken(TokenStorage.refreshToken);
+              const { accessToken, refreshToken: newRefreshToken } = refreshData;
 
               TokenStorage.setTokens(accessToken, newRefreshToken);
 
@@ -52,10 +52,17 @@ abstract class ApiService {
     );
   }
 
-  protected async refreshToken(refreshToken: string): Promise<AxiosResponse> {
-    return axios.post(`${this.api.defaults.baseURL}auth/refresh`, {
-      refreshToken,
-    });
+  protected async refreshToken(refreshToken: string): Promise<{
+    message: string;
+    accessToken: string;
+    refreshToken: string;
+  }> {
+    const response = await axios.post<{
+      message: string;
+      accessToken: string;
+      refreshToken: string;
+    }>(`${this.api.defaults.baseURL}auth/refresh-token`, { refreshToken });
+    return response.data;
   }
 }
 
