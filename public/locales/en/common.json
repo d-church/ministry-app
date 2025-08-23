@@ -1,6 +1,7 @@
 {
   "navigation": {
     "church": "Church",
+    "myChurch": "My Church",
     "website": "Website",
     "posts": "Posts"
   },
@@ -10,7 +11,7 @@
   },
   "sidebar": {
     "menu": "Menu",
-    "church": "Church",
+    "church": "My Church",
     "ministries": "Ministries",
     "website": "Website",
     "posts": "Posts"

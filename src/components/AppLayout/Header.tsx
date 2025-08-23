@@ -10,7 +10,7 @@ import {
   CDropdownMenu,
   CDropdownToggle,
 } from "@coreui/react";
-import { FaRegUser, FaGear, FaDoorOpen, FaBars, FaCircleUser } from "react-icons/fa6";
+import { FaRegUser, FaGear, FaDoorOpen, FaBars } from "react-icons/fa6";
 import { useTranslation } from "react-i18next";
 import { observer } from "mobx-react-lite";
 
@@ -18,10 +18,12 @@ import LayoutState from "./LayoutState";
 import Breadcrumb from "../Breadcrumb";
 import LanguageSwitcher from "./LanguageSwitcher";
 import AccountStore from "../../store/AccountStore";
+import { UserAvatar } from "../common";
 
 const Header = observer(() => {
   const headerRef = useRef<HTMLDivElement | null>(null);
   const { t } = useTranslation("common");
+  const user = AccountStore.data;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -53,8 +55,11 @@ const Header = observer(() => {
           </li>
 
           <CDropdown variant="nav-item">
-            <CDropdownToggle className="py-0 pe-0" caret={false}>
-              <FaCircleUser size="35px" />
+            <CDropdownToggle
+              className="py-0 pe-0 border-0 bg-transparent user-avatar-btn"
+              caret={false}
+            >
+              <UserAvatar user={user} size="md" className="" />
             </CDropdownToggle>
             <CDropdownMenu className="pt-0 overflow-hidden">
               <CDropdownItem href="#" className="d-flex align-items-center">

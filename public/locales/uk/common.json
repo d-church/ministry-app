@@ -1,6 +1,7 @@
 {
   "navigation": {
     "church": "Церква",
+    "myChurch": "Моя церква",
     "website": "Вебсайт",
     "posts": "Пости"
   },
@@ -10,7 +11,7 @@
   },
   "sidebar": {
     "menu": "Меню",
-    "church": "Церква",
+    "church": "Моя церква",
     "ministries": "Служіння",
     "website": "Вебсайт",
     "posts": "Пости"

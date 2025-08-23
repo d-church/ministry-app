@@ -1,7 +1,7 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
 
-const Overview = React.lazy(() => import("../pages/home/Overview"));
+const Profile = React.lazy(() => import("../pages/home/Profile"));
 const Posts = React.lazy(() => import("../pages/home/Posts"));
 
 const routes: {
@@ -9,8 +9,8 @@ const routes: {
   nameKey?: string;
   element?: React.JSX.Element;
 }[] = [
-  { path: "/", nameKey: "navigation.church" },
-  { path: "/overview", element: <Overview /> },
+  { path: "/", nameKey: "navigation.myChurch" },
+  { path: "/profile", element: <Profile /> },
 
   /* Ministries */
   // Website

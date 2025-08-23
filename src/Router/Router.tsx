@@ -49,7 +49,7 @@ const Router = () => {
                             <Route key={route.path} path={route.path} element={route.element} />
                           ),
                       )}
-                      <Route path="/" element={<Navigate to="overview" replace />} />
+                      <Route path="/" element={<Navigate to="profile" replace />} />
                       <Route path="*" element={<Page404 />} />
                     </Routes>
                   }
