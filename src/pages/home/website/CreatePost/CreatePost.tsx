@@ -1,8 +1,10 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { observer } from "mobx-react-lite";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
+import ReactQuill from "react-quill-new";
+import "react-quill-new/dist/quill.snow.css";
 import {
   CCard,
   CCardBody,
@@ -10,7 +12,6 @@ import {
   CButton,
   CForm,
   CFormInput,
-  CFormTextarea,
   CFormLabel,
   CSpinner,
 } from "@coreui/react";
@@ -33,6 +34,7 @@ const CreatePost: React.FC = observer(() => {
     handleSubmit,
     formState: { errors, isSubmitting },
     setError,
+    control,
   } = useForm<PostFormData>();
 
   const onSubmit = async (data: PostFormData) => {
@@ -105,19 +107,38 @@ const CreatePost: React.FC = observer(() => {
                 <CFormLabel htmlFor="html" className="text-sm font-medium text-gray-700">
                   {t("content")} *
                 </CFormLabel>
-                <CFormTextarea
-                  id="html"
-                  rows={12}
-                  {...register("html", {
-                    required: t("contentRequired"),
-                    minLength: {
-                      value: 10,
-                      message: t("contentMinLength"),
-                    },
-                  })}
-                  className={`mt-1 ${errors.html ? "border-red-500" : ""}`}
-                  placeholder={t("contentPlaceholder")}
-                />
+                <div className="mt-1">
+                  <Controller
+                    name="html"
+                    control={control}
+                    rules={{
+                      required: t("contentRequired"),
+                    }}
+                    render={({ field }) => (
+                      <ReactQuill
+                        theme="snow"
+                        value={field.value || ""}
+                        onChange={field.onChange}
+                        placeholder={t("contentPlaceholder")}
+                        modules={{
+                          toolbar: [
+                            [{ header: [1, 2, 3, false] }],
+                            ["bold", "italic", "underline", "strike"],
+                            [{ list: "ordered" }, { list: "bullet" }],
+                            ["blockquote", "code-block"],
+                            ["link", "image", "video"],
+                            ["clean"],
+                          ],
+                        }}
+                        style={{
+                          height: "300px",
+                          marginBottom: "50px",
+                        }}
+                        className={errors.html ? "border-red-500" : ""}
+                      />
+                    )}
+                  />
+                </div>
                 {errors.html && (
                   <div className="mt-1 text-sm text-red-600">{errors.html.message}</div>
                 )}
