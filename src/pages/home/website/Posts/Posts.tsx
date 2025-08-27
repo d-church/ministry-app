@@ -27,7 +27,7 @@ const Posts: React.FC = observer(() => {
   };
 
   const handleEdit = (id: string) => {
-    console.log("Редагувати пост:", id);
+    navigate(`${HOME_ROUTE}/website/posts/edit/${id}`);
   };
 
   const handleDelete = async (id: string) => {

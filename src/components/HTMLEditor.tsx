@@ -9,7 +9,7 @@ const HTMLEditor: React.FC<{
   placeholder?: string;
   hasError?: boolean;
   height?: string;
-}> = ({ value = "", onChange, placeholder, hasError = false, height = "300px" }) => {
+}> = ({ value = "", onChange, placeholder, hasError = false, height = "500px" }) => {
   return (
     <ReactQuill
       theme="snow"
