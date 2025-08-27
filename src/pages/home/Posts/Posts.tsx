@@ -1,43 +1,72 @@
-import React from 'react'
-import { CCard, CCardBody, CCardHeader, CButton, CBadge } from '@coreui/react'
+import React, { useEffect } from 'react'
+import { observer } from 'mobx-react-lite'
+import { CCard, CCardBody, CCardHeader, CButton, CBadge, CSpinner } from '@coreui/react'
 import { useTranslation } from 'react-i18next'
 
-interface Post {
-  id: number
-  title: string
-  author: string
-  date: string
-  status: 'published' | 'draft'
-}
+import { LoadingSpinner, UserAvatar } from 'src/components/common';
 
-const mockPosts: Post[] = [
-  { id: 1, title: 'Перший пост', author: 'Іван', date: '2024-06-01', status: 'published' },
-  { id: 2, title: 'Другий пост', author: 'Олена', date: '2024-06-02', status: 'draft' },
-  { id: 3, title: 'Третій пост', author: 'Петро', date: '2024-06-03', status: 'published' },
-  { id: 4, title: 'Четвертий пост', author: 'Марія', date: '2024-06-04', status: 'published' },
-  { id: 5, title: 'П\'ятий пост', author: 'Андрій', date: '2024-06-05', status: 'draft' },
-]
+import PostStore from './PostStore'
 
-const Posts: React.FC = () => {
+const Posts: React.FC = observer(() => {
   const { t } = useTranslation("pages/posts");
 
-  const getStatusBadge = (status: Post['status']) => {
-    if (status === 'published') {
-      return <CBadge color="success" className="text-xs">{t('status.published')}</CBadge>
+  useEffect(() => {
+    const loadData = async () => {
+      await PostStore.loadPosts();
+    };
+
+    loadData();
+  }, []);
+
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString('uk-UA', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+  };
+
+  const getStatusBadge = (likesCount: number, commentsCount: number) => {
+    if (likesCount > 0 || commentsCount > 0) {
+      return <CBadge color="success" className="text-xs">Активний</CBadge>
     }
-    return <CBadge color="warning" className="text-xs">{t('status.draft')}</CBadge>
+    return <CBadge color="secondary" className="text-xs">Новий</CBadge>
   }
 
-  const handleEdit = (id: number) => {
+  const handleEdit = (id: string) => {
     console.log('Редагувати пост:', id)
   }
 
-  const handleDelete = (id: number) => {
-    console.log('Видалити пост:', id)
+  const handleDelete = async (id: string) => {
+    if (window.confirm('Ви впевнені, що хочете видалити цей пост?')) {
+      try {
+        await PostStore.deletePost(id);
+      } catch (error) {
+        console.error('Failed to delete post:', error);
+      }
+    }
+  }
+
+  const handleLike = async (id: string) => {
+    try {
+      await PostStore.likePost(id);
+    } catch (error) {
+      console.error('Failed to like post:', error);
+    }
   }
 
   const handleAddPost = () => {
     console.log('Додати новий пост')
+  }
+
+  if (PostStore.isLoading && (!PostStore.data || PostStore.data.length === 0)) {
+    return (
+      <div className="flex justify-center items-center h-64">
+        <LoadingSpinner />
+      </div>
+    );
   }
 
   return (
@@ -80,19 +109,22 @@ const Posts: React.FC = () => {
               <thead className="bg-gray-50">
                 <tr>
                   <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    {t('table.id')}
+                    Заголовок
                   </th>
                   <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    {t('table.title')}
+                    Автор
                   </th>
                   <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    {t('table.author')}
+                    Дата створення
                   </th>
                   <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    {t('table.date')}
+                    Лайки
                   </th>
                   <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    {t('table.status')}
+                    Коментарі
+                  </th>
+                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Статус
                   </th>
                   <th scope="col" className="relative px-6 py-3">
                     <span className="sr-only">{t('table.actions')}</span>
@@ -100,41 +132,64 @@ const Posts: React.FC = () => {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {mockPosts.map((post) => (
+                {PostStore.data?.map((post) => (
                   <tr key={post.id} className="hover:bg-gray-50 transition-colors">
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                      #{post.id}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 font-medium">
-                      {post.title}
+                    <td className="px-6 py-4 text-sm text-gray-900 font-medium">
+                      <div className="max-w-xs truncate" title={post.title}>
+                        {post.title}
+                      </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                       <div className="flex items-center">
-                        <div className="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center">
-                          <span className="text-sm font-medium text-blue-800">
-                            {post.author.charAt(0).toUpperCase()}
-                          </span>
-                        </div>
+                        <UserAvatar
+                          user={post.author}
+                          size="sm"
+                        />
                         <div className="ml-3">
-                          <div className="text-sm font-medium text-gray-900">{post.author}</div>
+                          <div className="text-sm font-medium text-gray-900">
+                            {post.author.first_name} {post.author.last_name}
+                          </div>
+                          <div className="text-xs text-gray-500">{post.author.role}</div>
                         </div>
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {post.date}
+                      {formatDate(post.createdAt)}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {getStatusBadge(post.status)}
+                      <div className="flex items-center">
+                        <span className={`${post.isLiked ? 'text-red-500' : 'text-gray-400'} mr-1`}>
+                          ❤️
+                        </span>
+                        {post.likesCount}
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      <div className="flex items-center">
+                        <span className="text-gray-400 mr-1">💬</span>
+                        {post.commentsCount}
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      {getStatusBadge(post.likesCount, post.commentsCount)}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                       <div className="flex space-x-2">
                         <CButton
                           color="link"
                           size="sm"
+                          onClick={() => handleLike(post.id)}
+                          className={`${post.isLiked ? 'text-red-600 hover:text-red-900' : 'text-gray-600 hover:text-gray-900'} p-0`}
+                        >
+                          {post.isLiked ? 'Не подобається' : 'Подобається'}
+                        </CButton>
+                        <CButton
+                          color="link"
+                          size="sm"
                           onClick={() => handleEdit(post.id)}
                           className="text-blue-600 hover:text-blue-900 p-0"
                         >
-                          {t('edit')}
+                          Редагувати
                         </CButton>
                         <CButton
                           color="link"
@@ -142,12 +197,18 @@ const Posts: React.FC = () => {
                           onClick={() => handleDelete(post.id)}
                           className="text-red-600 hover:text-red-900 p-0"
                         >
-                          {t('delete')}
+                          Видалити
                         </CButton>
                       </div>
                     </td>
                   </tr>
-                ))}
+                )) || (
+                  <tr>
+                    <td colSpan={7} className="px-6 py-4 text-center text-sm text-gray-500">
+                      Постів не знайдено
+                    </td>
+                  </tr>
+                )}
               </tbody>
             </table>
           </div>
@@ -156,19 +217,20 @@ const Posts: React.FC = () => {
 
       <div className="mt-6 flex items-center justify-between">
         <div className="text-sm text-gray-700">
-          {t('showing')} <span className="font-medium">{mockPosts.length}</span> {t('of')} <span className="font-medium">{mockPosts.length}</span> {t('results')}
+          Показано <span className="font-medium">{PostStore.data?.length || 0}</span> постів
+          {PostStore.isLoading && <CSpinner size="sm" className="ml-2" />}
         </div>
         <div className="flex space-x-2">
           <CButton color="outline" size="sm" disabled>
-            {t('previous')}
+            Попередня
           </CButton>
           <CButton color="outline" size="sm" disabled>
-            {t('next')}
+            Наступна
           </CButton>
         </div>
       </div>
     </div>
   )
-}
+});
 
 export default Posts

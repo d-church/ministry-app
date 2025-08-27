@@ -7,7 +7,6 @@ class UserService extends RestService<User> {
   public async getMe(): Promise<User> {
     const response = await this.api.get<User>(`/${this.anchor}/get-me`);
 
-    console.log(response.data);
     return response.data;
   }
 }

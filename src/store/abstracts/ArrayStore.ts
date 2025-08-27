@@ -3,7 +3,7 @@ import first from "lodash/first";
 
 import Store from "./Store";
 
-abstract class ArrayStore<T extends { _id: string }> extends Store<T[]> {
+abstract class ArrayStore<T extends { id: string }> extends Store<T[]> {
   @action public push(newItem: T) {
     const newData = [...(this.data || []), newItem];
 
@@ -13,13 +13,13 @@ abstract class ArrayStore<T extends { _id: string }> extends Store<T[]> {
   public getById(id: string): T {
     if (!this.isDataExist) return null;
 
-    return this.data.find((el) => el._id === id);
+    return this.data.find((el) => el.id === id);
   }
 
   @action public removeById(id: string): T {
     if (!this.isDataExist) return null;
 
-    const index = this.data.findIndex((el) => el._id === id);
+    const index = this.data.findIndex((el) => el.id === id);
     if (index !== -1) {
       const newData = [...this.data];
 
