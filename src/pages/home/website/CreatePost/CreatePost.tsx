@@ -3,8 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { observer } from "mobx-react-lite";
 import { useForm, Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import ReactQuill from "react-quill-new";
-import "react-quill-new/dist/quill.snow.css";
 import {
   CCard,
   CCardBody,
@@ -19,6 +17,7 @@ import { FaArrowLeft, FaFloppyDisk } from "react-icons/fa6";
 
 import { HOME_ROUTE } from "src/constants";
 import PostStore from "../Posts/PostStore";
+import HTMLEditor from "src/components/HTMLEditor";
 
 interface PostFormData {
   title: string;
@@ -115,26 +114,11 @@ const CreatePost: React.FC = observer(() => {
                       required: t("contentRequired"),
                     }}
                     render={({ field }) => (
-                      <ReactQuill
-                        theme="snow"
+                      <HTMLEditor
                         value={field.value || ""}
                         onChange={field.onChange}
                         placeholder={t("contentPlaceholder")}
-                        modules={{
-                          toolbar: [
-                            [{ header: [1, 2, 3, false] }],
-                            ["bold", "italic", "underline", "strike"],
-                            [{ list: "ordered" }, { list: "bullet" }],
-                            ["blockquote", "code-block"],
-                            ["link", "image", "video"],
-                            ["clean"],
-                          ],
-                        }}
-                        style={{
-                          height: "300px",
-                          marginBottom: "50px",
-                        }}
-                        className={errors.html ? "border-red-500" : ""}
+                        hasError={!!errors.html}
                       />
                     )}
                   />

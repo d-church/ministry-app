@@ -17,7 +17,7 @@ const routes: {
   // Website
   { path: "/website", nameKey: "navigation.website", element: <Navigate to="posts" replace /> },
   { path: "/website/posts", nameKey: "navigation.posts", element: <Posts /> },
-  { path: "/website/posts/create", nameKey: "pages/create-post:newPost", element: <CreatePost /> },
+  { path: "/website/posts/create", nameKey: "navigation.newPost", element: <CreatePost /> },
 ];
 
 export default routes;
