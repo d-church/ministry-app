@@ -16,6 +16,19 @@ abstract class ArrayStore<T extends { id: string }> extends Store<T[]> {
     return this.data.find((el) => el.id === id);
   }
 
+  @action public updateById(id: string, updatedItem: T): T | null {
+    if (!this.isDataExist) return null;
+
+    const index = this.data.findIndex((el) => el.id === id);
+    if (index !== -1) {
+      const newData = [...this.data];
+      newData[index] = updatedItem;
+      this.data = newData;
+      return updatedItem;
+    }
+    return null;
+  }
+
   @action public removeById(id: string): T {
     if (!this.isDataExist) return null;
 

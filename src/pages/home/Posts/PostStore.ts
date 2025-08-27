@@ -1,6 +1,7 @@
 import { observable } from "mobx";
-import ArrayStore from "../../../store/abstracts/ArrayStore";
-import PostService, { type Post } from "../../../services/PostService";
+
+import ArrayStore from "src/store/abstracts/ArrayStore";
+import PostService, { type Post } from "src/services/PostService";
 
 class PostStore extends ArrayStore<Post> {
   @observable public accessor isLoading = false;
@@ -27,12 +28,7 @@ class PostStore extends ArrayStore<Post> {
 
   public async updatePost(id: string, postData: Partial<Post>): Promise<void> {
     const updatedPost = await PostService.update(id, postData);
-    const index = this.data?.findIndex((post) => post.id === id);
-    if (index !== -1 && this.data) {
-      const newData = [...this.data];
-      newData[index] = updatedPost;
-      this.setData(newData);
-    }
+    this.updateById(id, updatedPost);
   }
 
   public async deletePost(id: string): Promise<void> {
