@@ -1,0 +1,17 @@
+{
+  "title": "Post title",
+  "content": "Post content",
+  "titlePlaceholder": "Enter post title",
+  "contentPlaceholder": "Enter HTML content for the post",
+  "htmlHelp": "You can use HTML tags for formatting",
+  "titleRequired": "Title is required",
+  "titleMinLength": "Title must contain at least 3 characters",
+  "contentRequired": "Content is required",
+  "contentMinLength": "Content must contain at least 10 characters",
+  "createError": "Error creating post",
+  "creating": "Creating...",
+  "cancel": "Cancel",
+  "createPost": "Create new post",
+  "newPost": "New post",
+  "addPost": "Create post"
+}

@@ -1,0 +1,171 @@
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import { observer } from "mobx-react-lite";
+import { useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
+import {
+  CCard,
+  CCardBody,
+  CCardHeader,
+  CButton,
+  CForm,
+  CFormInput,
+  CFormTextarea,
+  CFormLabel,
+  CSpinner,
+} from "@coreui/react";
+import { FaArrowLeft, FaFloppyDisk } from "react-icons/fa6";
+
+import { HOME_ROUTE } from "src/constants";
+import PostStore from "../Posts/PostStore";
+
+interface PostFormData {
+  title: string;
+  html: string;
+}
+
+const CreatePost: React.FC = observer(() => {
+  const navigate = useNavigate();
+  const { t } = useTranslation("pages/create-post");
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    setError,
+  } = useForm<PostFormData>();
+
+  const onSubmit = async (data: PostFormData) => {
+    try {
+      await PostStore.createPost(data);
+      navigate(`${HOME_ROUTE}/website/posts`);
+    } catch (error) {
+      console.error("Failed to create post:", error);
+      setError("root", {
+        type: "manual",
+        message: t("createError"),
+      });
+    }
+  };
+
+  const handleBack = () => {
+    navigate(`${HOME_ROUTE}/website/posts`);
+  };
+
+  return (
+    <div className="px-2 sm:px-4 lg:px-6">
+      <div className="sm:flex sm:items-center mb-4">
+        <div className="sm:flex-auto">
+          <div className="flex items-center space-x-3">
+            <CButton
+              color="ghost"
+              size="sm"
+              onClick={handleBack}
+              className="text-gray-600 hover:text-gray-900"
+            >
+              <FaArrowLeft className="w-4 h-4" />
+            </CButton>
+            <h1 className="text-2xl font-semibold text-gray-900">{t("createPost")}</h1>
+          </div>
+        </div>
+      </div>
+
+      <CCard className="shadow-lg border-0">
+        <CCardHeader className="bg-gray-50 border-b border-gray-200">
+          <div className="flex items-center justify-between">
+            <h3 className="text-lg font-medium text-gray-900">{t("newPost")}</h3>
+          </div>
+        </CCardHeader>
+        <CCardBody className="p-6">
+          <CForm onSubmit={handleSubmit(onSubmit)}>
+            <div className="space-y-6">
+              <div>
+                <CFormLabel htmlFor="title" className="text-sm font-medium text-gray-700">
+                  {t("title")} *
+                </CFormLabel>
+                <CFormInput
+                  type="text"
+                  id="title"
+                  {...register("title", {
+                    required: t("titleRequired"),
+                    minLength: {
+                      value: 3,
+                      message: t("titleMinLength"),
+                    },
+                  })}
+                  className={`mt-1 ${errors.title ? "border-red-500" : ""}`}
+                  placeholder={t("titlePlaceholder")}
+                />
+                {errors.title && (
+                  <div className="mt-1 text-sm text-red-600">{errors.title.message}</div>
+                )}
+              </div>
+
+              <div>
+                <CFormLabel htmlFor="html" className="text-sm font-medium text-gray-700">
+                  {t("content")} *
+                </CFormLabel>
+                <CFormTextarea
+                  id="html"
+                  rows={12}
+                  {...register("html", {
+                    required: t("contentRequired"),
+                    minLength: {
+                      value: 10,
+                      message: t("contentMinLength"),
+                    },
+                  })}
+                  className={`mt-1 ${errors.html ? "border-red-500" : ""}`}
+                  placeholder={t("contentPlaceholder")}
+                />
+                {errors.html && (
+                  <div className="mt-1 text-sm text-red-600">{errors.html.message}</div>
+                )}
+                <div className="mt-1 text-xs text-gray-500">
+                  {t("htmlHelp")}
+                </div>
+              </div>
+
+              {errors.root && (
+                <div className="p-4 bg-red-50 border border-red-200 rounded-md">
+                  <div className="text-sm text-red-600">{errors.root.message}</div>
+                </div>
+              )}
+
+              <div className="flex items-center justify-end gap-3 pt-4">
+                <CButton
+                  color="secondary"
+                  variant="outline"
+                  onClick={handleBack}
+                  disabled={isSubmitting}
+                >
+                  {t("cancel")}
+                </CButton>
+                <CButton
+                  color="primary"
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="flex items-center gap-2"
+                >
+                  {isSubmitting ? (
+                    <>
+                      <CSpinner size="sm" className="inline w-4 h-4 mr-2" />
+                      <span>{t("creating")}</span>
+                    </>
+                  ) : (
+                    <>
+                      <FaFloppyDisk className="inline w-4 h-4 mr-2" />
+                      <span>{t("addPost")}</span>
+                    </>
+                  )}
+                </CButton>
+              </div>
+            </div>
+          </CForm>
+        </CCardBody>
+      </CCard>
+    </div>
+  );
+});
+
+export default CreatePost;

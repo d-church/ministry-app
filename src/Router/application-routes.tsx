@@ -2,7 +2,8 @@ import React from "react";
 import { Navigate } from "react-router-dom";
 
 const Profile = React.lazy(() => import("../pages/home/Profile"));
-const Posts = React.lazy(() => import("../pages/home/Posts"));
+const Posts = React.lazy(() => import("../pages/home/website/Posts"));
+const CreatePost = React.lazy(() => import("../pages/home/website/CreatePost"));
 
 const routes: {
   path: string;
@@ -16,6 +17,7 @@ const routes: {
   // Website
   { path: "/website", nameKey: "navigation.website", element: <Navigate to="posts" replace /> },
   { path: "/website/posts", nameKey: "navigation.posts", element: <Posts /> },
+  { path: "/website/posts/create", nameKey: "pages/create-post:newPost", element: <CreatePost /> },
 ];
 
 export default routes;

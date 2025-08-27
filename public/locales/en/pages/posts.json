@@ -17,6 +17,7 @@
   "editPost": "Edit post",
   "deletePost": "Delete post",
   "confirmDelete": "Are you sure you want to delete this post?",
+  "new": "New",
   "table": {
     "id": "ID",
     "title": "Title",

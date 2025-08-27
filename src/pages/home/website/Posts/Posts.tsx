@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { observer } from "mobx-react-lite";
+import { useNavigate } from "react-router-dom";
 import { CCard, CCardBody, CCardHeader, CButton, CSpinner, CBadge } from "@coreui/react";
 import { FaPen, FaTrash } from "react-icons/fa6";
 import { useTranslation } from "react-i18next";
@@ -7,11 +8,13 @@ import { format } from "date-fns";
 import { uk } from "date-fns/locale/uk";
 
 import { LoadingSpinner, UserAvatar } from "src/components/common";
+import { HOME_ROUTE } from "src/constants";
 
 import PostStore from "./PostStore";
 
 const Posts: React.FC = observer(() => {
   const { t, i18n } = useTranslation("pages/posts");
+  const navigate = useNavigate();
 
   useEffect(() => {
     PostStore.loadPosts();
@@ -38,7 +41,7 @@ const Posts: React.FC = observer(() => {
   };
 
   const handleAddPost = () => {
-    console.log("Додати новий пост");
+    navigate(`${HOME_ROUTE}/website/posts/create`);
   };
 
   if (PostStore.isLoading && (!PostStore.data || PostStore.data.length === 0)) {
