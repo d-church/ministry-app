@@ -26,8 +26,12 @@ const Posts: React.FC = observer(() => {
     return format(dateString, "d MMM yyyy, HH:mm", { locale });
   };
 
+  const handleView = (id: string) => {
+    navigate(`${HOME_ROUTE}/website/posts/${id}`);
+  };
+
   const handleEdit = (id: string) => {
-    navigate(`${HOME_ROUTE}/website/posts/edit/${id}`);
+    navigate(`${HOME_ROUTE}/website/posts/${id}/edit`);
   };
 
   const handleDelete = async (id: string) => {
@@ -117,7 +121,11 @@ const Posts: React.FC = observer(() => {
                 {PostStore.data?.map((post) => (
                   <tr key={post.id} className="hover:bg-gray-50 transition-colors">
                     <td className="px-4 py-3 text-sm text-gray-900 font-medium">
-                      <div className="max-w-md truncate" title={post.title}>
+                      <div
+                        className="max-w-md truncate cursor-pointer hover:text-blue-600 transition-colors"
+                        title={post.title}
+                        onClick={() => handleView(post.id)}
+                      >
                         {post.title}
                       </div>
                     </td>
