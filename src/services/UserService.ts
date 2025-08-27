@@ -1,12 +1,22 @@
 import RestService from "./abstracts/RestService";
+import { type UserMinistry } from "./MinistryService";
 
 class UserService extends RestService<User> {
   protected anchor = "users";
 
   public async getMe(): Promise<User> {
     const response = await this.api.get<User>(`/${this.anchor}/get-me`);
+
+    console.log(response.data);
     return response.data;
   }
+}
+
+export enum UserRole {
+  USER = 'user',
+  ADMIN = 'admin',
+  SUPERADMIN = 'super_admin',
+  DEVELOPER = 'developer'
 }
 
 export interface User {
@@ -17,10 +27,10 @@ export interface User {
   phone_number: string;
   photo: string;
   photoKey: string;
-  // TODO: Add role
-  role: "admin";
+  role: UserRole;
   createdAt: string;
   updatedAt: string;
+  userMinistries: UserMinistry[];
 }
 
 export default new UserService();

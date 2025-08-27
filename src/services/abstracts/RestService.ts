@@ -19,7 +19,7 @@ abstract class RestService<T> extends ApiService {
   }
 
   public async update(id: string, data: Partial<T>): Promise<T> {
-    const response = await this.api.put<T>(`${this.anchor}/${id}`, data);
+    const response = await this.api.patch<T>(`${this.anchor}/${id}`, data);
     return response.data;
   }
 

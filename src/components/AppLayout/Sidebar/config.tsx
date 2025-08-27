@@ -5,7 +5,7 @@ const config: SidebarNavConfigItem[] = [
   {
     component: CNavItem,
     nameKey: "sidebar.church",
-    to: "/church/overview",
+    to: "/church/profile",
     icon: <FaChurch className="nav-icon" />,
   },
   {
