@@ -1,28 +1,26 @@
 import React, { useEffect } from "react";
 import { observer } from "mobx-react-lite";
-import { CCard, CCardBody, CCardHeader, CButton, CSpinner } from "@coreui/react";
+import { CCard, CCardBody, CCardHeader, CButton, CSpinner, CBadge } from "@coreui/react";
 import { FaPen, FaTrash } from "react-icons/fa6";
 import { useTranslation } from "react-i18next";
+import { format } from "date-fns";
+import { uk } from "date-fns/locale/uk";
 
 import { LoadingSpinner, UserAvatar } from "src/components/common";
 
 import PostStore from "./PostStore";
 
 const Posts: React.FC = observer(() => {
-  const { t } = useTranslation("pages/posts");
+  const { t, i18n } = useTranslation("pages/posts");
 
   useEffect(() => {
     PostStore.loadPosts();
   }, []);
 
   const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString("uk-UA", {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-    });
+    const locale = i18n.language === 'uk' ? uk : undefined;
+
+    return format(dateString, "d MMM yyyy, HH:mm", { locale });
   };
 
   const handleEdit = (id: string) => {
@@ -30,7 +28,7 @@ const Posts: React.FC = observer(() => {
   };
 
   const handleDelete = async (id: string) => {
-    if (window.confirm("Ви впевнені, що хочете видалити цей пост?")) {
+    if (window.confirm(t("confirmDelete"))) {
       try {
         await PostStore.deletePost(id);
       } catch (error) {
@@ -73,14 +71,6 @@ const Posts: React.FC = observer(() => {
         <CCardHeader className="bg-gray-50 border-b border-gray-200">
           <div className="flex items-center justify-between">
             <h3 className="text-lg font-medium text-gray-900">{t("allPosts")}</h3>
-            <div className="flex space-x-2">
-              <CButton color="outline" size="sm" className="text-xs">
-                {t("export")}
-              </CButton>
-              <CButton color="outline" size="sm" className="text-xs">
-                {t("filter")}
-              </CButton>
-            </div>
           </div>
         </CCardHeader>
         <CCardBody className="p-0">
@@ -92,25 +82,31 @@ const Posts: React.FC = observer(() => {
                      scope="col"
                      className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-80"
                    >
-                     Заголовок
+                     {t("table.title")}
                    </th>
                   <th
                     scope="col"
                     className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                   >
-                    Автор
+                    {t("table.author")}
                   </th>
                   <th
                     scope="col"
                     className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                   >
-                    Дата створення
+                    {t("table.date")}
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    {t("table.status")}
                   </th>
                   <th
                     scope="col"
                     className="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider w-24"
                   >
-                    Дії
+                    {t("table.actions")}
                   </th>
                 </tr>
               </thead>
@@ -136,6 +132,11 @@ const Posts: React.FC = observer(() => {
                     <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-500">
                       {formatDate(post.createdAt)}
                     </td>
+                    <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-500">
+                      <CBadge color="success" className="text-xs">
+                        {t("status.published")}
+                      </CBadge>
+                    </td>
                     <td className="px-4 py-3 whitespace-nowrap text-right text-sm font-medium">
                       <div className="flex space-x-2 justify-end">
                         <CButton
@@ -143,7 +144,7 @@ const Posts: React.FC = observer(() => {
                           size="sm"
                           onClick={() => handleEdit(post.id)}
                           className="text-blue-600 hover:text-blue-900 hover:bg-blue-50 p-2"
-                          title="Редагувати пост"
+                          title={t("editPost")}
                         >
                           <FaPen className="w-4 h-4" />
                         </CButton>
@@ -152,7 +153,7 @@ const Posts: React.FC = observer(() => {
                           size="sm"
                           onClick={() => handleDelete(post.id)}
                           className="text-red-600 hover:text-red-900 hover:bg-red-50 p-2"
-                          title="Видалити пост"
+                          title={t("deletePost")}
                         >
                           <FaTrash className="w-4 h-4" />
                         </CButton>
@@ -161,8 +162,8 @@ const Posts: React.FC = observer(() => {
                   </tr>
                 )) || (
                   <tr>
-                    <td colSpan={4} className="px-4 py-8 text-center text-sm text-gray-500">
-                      Постів не знайдено
+                    <td colSpan={5} className="px-4 py-8 text-center text-sm text-gray-500">
+                      {t("noPostsFound")}
                     </td>
                   </tr>
                 )}
@@ -174,15 +175,15 @@ const Posts: React.FC = observer(() => {
 
       <div className="mt-4 flex items-center justify-between">
         <div className="text-sm text-gray-700">
-          Показано <span className="font-medium">{PostStore.data?.length || 0}</span> постів
+          {t("showing")} <span className="font-medium">{PostStore.data?.length || 0}</span> {t("postsCount")}
           {PostStore.isLoading && <CSpinner size="sm" className="ml-2" />}
         </div>
         <div className="flex space-x-2">
           <CButton color="outline" size="sm" disabled>
-            Попередня
+            {t("previous")}
           </CButton>
           <CButton color="outline" size="sm" disabled>
-            Наступна
+            {t("next")}
           </CButton>
         </div>
       </div>

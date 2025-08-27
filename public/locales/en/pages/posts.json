@@ -12,11 +12,16 @@
   "results": "results",
   "previous": "Previous",
   "next": "Next",
+  "postsCount": "posts",
+  "noPostsFound": "No posts found",
+  "editPost": "Edit post",
+  "deletePost": "Delete post",
+  "confirmDelete": "Are you sure you want to delete this post?",
   "table": {
     "id": "ID",
     "title": "Title",
     "author": "Author",
-    "date": "Date",
+    "date": "Created Date",
     "status": "Status",
     "actions": "Actions"
   },
