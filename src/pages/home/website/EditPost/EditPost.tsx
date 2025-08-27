@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { observer } from "mobx-react-lite";
 import { useForm, Controller } from "react-hook-form";
@@ -17,6 +17,7 @@ import { FaArrowLeft, FaFloppyDisk } from "react-icons/fa6";
 
 import { HOME_ROUTE } from "src/constants";
 import PostStore from "../Posts/PostStore";
+import PostService, { type Post } from "src/services/PostService";
 import HTMLEditor from "src/components/HTMLEditor";
 
 interface PostFormData {
@@ -29,6 +30,9 @@ const EditPost: React.FC = observer(() => {
   const { id } = useParams<{ id: string }>();
   const { t } = useTranslation("pages/edit-post");
 
+  const [post, setPost] = useState<Post | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+
   const {
     register,
     handleSubmit,
@@ -38,21 +42,33 @@ const EditPost: React.FC = observer(() => {
     reset,
   } = useForm<PostFormData>();
 
-  const post = id ? PostStore.getById(id) : null;
-
   useEffect(() => {
     if (!id) {
       navigate(`${HOME_ROUTE}/website/posts`);
       return;
     }
 
-    if (post) {
-      reset({
-        title: post.title,
-        html: post.html,
-      });
-    }
-  }, [id, post, navigate, reset]);
+    const fetchPost = async () => {
+      try {
+        setIsLoading(true);
+        const fetchedPost = await PostService.get(id);
+        setPost(fetchedPost);
+
+        // Попереднє заповнення форми
+        reset({
+          title: fetchedPost.title,
+          html: fetchedPost.html,
+        });
+      } catch (error) {
+        console.error("Failed to load post:", error);
+        navigate(`${HOME_ROUTE}/website/posts`);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchPost();
+  }, [id, navigate, reset]);
 
   const onSubmit = async (data: PostFormData) => {
     if (!id) return;
@@ -73,11 +89,30 @@ const EditPost: React.FC = observer(() => {
     navigate(`${HOME_ROUTE}/website/posts`);
   };
 
+  if (isLoading) {
+    return (
+      <div className="px-2 sm:px-4 lg:px-6">
+        <div className="flex items-center justify-center h-64">
+          <CSpinner size="sm" className="w-8 h-8" />
+        </div>
+      </div>
+    );
+  }
+
   if (!post) {
     return (
       <div className="px-2 sm:px-4 lg:px-6">
         <div className="flex items-center justify-center h-64">
-          <CSpinner size="lg" />
+          <div className="text-center">
+            <p className="text-gray-500">{t("postNotFound")}</p>
+            <CButton
+              color="primary"
+              onClick={() => navigate(`${HOME_ROUTE}/website/posts`)}
+              className="mt-4"
+            >
+              {t("backToPosts")}
+            </CButton>
+          </div>
         </div>
       </div>
     );

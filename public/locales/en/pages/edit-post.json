@@ -12,5 +12,7 @@
   "updating": "Updating...",
   "cancel": "Cancel",
   "editPost": "Edit post",
-  "updatePost": "Update post"
+  "updatePost": "Update post",
+  "postNotFound": "Post not found",
+  "backToPosts": "Back to posts list"
 }
