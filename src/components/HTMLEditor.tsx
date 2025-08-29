@@ -1,6 +1,9 @@
 import React from "react";
-import ReactQuill from "react-quill-new";
+import ReactQuill, { Quill } from "react-quill-new";
 import "react-quill-new/dist/quill.snow.css";
+import QuillResizeImage from "quill-resize-image";
+
+Quill.register("modules/resize", QuillResizeImage);
 
 const HTMLEditor: React.FC<{
   value?: string;
@@ -12,7 +15,7 @@ const HTMLEditor: React.FC<{
   return (
     <ReactQuill
       theme="snow"
-      value={value}
+      defaultValue={value}
       onChange={onChange}
       placeholder={placeholder}
       modules={modules}
@@ -31,8 +34,7 @@ const modules = {
     // Headers dropdown
     [{ header: [1, 2, 3, 4, 5, 6, false] }],
 
-    // Font family and size
-    [{ font: [] as string[] }],
+    // Font size
     [{ size: ["small", false, "large", "huge"] }],
 
     // Text formatting
@@ -40,9 +42,6 @@ const modules = {
 
     // Text color and background
     [{ color: [] as string[] }, { background: [] as string[] }],
-
-    // Subscript/Superscript
-    [{ script: "sub" }, { script: "super" }],
 
     // Lists
     [{ list: "ordered" }, { list: "bullet" }],
@@ -57,17 +56,19 @@ const modules = {
     // Blockquote and code block
     ["blockquote", "code-block"],
 
-    // Links, images, videos, formulas
-    ["link", "image", "video", "formula"],
+    // Links, images, videos
+    ["link", "image", "video"],
 
     // Clean formatting
     ["clean"],
   ],
+  resize: {
+    locale: {},
+  },
 };
 
 const formats = [
   "header",
-  "font",
   "size",
   "bold",
   "italic",
@@ -75,7 +76,6 @@ const formats = [
   "strike",
   "color",
   "background",
-  "script",
   "list",
   "bullet",
   "indent",
@@ -86,7 +86,6 @@ const formats = [
   "link",
   "image",
   "video",
-  "formula",
 ];
 
 export default HTMLEditor;
