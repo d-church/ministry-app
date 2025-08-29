@@ -54,7 +54,6 @@ const EditPost: React.FC = observer(() => {
         const fetchedPost = await PostService.get(id);
         setPost(fetchedPost);
 
-        // Попереднє заповнення форми
         reset({
           title: fetchedPost.title,
           html: fetchedPost.html,
@@ -179,9 +178,8 @@ const EditPost: React.FC = observer(() => {
                     }}
                     render={({ field }) => (
                       <HTMLEditor
-                        value={field.value || ""}
+                        value={field.value}
                         onChange={field.onChange}
-                        placeholder={t("contentPlaceholder")}
                         hasError={!!errors.html}
                       />
                     )}
@@ -190,9 +188,6 @@ const EditPost: React.FC = observer(() => {
                 {errors.html && (
                   <div className="mt-1 text-sm text-red-600">{errors.html.message}</div>
                 )}
-                <div className="mt-1 text-xs text-gray-500">
-                  {t("htmlHelp")}
-                </div>
               </div>
 
               {errors.root && (

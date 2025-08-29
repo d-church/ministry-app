@@ -3,7 +3,6 @@
   "content": "Post content",
   "titlePlaceholder": "Enter post title",
   "contentPlaceholder": "Enter post content...",
-  "htmlHelp": "Use the toolbar to format your text",
   "titleRequired": "Title is required",
   "titleMinLength": "Title must contain at least 3 characters",
   "contentRequired": "Content is required",

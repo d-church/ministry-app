@@ -117,7 +117,6 @@ const CreatePost: React.FC = observer(() => {
                       <HTMLEditor
                         value={field.value || ""}
                         onChange={field.onChange}
-                        placeholder={t("contentPlaceholder")}
                         hasError={!!errors.html}
                       />
                     )}
@@ -126,9 +125,6 @@ const CreatePost: React.FC = observer(() => {
                 {errors.html && (
                   <div className="mt-1 text-sm text-red-600">{errors.html.message}</div>
                 )}
-                <div className="mt-1 text-xs text-gray-500">
-                  {t("htmlHelp")}
-                </div>
               </div>
 
               {errors.root && (

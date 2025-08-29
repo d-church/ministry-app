@@ -26,5 +26,10 @@
     "profile": "Profile",
     "settings": "Settings",
     "logout": "Logout"
+  },
+  "htmlEditor": {
+    "editHtmlMessage": "Direct HTML editing",
+    "ok": "OK",
+    "cancel": "Cancel"
   }
 }

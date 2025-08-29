@@ -1,0 +1,14 @@
+.html-editor {
+  .ql-toolbar {
+    button[title*="HTML"] {
+      width: 100px !important;
+
+      position: relative;
+      $offset: -3px;
+      top: $offset;
+      left: $offset - 20;
+
+      opacity: 0.8;
+    }
+  }
+}
