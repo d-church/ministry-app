@@ -141,7 +141,14 @@ const EditPost: React.FC = observer(() => {
           </div>
         </CCardHeader>
         <CCardBody className="p-6">
-          <CForm onSubmit={handleSubmit(onSubmit)}>
+          <CForm
+            onSubmit={handleSubmit(onSubmit)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" && !e.shiftKey) {
+                e.preventDefault();
+              }
+            }}
+          >
             <div className="space-y-6">
               <div>
                 <CFormLabel htmlFor="title" className="text-sm font-medium text-gray-700">
