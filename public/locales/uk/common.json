@@ -28,8 +28,7 @@
     "logout": "Вийти"
   },
   "htmlEditor": {
-    "editHtmlMessage": "Пряме редагування HTML",
-    "ok": "ОК",
-    "cancel": "Скасувати"
+    "visualMode": "Візуальний",
+    "htmlMode": "HTML"
   }
 }

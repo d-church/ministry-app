@@ -28,8 +28,7 @@
     "logout": "Logout"
   },
   "htmlEditor": {
-    "editHtmlMessage": "Direct HTML editing",
-    "ok": "OK",
-    "cancel": "Cancel"
+    "visualMode": "Visual",
+    "htmlMode": "HTML"
   }
 }

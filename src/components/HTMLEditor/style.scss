@@ -1,14 +1,40 @@
 .html-editor {
-  .ql-toolbar {
-    button[title*="HTML"] {
-      width: 100px !important;
+  &.html-mode {
+    .ql-toolbar {
+      display: none !important;
+    }
 
-      position: relative;
-      $offset: -3px;
-      top: $offset;
-      left: $offset - 20;
+    .ql-container {
+      border-top: 1px solid #ccc !important;
+    }
 
-      opacity: 0.8;
+    .ql-editor {
+      font-family: ui-monospace, SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace !important;
+      font-size: 14px !important;
+      line-height: 1.5 !important;
+      white-space: pre-wrap !important;
+      background-color: #f8f9fa !important;
+      color: #495057 !important;
+      padding: 12px !important;
+      * {
+        font-family: inherit !important;
+        font-size: inherit !important;
+        font-weight: normal !important;
+        color: inherit !important;
+        background: transparent !important;
+        text-decoration: none !important;
+        font-style: normal !important;
+      }
+      p {
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+
+      br {
+        display: block !important;
+        content: "" !important;
+        margin-top: 0 !important;
+      }
     }
   }
 }
