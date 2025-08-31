@@ -69,9 +69,6 @@ const defaultModules = {
     // Text alignment
     [{ align: [] as string[] }],
 
-    // Text direction
-    [{ direction: "rtl" }],
-
     // Blockquote and code block
     ["blockquote", "code-block"],
 
