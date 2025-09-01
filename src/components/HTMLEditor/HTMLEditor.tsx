@@ -1,9 +1,10 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, Suspense } from "react";
 import ReactQuill, { Quill } from "react-quill-new";
+import Editor from "@monaco-editor/react";
 import cn from "clsx";
 import { useTranslation } from "react-i18next";
-import { CButton, CButtonGroup, CFormTextarea } from "@coreui/react";
-import { FaEye, FaCode } from "react-icons/fa6";
+import { CButton, CButtonGroup, CSpinner } from "@coreui/react";
+import { FaEye, FaCode, FaSun, FaMoon } from "react-icons/fa6";
 
 import QuillResizeImage from "quill-resize-image";
 
@@ -20,6 +21,7 @@ const HTMLEditor: React.FC<{
 }> = ({ value = "", onChange, hasError = false, height = "400px" }) => {
   const { t } = useTranslation("common");
   const [mode, setMode] = useState<'visual' | 'html'>('visual');
+  const [editorTheme, setEditorTheme] = useState<'light' | 'dark'>('dark');
   const visualModules = useMemo(() => {
     return {
       ...defaultModules,
@@ -31,7 +33,31 @@ const HTMLEditor: React.FC<{
 
   return (
     <div>
-      <div className="mb-2 flex justify-end">
+      <div className="mb-2 flex justify-between items-center">
+        <div className="flex gap-2">
+          {mode === 'html' && (
+            <CButtonGroup size="sm">
+              <CButton
+                color={editorTheme === 'light' ? 'primary' : 'secondary'}
+                variant={editorTheme === 'light' ? undefined : 'outline'}
+                onClick={() => setEditorTheme('light')}
+                className="flex items-center gap-1"
+              >
+                <FaSun className="inline w-3 h-3" />
+                Light
+              </CButton>
+              <CButton
+                color={editorTheme === 'dark' ? 'primary' : 'secondary'}
+                variant={editorTheme === 'dark' ? undefined : 'outline'}
+                onClick={() => setEditorTheme('dark')}
+                className="flex items-center gap-1"
+              >
+                <FaMoon className="inline w-3 h-3" />
+                Dark
+              </CButton>
+            </CButtonGroup>
+          )}
+        </div>
         <CButtonGroup size="sm">
           <CButton
             color={mode === 'visual' ? 'primary' : 'secondary'}
@@ -64,22 +90,65 @@ const HTMLEditor: React.FC<{
           className={cn("html-editor", hasError && "border-red-500")}
         />
       ) : (
-        <CFormTextarea
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-          style={{
-            height,
-            fontFamily: 'ui-monospace, SFMono-Regular, Consolas, monospace',
-            fontSize: '14px',
-            lineHeight: '1.5',
-            backgroundColor: '#f8f9fa',
-          }}
-          className={cn(
-            "html-editor html-mode",
-            hasError && "border-red-500"
-          )}
-          rows={Math.floor(parseInt(height) / 24) || 10}
-        />
+        <div className={cn(hasError && "border border-red-500 rounded")}>
+          <Editor
+            height={height}
+            language="html"
+            theme={editorTheme === 'dark' ? 'vs-dark' : 'vs'}
+            value={value}
+            onChange={(val) => onChange(val || '')}
+            options={{
+              minimap: { enabled: false },
+              scrollBeyondLastLine: false,
+              fontSize: 14,
+              lineNumbers: 'on',
+              wordWrap: 'on',
+              automaticLayout: true,
+              formatOnPaste: true,
+              formatOnType: true,
+              tabSize: 2,
+              insertSpaces: true,
+              acceptSuggestionOnEnter: 'off',
+              quickSuggestions: {
+                other: true,
+                comments: true,
+                strings: true
+              },
+              renderLineHighlight: 'line',
+              multiCursorModifier: 'ctrlCmd',
+              selectionHighlight: false,
+              occurrencesHighlight: false,
+              suggest: {
+                showKeywords: true,
+                showSnippets: true,
+                showColors: true,
+                showFiles: true,
+                showReferences: true,
+                showFolders: true,
+                showTypeParameters: true,
+                showIssues: true,
+                showUsers: true,
+                showValues: true,
+                showMethods: true,
+                showFunctions: true,
+                showConstructors: true,
+                showFields: true,
+                showVariables: true,
+                showClasses: true,
+                showStructs: true,
+                showInterfaces: true,
+                showModules: true,
+                showProperties: true,
+                showEvents: true,
+                showOperators: true,
+                showUnits: true,
+                showConstants: true,
+                showEnums: true,
+                showEnumMembers: true,
+              },
+            }}
+          />
+        </div>
       )}
     </div>
   );

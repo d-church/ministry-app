@@ -82,6 +82,11 @@ const CreatePost: React.FC = observer(() => {
             onSubmit={handleSubmit(onSubmit)}
             onKeyDown={(e) => {
               if (e.key === "Enter" && !e.shiftKey) {
+                const target = e.target as HTMLElement;
+                // Don't prevent Enter in Monaco Editor (HTML/CSS modes)
+                if (target.closest('.monaco-editor')) {
+                  return;
+                }
                 e.preventDefault();
               }
             }}
