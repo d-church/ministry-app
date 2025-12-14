@@ -1,13 +1,16 @@
-import { observable, action } from "mobx";
+import { observable, action, computed } from "mobx";
 import type { AnnouncementItem, Announcement } from "./DyouthAnnouncementsService";
 import DyouthAnnouncementsService from "./DyouthAnnouncementsService";
 
 class State {
-  @observable public accessor announcements: AnnouncementItem[] = [];
+  @observable public accessor data: Announcement | null = null;
   @observable public accessor isLoading = false;
   @observable public accessor isSaving = false;
   @observable public accessor locale: "UK" | "EN" = "UK";
-  @observable public accessor announcementData: Announcement | null = null;
+
+  @computed get announcements(): AnnouncementItem[] {
+    return this.data?.announcements || [];
+  }
 
   @action public setLocale(locale: "UK" | "EN") {
     this.locale = locale;
@@ -17,17 +20,11 @@ class State {
     this.isLoading = true;
     try {
       const data = await DyouthAnnouncementsService.getAnnouncements(this.locale);
-      if (data && data.length > 0) {
-        this.announcementData = data[0];
-        this.announcements = data[0].announcements || [];
-      } else {
-        this.announcements = [];
-        this.announcementData = null;
-      }
+      this.data = data || null;
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : String(error);
       console.error("Failed to load announcements:", errorMessage);
-      this.announcements = [];
+      this.data = null;
     } finally {
       this.isLoading = false;
     }
@@ -40,7 +37,7 @@ class State {
         this.locale,
         this.announcements,
       );
-      this.announcementData = updated;
+      this.data = updated;
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : String(error);
       console.error("Failed to save announcements:", errorMessage);
@@ -51,26 +48,42 @@ class State {
   }
 
   @action public reorderAnnouncements(startIndex: number, endIndex: number): void {
+    if (!this.data) return;
     const result = Array.from(this.announcements);
     const [removed] = result.splice(startIndex, 1);
     result.splice(endIndex, 0, removed);
-    this.announcements = result;
+    this.data = {
+      ...this.data,
+      announcements: result,
+    };
   }
 
   @action public addAnnouncement(announcement: AnnouncementItem): void {
-    this.announcements = [...this.announcements, announcement];
+    if (!this.data) return;
+    this.data = {
+      ...this.data,
+      announcements: [...this.announcements, announcement],
+    };
   }
 
   @action public updateAnnouncement(index: number, announcement: AnnouncementItem): void {
+    if (!this.data) return;
     const updated = [...this.announcements];
     updated[index] = announcement;
-    this.announcements = updated;
+    this.data = {
+      ...this.data,
+      announcements: updated,
+    };
   }
 
   @action public removeAnnouncement(index: number): void {
+    if (!this.data) return;
     const updated = [...this.announcements];
     updated.splice(index, 1);
-    this.announcements = updated;
+    this.data = {
+      ...this.data,
+      announcements: updated,
+    };
   }
 }
 

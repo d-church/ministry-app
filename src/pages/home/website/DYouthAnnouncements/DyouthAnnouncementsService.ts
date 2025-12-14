@@ -15,13 +15,15 @@ export interface Announcement {
 }
 
 class DyouthAnnouncementsService extends ApiService {
-  public async getAnnouncements(locale: "UK" | "EN"): Promise<Announcement[]> {
+  public async getAnnouncements(locale: "UK" | "EN"): Promise<Announcement> {
     const response = await this.api.get<Announcement[]>("/announcements", {
       headers: {
         "x-locale": locale,
       },
     });
-    return response.data;
+
+    // TODO: Backend returns array, but we need only first element
+    return response.data[0];
   }
 
   public async updateAnnouncements(

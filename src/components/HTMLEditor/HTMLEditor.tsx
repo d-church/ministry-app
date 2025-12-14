@@ -13,7 +13,7 @@ const HTMLEditor: React.FC<{
   onChange: (value: string) => void;
   hasError?: boolean;
   height?: string;
-}> = ({ value = "", onChange, hasError = false, height = "400px" }) => {
+}> = ({ value = "", onChange, hasError = false, height }) => {
   const { t } = useTranslation("common");
   const [mode, setMode] = useState<'visual' | 'html'>('visual');
   const [editorTheme, setEditorTheme] = useState<'light' | 'dark'>('dark');
