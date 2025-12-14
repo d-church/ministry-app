@@ -6,7 +6,8 @@
     "posts": "Posts",
     "newPost": "New Post",
     "editPost": "Edit Post",
-    "viewPost": "View Post"
+    "viewPost": "View Post",
+    "dyouthAnnouncements": "D.Youth Announcements"
   },
   "language": {
     "uk": "Українська",
@@ -17,7 +18,8 @@
     "church": "My Church",
     "ministries": "Ministries",
     "website": "Website",
-    "posts": "Posts"
+    "posts": "Posts",
+    "dyouthAnnouncements": "D.Youth Announcements"
   },
   "breadcrumb": {
     "home": "Home"
@@ -30,5 +32,27 @@
   "htmlEditor": {
     "visualMode": "Visual",
     "htmlMode": "HTML"
-  }
+  },
+  "dyouthAnnouncements": {
+    "description": "Manage announcements for D.Youth page. Drag cards to reorder.",
+    "list": "Announcements List",
+    "noAnnouncements": "No announcements. Add the first one!"
+  },
+  "add": "Add",
+  "save": "Save",
+  "saving": "Saving...",
+  "savedSuccessfully": "Announcements saved successfully!",
+  "cancel": "Cancel",
+  "title": "Title",
+  "body": "Body",
+  "date": "Date",
+  "location": "Location",
+  "price": "Price",
+  "description": "Description",
+  "enterTitle": "Enter title",
+  "enterBody": "Enter announcement text",
+  "enterDescription": "Enter description",
+  "editAnnouncement": "Edit Announcement",
+  "addAnnouncement": "Add Announcement",
+  "confirmDelete": "Are you sure you want to delete this announcement?"
 }

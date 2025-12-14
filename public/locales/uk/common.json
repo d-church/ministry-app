@@ -6,7 +6,8 @@
     "posts": "Пости",
     "newPost": "Новий пост",
     "editPost": "Редагувати пост",
-    "viewPost": "Перегляд поста"
+    "viewPost": "Перегляд поста",
+    "dyouthAnnouncements": "Анонси D.Youth"
   },
   "language": {
     "uk": "Українська",
@@ -17,7 +18,8 @@
     "church": "Моя церква",
     "ministries": "Служіння",
     "website": "Вебсайт",
-    "posts": "Пости"
+    "posts": "Пости",
+    "dyouthAnnouncements": "Анонси D.Youth"
   },
   "breadcrumb": {
     "home": "Головна"
@@ -30,5 +32,27 @@
   "htmlEditor": {
     "visualMode": "Візуальний",
     "htmlMode": "HTML"
-  }
+  },
+  "dyouthAnnouncements": {
+    "description": "Керуйте анонсами для сторінки D.Youth. Перетягуйте картки для зміни порядку.",
+    "list": "Список анонсів",
+    "noAnnouncements": "Немає анонсів. Додайте перший!"
+  },
+  "add": "Додати",
+  "save": "Зберегти",
+  "saving": "Збереження...",
+  "savedSuccessfully": "Анонси успішно збережено!",
+  "cancel": "Скасувати",
+  "title": "Заголовок",
+  "body": "Текст",
+  "date": "Дата",
+  "location": "Місце",
+  "price": "Ціна",
+  "description": "Опис",
+  "enterTitle": "Введіть заголовок",
+  "enterBody": "Введіть текст анонсу",
+  "enterDescription": "Введіть опис",
+  "editAnnouncement": "Редагувати анонс",
+  "addAnnouncement": "Додати анонс",
+  "confirmDelete": "Ви впевнені, що хочете видалити цей анонс?"
 }
