@@ -1,21 +1,24 @@
-import { observable, action } from "mobx";
+import { observable, action, runInAction } from "mobx";
 import ArrayStore from "src/store/abstracts/ArrayStore";
+import type { Language } from "src/types";
 import type { AnnouncementItem, Announcement } from "./DYouthAnnouncementsService";
 import DYouthAnnouncementsService from "./DYouthAnnouncementsService";
 
 class State extends ArrayStore<AnnouncementItem> {
   @observable public accessor isSaving = false;
-  @observable public accessor locale: "UK" | "EN" = "UK";
+  @observable public accessor language: Language = "uk";
   @observable public accessor announcementMeta: Omit<Announcement, "announcements"> | null = null;
+  @observable public accessor saveError: string | null = null;
+  @observable public accessor saveSuccess = false;
 
-  @action public setLocale(locale: "UK" | "EN") {
-    this.locale = locale;
+  @action public setLanguage(language: Language) {
+    this.language = language;
   }
 
   @action public async loadAnnouncements(): Promise<void> {
     this.isLoading = true;
     try {
-      const { announcements, ...meta } = await DYouthAnnouncementsService.getAnnouncements(this.locale);
+      const { announcements, ...meta } = await DYouthAnnouncementsService.getAnnouncements(this.language);
 
       this.setData(announcements);
       this.announcementMeta = meta;
@@ -28,17 +31,26 @@ class State extends ArrayStore<AnnouncementItem> {
 
   @action public async saveAnnouncements(): Promise<void> {
     this.isSaving = true;
+    this.saveError = null;
+    this.saveSuccess = false;
     try {
       const { announcements, ...meta } = await DYouthAnnouncementsService.updateAnnouncements(
-        this.locale,
+        this.language,
         this.data || [],
       );
 
       this.setData(announcements);
       this.announcementMeta = meta;
+      this.saveSuccess = true;
+      setTimeout(() => {
+        runInAction(() => {
+          this.saveSuccess = false;
+        });
+      }, 3000);
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : String(error);
       console.error("Failed to save announcements:", errorMessage);
+      this.saveError = errorMessage;
       throw error;
     } finally {
       this.isSaving = false;

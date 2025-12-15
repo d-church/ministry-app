@@ -1,10 +1,11 @@
 import ApiService from "src/services/abstracts/ApiService";
+import type { Language } from "src/types";
 
 class DYouthAnnouncementsService extends ApiService {
-  public async getAnnouncements(locale: "UK" | "EN"): Promise<Announcement> {
+  public async getAnnouncements(language: Language): Promise<Announcement> {
     const response = await this.api.get<Announcement[]>("/announcements", {
       headers: {
-        "x-locale": locale,
+        "x-locale": language,
       },
     });
 
@@ -13,7 +14,7 @@ class DYouthAnnouncementsService extends ApiService {
   }
 
   public async updateAnnouncements(
-    locale: "UK" | "EN",
+    language: Language,
     announcements: AnnouncementItem[],
   ): Promise<Announcement> {
     const response = await this.api.patch<Announcement>(
@@ -21,7 +22,7 @@ class DYouthAnnouncementsService extends ApiService {
       { announcements },
       {
         headers: {
-          "x-locale": locale,
+          "x-locale": language,
         },
       },
     );
@@ -33,13 +34,13 @@ export interface AnnouncementItem {
   id: string;
   title: string;
   body: string;
+  editorMode?: "VISUAL" | "HTML";
 }
 
 export interface Announcement {
   id: string;
-  locale: "UK" | "EN";
+  language: Language;
   announcements: AnnouncementItem[];
-  editorMode: "VISUAL" | "HTML";
   createdAt: string;
   updatedAt: string;
 }

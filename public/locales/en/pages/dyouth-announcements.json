@@ -1,0 +1,14 @@
+{
+  "description": "Manage announcements for D.Youth page. Drag cards to reorder.",
+  "list": "Announcements List",
+  "noAnnouncements": "No announcements. Add the first one!",
+  "announcements": {
+    "addNew": "Add new announcement",
+    "title": "Title",
+    "titlePlaceholder": "Enter title",
+    "content": "Content",
+    "add": "Add",
+    "titleRequired": "Title is required"
+  }
+}
+

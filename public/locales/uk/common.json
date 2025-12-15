@@ -33,26 +33,9 @@
     "visualMode": "Візуальний",
     "htmlMode": "HTML"
   },
-  "dyouthAnnouncements": {
-    "description": "Керуйте анонсами для сторінки D.Youth. Перетягуйте картки для зміни порядку.",
-    "list": "Список анонсів",
-    "noAnnouncements": "Немає анонсів. Додайте перший!"
-  },
-  "add": "Додати",
   "save": "Зберегти",
   "saving": "Збереження...",
-  "savedSuccessfully": "Анонси успішно збережено!",
+  "savedSuccessfully": "Збережено успішно!",
   "cancel": "Скасувати",
-  "title": "Заголовок",
-  "body": "Текст",
-  "date": "Дата",
-  "location": "Місце",
-  "price": "Ціна",
-  "description": "Опис",
-  "enterTitle": "Введіть заголовок",
-  "enterBody": "Введіть текст анонсу",
-  "enterDescription": "Введіть опис",
-  "editAnnouncement": "Редагувати анонс",
-  "addAnnouncement": "Додати анонс",
-  "confirmDelete": "Ви впевнені, що хочете видалити цей анонс?"
+  "delete": "Видалити"
 }

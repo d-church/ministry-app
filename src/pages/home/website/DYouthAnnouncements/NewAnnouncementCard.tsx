@@ -1,6 +1,7 @@
 import React, { useState, Suspense } from "react";
-import { CCard, CCardBody, CButton, CForm, CFormInput, CAlert, CSpinner } from "@coreui/react";
+import { CCard, CCardBody, CSpinner } from "@coreui/react";
 import { FaPlus, FaCheck, FaXmark } from "react-icons/fa6";
+import { useTranslation } from "react-i18next";
 import type { AnnouncementItem } from "./DYouthAnnouncementsService";
 import HTMLEditor from "src/components/HTMLEditor";
 
@@ -10,17 +11,19 @@ interface NewAnnouncementCardProps {
 }
 
 const NewAnnouncementCard: React.FC<NewAnnouncementCardProps> = ({ onSave, onCancel }) => {
+  const { t } = useTranslation("pages/dyouth-announcements");
   const [formData, setFormData] = useState<AnnouncementItem>({
     id: "",
     title: "",
     body: "",
+    editorMode: "VISUAL",
   });
   const [error, setError] = useState<string | null>(null);
   const [isOpen, setIsOpen] = useState(false);
 
   const handleSave = () => {
     if (!formData.title.trim()) {
-      setError("Заголовок обов'язковий");
+      setError(t("announcements.titleRequired"));
       return;
     }
     const dataWithId: AnnouncementItem = {
@@ -28,13 +31,13 @@ const NewAnnouncementCard: React.FC<NewAnnouncementCardProps> = ({ onSave, onCan
       id: formData.id || crypto.randomUUID(),
     };
     onSave(dataWithId);
-    setFormData({ id: "", title: "", body: "" });
+    setFormData({ id: "", title: "", body: "", editorMode: "VISUAL" });
     setError(null);
     setIsOpen(false);
   };
 
   const handleCancel = () => {
-    setFormData({ id: "", title: "", body: "" });
+    setFormData({ id: "", title: "", body: "", editorMode: "VISUAL" });
     setError(null);
     setIsOpen(false);
     onCancel();
@@ -67,10 +70,10 @@ const NewAnnouncementCard: React.FC<NewAnnouncementCardProps> = ({ onSave, onCan
           <CCardBody className="p-4">
             <button
               onClick={() => setIsOpen(true)}
-              className="w-100 text-start text-gray-600 hover:text-blue-600 d-flex align-items-center gap-2"
+              className="w-full text-left text-gray-600 hover:text-blue-600 flex items-center gap-2"
             >
               <FaPlus />
-              <span>Додати новий анонс</span>
+              <span>{t("announcements.addNew")}</span>
             </button>
           </CCardBody>
         </CCard>
@@ -82,24 +85,28 @@ const NewAnnouncementCard: React.FC<NewAnnouncementCardProps> = ({ onSave, onCan
     <div className="mb-3">
       <CCard className="shadow-sm border-2 border-blue-500">
         <CCardBody className="p-3" style={{ overflow: "visible" }}>
-          <CForm onClick={handleFormClick}>
+          <form onClick={handleFormClick}>
             <div className="mb-2">
-              <label className="form-label fw-semibold small">Заголовок *</label>
-              <CFormInput
+              <label className="block text-sm font-semibold mb-1">
+                {t("announcements.title")} *
+              </label>
+              <input
                 type="text"
-                size="sm"
+                className="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 value={formData.title}
                 onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                placeholder="Введіть заголовок"
+                placeholder={t("announcements.titlePlaceholder")}
                 autoFocus
               />
             </div>
 
             <div className="mb-2" style={{ overflow: "visible" }}>
-              <label className="form-label mb-1 d-block fw-semibold small">Контент *</label>
+              <label className="block text-sm font-semibold mb-1">
+                {t("announcements.content")} *
+              </label>
               <Suspense
                 fallback={
-                  <div className="d-flex justify-content-center align-items-center p-2" style={{ minHeight: "150px" }}>
+                  <div className="flex justify-center items-center p-2" style={{ minHeight: "150px" }}>
                     <CSpinner size="sm" />
                   </div>
                 }
@@ -108,31 +115,37 @@ const NewAnnouncementCard: React.FC<NewAnnouncementCardProps> = ({ onSave, onCan
                   value={formData.body || ""}
                   onChange={(value) => setFormData({ ...formData, body: value })}
                   hasError={false}
-                  height="200px"
+                  initialMode={formData.editorMode || "VISUAL"}
+                  onModeChange={(mode) => setFormData({ ...formData, editorMode: mode })}
                 />
               </Suspense>
             </div>
 
             {error && (
-              <CAlert color="danger" className="mb-2 py-2">
+              <div className="mb-2 py-2 px-3 bg-red-50 border border-red-200 text-red-700 rounded">
                 <small>{error}</small>
-              </CAlert>
+              </div>
             )}
 
-            <div
-              className="d-flex gap-2 justify-content-end mt-2"
-              style={{ position: "relative", zIndex: 10 }}
-            >
-              <CButton color="secondary" size="sm" onClick={handleCancel} className="d-flex align-items-center">
-                <FaXmark className="me-1" />
-                <span>Скасувати</span>
-              </CButton>
-              <CButton color="primary" size="sm" onClick={handleSave} className="d-flex align-items-center">
-                <FaCheck className="me-1" />
-                <span>Додати</span>
-              </CButton>
+            <div className="flex gap-2 justify-end mt-2 relative z-10">
+              <button
+                type="button"
+                onClick={handleCancel}
+                className="flex items-center gap-1 px-3 py-1.5 text-sm bg-gray-200 text-gray-700 rounded hover:bg-gray-300"
+              >
+                <FaXmark className="mr-1" />
+                <span>{t("cancel", { ns: "common" })}</span>
+              </button>
+              <button
+                type="button"
+                onClick={handleSave}
+                className="flex items-center gap-1 px-3 py-1.5 text-sm bg-blue-600 text-white rounded hover:bg-blue-700"
+              >
+                <FaCheck className="mr-1" />
+                <span>{t("announcements.add")}</span>
+              </button>
             </div>
-          </CForm>
+          </form>
         </CCardBody>
       </CCard>
     </div>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useCallback } from "react";
 import { observer } from "mobx-react-lite";
 import { reaction } from "mobx";
 import {
@@ -19,22 +19,21 @@ import {
   CCard,
   CCardBody,
   CCardHeader,
-  CButton,
   CSpinner,
-  CFormSelect,
   CAlert,
 } from "@coreui/react";
 import { FaFloppyDisk } from "react-icons/fa6";
 import { useTranslation } from "react-i18next";
 
 import { LoadingSpinner } from "src/components/common";
+import type { Language } from "src/types";
 import State from "./State";
 import type { AnnouncementItem } from "./DYouthAnnouncementsService";
-import SortableItem from "./SortableItem";
+import AnnounceCard from "./AnnounceCard";
 import NewAnnouncementCard from "./NewAnnouncementCard";
 
 const DYouthAnnouncements: React.FC = observer(() => {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation("pages/dyouth-announcements");
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
@@ -42,16 +41,11 @@ const DYouthAnnouncements: React.FC = observer(() => {
     }),
   );
 
-  const [editingId, setEditingId] = useState<string | null>(null);
-  const [saveError, setSaveError] = useState<string | null>(null);
-  const [saveSuccess, setSaveSuccess] = useState(false);
-
   useEffect(() => {
     State.loadAnnouncements();
 
-    // Set up reaction to reload when locale changes
     const dispose = reaction(
-      () => State.locale,
+      () => State.language,
       () => {
         State.loadAnnouncements();
       },
@@ -62,53 +56,29 @@ const DYouthAnnouncements: React.FC = observer(() => {
     };
   }, []);
 
-  const handleDragEnd = (event: DragEndEvent) => {
+  const handleDragEnd = useCallback((event: DragEndEvent) => {
     const { active, over } = event;
 
     if (over && active.id !== over.id) {
-      // Pass IDs directly - faster than finding indices
       State.reorder(active.id as string, over.id as string);
     }
-  };
+  }, []);
 
-  const handleAddNew = (data: AnnouncementItem) => {
+  const handleAddNew = useCallback((data: AnnouncementItem) => {
     State.push(data);
-    setEditingId(null);
-  };
+  }, []);
 
-  const handleEdit = (id: string) => {
-    setEditingId(id);
-  };
-
-  const handleSaveItem = (id: string, data: AnnouncementItem) => {
+  const handleSaveItem = useCallback((id: string, data: AnnouncementItem) => {
     State.updateById(id, data);
-    setEditingId(null);
-  };
+  }, []);
 
-  const handleCancelEdit = () => {
-    setEditingId(null);
-  };
-
-  const handleDelete = (id: string) => {
+  const handleDelete = useCallback((id: string) => {
     State.removeById(id);
-    if (editingId === id) {
-      setEditingId(null);
-    }
-  };
+  }, []);
 
-  const handleSave = async () => {
-    setSaveError(null);
-    setSaveSuccess(false);
-    try {
-      await State.saveAnnouncements();
-      setSaveSuccess(true);
-      setTimeout(() => setSaveSuccess(false), 3000);
-    } catch (error: unknown) {
-      const errorMessage = error instanceof Error ? error.message : "Помилка збереження";
-      setSaveError(errorMessage);
-    }
-  };
-
+  const handleSave = useCallback(async () => {
+    await State.saveAnnouncements();
+  }, []);
 
   if (State.isLoading && (!State.data || State.data.length === 0)) {
     return (
@@ -123,83 +93,77 @@ const DYouthAnnouncements: React.FC = observer(() => {
       <div className="sm:flex sm:items-center mb-4">
         <div className="sm:flex-auto">
           <h1 className="text-2xl font-semibold text-gray-900">
-            {t("sidebar.dyouthAnnouncements") || "Анонси D.Youth"}
+            {t("sidebar.dyouthAnnouncements", { ns: "common" })}
           </h1>
-          <p className="mt-2 text-sm text-gray-700">
-            {t("dyouthAnnouncements.description") ||
-              "Керуйте анонсами для сторінки D.Youth. Перетягуйте картки для зміни порядку."}
-          </p>
+          <p className="mt-2 text-sm text-gray-700">{t("description")}</p>
         </div>
         <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none flex gap-2">
-          <CFormSelect
-            value={State.locale}
-            onChange={(e) => State.setLocale(e.target.value as "UK" | "EN")}
-            className="w-auto"
+          <select
+            value={State.language}
+            onChange={(e) => State.setLanguage(e.target.value as Language)}
+            className="px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
           >
-            <option value="UK">UK</option>
-            <option value="EN">EN</option>
-          </CFormSelect>
-          <CButton
-            color="primary"
+            <option value="uk">{t("language.uk", { ns: "common" })}</option>
+            <option value="en">{t("language.en", { ns: "common" })}</option>
+          </select>
+          <button
             onClick={handleSave}
             disabled={State.isSaving}
-            className="shadow-sm hover:shadow-md transition-shadow d-flex align-items-center flex-row"
-            style={{ flexDirection: 'row', display: 'flex !important' }}
+            className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-md shadow-sm hover:shadow-md transition-shadow disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {State.isSaving ? (
               <>
-                <CSpinner size="sm" className="me-2" />
-                <span>{t("saving") || "Збереження..."}</span>
+                <CSpinner size="sm" className="mr-2" />
+                <span>{t("saving", { ns: "common" })}</span>
               </>
             ) : (
               <>
-                <FaFloppyDisk className="me-2" />
-                <span>{t("save") || "Зберегти"}</span>
+                <FaFloppyDisk className="mr-2" />
+                <span>{t("save", { ns: "common" })}</span>
               </>
             )}
-          </CButton>
+          </button>
         </div>
       </div>
 
-      {saveSuccess && (
+      {State.saveSuccess && (
         <CAlert color="success" className="mb-4">
-          {t("savedSuccessfully") || "Анонси успішно збережено!"}
+          {t("savedSuccessfully", { ns: "common" })}
         </CAlert>
       )}
 
-      {saveError && (
+      {State.saveError && (
         <CAlert color="danger" className="mb-4">
-          {saveError}
+          {State.saveError}
         </CAlert>
       )}
 
       <CCard className="shadow-lg border-0">
         <CCardHeader className="bg-gray-50 border-b border-gray-200">
           <div className="flex items-center justify-between">
-            <h3 className="text-lg font-medium text-gray-900">
-              {t("dyouthAnnouncements.list") || "Список анонсів"}
-            </h3>
+            <h3 className="text-lg font-medium text-gray-900">{t("list")}</h3>
           </div>
         </CCardHeader>
         <CCardBody className="p-4" style={{ overflow: "visible" }}>
-          <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+          <DndContext
+            sensors={sensors}
+            collisionDetection={closestCenter}
+            onDragEnd={handleDragEnd}
+          >
             <SortableContext
               items={(State.data || []).map((item) => item.id)}
               strategy={verticalListSortingStrategy}
             >
               <div style={{ overflow: "visible" }}>
                 {(State.data || []).map((item) => (
-                  <SortableItem
+                  <AnnounceCard
                     key={item.id}
                     item={item}
                     onSave={handleSaveItem}
-                    onCancel={handleCancelEdit}
                     onDelete={handleDelete}
-                    isEditing={editingId === item.id}
-                    onStartEdit={() => handleEdit(item.id)}
                   />
                 ))}
-                <NewAnnouncementCard onSave={handleAddNew} onCancel={handleCancelEdit} />
+                <NewAnnouncementCard onSave={handleAddNew} onCancel={() => {}} />
               </div>
             </SortableContext>
           </DndContext>
@@ -210,4 +174,3 @@ const DYouthAnnouncements: React.FC = observer(() => {
 });
 
 export default DYouthAnnouncements;
-
