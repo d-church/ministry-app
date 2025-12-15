@@ -121,6 +121,56 @@ const NewAnnouncementCard: React.FC<NewAnnouncementCardProps> = ({ onSave, onCan
               </Suspense>
             </div>
 
+            <div className="mb-2 border-t pt-2">
+              <label className="block text-sm font-semibold mb-2">
+                {t("announcements.button")}
+              </label>
+              <div className="space-y-2">
+                <div>
+                  <label className="block text-xs text-gray-600 mb-1">
+                    {t("announcements.buttonTitle")}
+                  </label>
+                  <input
+                    type="text"
+                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    value={formData.button?.title || ""}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        button: {
+                          ...formData.button,
+                          title: e.target.value,
+                          url: formData.button?.url || "",
+                        },
+                      })
+                    }
+                    placeholder={t("announcements.buttonTitlePlaceholder")}
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs text-gray-600 mb-1">
+                    {t("announcements.buttonUrl")}
+                  </label>
+                  <input
+                    type="url"
+                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    value={formData.button?.url || ""}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        button: {
+                          ...formData.button,
+                          title: formData.button?.title || "",
+                          url: e.target.value,
+                        },
+                      })
+                    }
+                    placeholder={t("announcements.buttonUrlPlaceholder")}
+                  />
+                </div>
+              </div>
+            </div>
+
             {error && (
               <div className="mb-2 py-2 px-3 bg-red-50 border border-red-200 text-red-700 rounded">
                 <small>{error}</small>

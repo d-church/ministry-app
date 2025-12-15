@@ -35,6 +35,10 @@ export interface AnnouncementItem {
   title: string;
   body: string;
   editorMode?: "VISUAL" | "HTML";
+  button?: {
+    title: string;
+    url: string;
+  };
 }
 
 export interface Announcement {

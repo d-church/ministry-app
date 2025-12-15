@@ -8,7 +8,13 @@
     "titlePlaceholder": "Enter title",
     "content": "Content",
     "add": "Add",
-    "titleRequired": "Title is required"
+    "titleRequired": "Title is required",
+    "button": "Button",
+    "buttonTitle": "Button text",
+    "buttonTitlePlaceholder": "Enter button text",
+    "buttonUrl": "Button URL",
+    "buttonUrlPlaceholder": "https://example.com",
+    "removeButton": "Remove button"
   }
 }
 
