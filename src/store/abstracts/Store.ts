@@ -4,6 +4,8 @@ import GlobalStore from "../GlobalStore";
 abstract class Store<T = any> {
   @observable public accessor data: T;
 
+  @observable public accessor isLoading = false;
+
   public constructor(data?: T) {
     this.data = data;
 

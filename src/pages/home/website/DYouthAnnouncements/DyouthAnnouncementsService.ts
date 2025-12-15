@@ -1,20 +1,6 @@
 import ApiService from "src/services/abstracts/ApiService";
 
-export interface AnnouncementItem {
-  title: string;
-  body: string;
-}
-
-export interface Announcement {
-  id: string;
-  locale: "UK" | "EN";
-  announcements: AnnouncementItem[];
-  editorMode: "VISUAL" | "HTML";
-  createdAt: string;
-  updatedAt: string;
-}
-
-class DyouthAnnouncementsService extends ApiService {
+class DYouthAnnouncementsService extends ApiService {
   public async getAnnouncements(locale: "UK" | "EN"): Promise<Announcement> {
     const response = await this.api.get<Announcement[]>("/announcements", {
       headers: {
@@ -43,5 +29,19 @@ class DyouthAnnouncementsService extends ApiService {
   }
 }
 
-export default new DyouthAnnouncementsService();
+export interface AnnouncementItem {
+  id: string;
+  title: string;
+  body: string;
+}
 
+export interface Announcement {
+  id: string;
+  locale: "UK" | "EN";
+  announcements: AnnouncementItem[];
+  editorMode: "VISUAL" | "HTML";
+  createdAt: string;
+  updatedAt: string;
+}
+
+export default new DYouthAnnouncementsService();

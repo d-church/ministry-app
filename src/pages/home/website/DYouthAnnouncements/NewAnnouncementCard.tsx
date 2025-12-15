@@ -1,7 +1,7 @@
 import React, { useState, Suspense } from "react";
 import { CCard, CCardBody, CButton, CForm, CFormInput, CAlert, CSpinner } from "@coreui/react";
 import { FaPlus, FaCheck, FaXmark } from "react-icons/fa6";
-import type { AnnouncementItem } from "./DyouthAnnouncementsService";
+import type { AnnouncementItem } from "./DYouthAnnouncementsService";
 import HTMLEditor from "src/components/HTMLEditor";
 
 interface NewAnnouncementCardProps {
@@ -11,6 +11,7 @@ interface NewAnnouncementCardProps {
 
 const NewAnnouncementCard: React.FC<NewAnnouncementCardProps> = ({ onSave, onCancel }) => {
   const [formData, setFormData] = useState<AnnouncementItem>({
+    id: "",
     title: "",
     body: "",
   });
@@ -22,14 +23,18 @@ const NewAnnouncementCard: React.FC<NewAnnouncementCardProps> = ({ onSave, onCan
       setError("Заголовок обов'язковий");
       return;
     }
-    onSave(formData);
-    setFormData({ title: "", body: "" });
+    const dataWithId: AnnouncementItem = {
+      ...formData,
+      id: formData.id || crypto.randomUUID(),
+    };
+    onSave(dataWithId);
+    setFormData({ id: "", title: "", body: "" });
     setError(null);
     setIsOpen(false);
   };
 
   const handleCancel = () => {
-    setFormData({ title: "", body: "" });
+    setFormData({ id: "", title: "", body: "" });
     setError(null);
     setIsOpen(false);
     onCancel();

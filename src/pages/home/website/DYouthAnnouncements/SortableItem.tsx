@@ -11,22 +11,20 @@ import {
 import { FaCheck, FaXmark } from "react-icons/fa6";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import type { AnnouncementItem } from "./DyouthAnnouncementsService";
+import type { AnnouncementItem } from "./DYouthAnnouncementsService";
 import HTMLEditor from "src/components/HTMLEditor";
 
 interface SortableItemProps {
   item: AnnouncementItem;
-  index: number;
-  onSave: (index: number, data: AnnouncementItem) => void;
+  onSave: (id: string, data: AnnouncementItem) => void;
   onCancel: () => void;
-  onDelete: (index: number) => void;
+  onDelete: (id: string) => void;
   isEditing: boolean;
   onStartEdit: () => void;
 }
 
 const SortableItem: React.FC<SortableItemProps> = ({
   item,
-  index,
   onSave,
   onCancel,
   onDelete,
@@ -34,7 +32,7 @@ const SortableItem: React.FC<SortableItemProps> = ({
   onStartEdit,
 }) => {
   const { attributes, listeners, setNodeRef, transform, isDragging } = useSortable({
-    id: `announcement-${index}`,
+    id: item.id,
   });
 
   const [formData, setFormData] = useState<AnnouncementItem>(item);
@@ -78,7 +76,7 @@ const SortableItem: React.FC<SortableItemProps> = ({
       setError("Заголовок обов'язковий");
       return;
     }
-    onSave(index, formData);
+    onSave(item.id, formData);
   };
 
   const handleCancel = () => {
@@ -228,7 +226,7 @@ const SortableItem: React.FC<SortableItemProps> = ({
                 onClick={(e) => {
                   e.stopPropagation();
                   e.preventDefault();
-                  onDelete(index);
+                  onDelete(item.id);
                 }}
                 className="text-red-600 hover:text-red-900 hover:bg-red-50"
               >

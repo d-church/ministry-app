@@ -29,7 +29,7 @@ import { useTranslation } from "react-i18next";
 
 import { LoadingSpinner } from "src/components/common";
 import State from "./State";
-import type { AnnouncementItem } from "./DyouthAnnouncementsService";
+import type { AnnouncementItem } from "./DYouthAnnouncementsService";
 import SortableItem from "./SortableItem";
 import NewAnnouncementCard from "./NewAnnouncementCard";
 
@@ -42,7 +42,7 @@ const DYouthAnnouncements: React.FC = observer(() => {
     }),
   );
 
-  const [editingIndex, setEditingIndex] = useState<number | null>(null);
+  const [editingId, setEditingId] = useState<string | null>(null);
   const [saveError, setSaveError] = useState<string | null>(null);
   const [saveSuccess, setSaveSuccess] = useState(false);
 
@@ -66,35 +66,33 @@ const DYouthAnnouncements: React.FC = observer(() => {
     const { active, over } = event;
 
     if (over && active.id !== over.id) {
-      const oldIndex = parseInt(active.id.toString().replace("announcement-", ""));
-      const newIndex = parseInt(over.id.toString().replace("announcement-", ""));
-
-      State.reorderAnnouncements(oldIndex, newIndex);
+      // Pass IDs directly - faster than finding indices
+      State.reorder(active.id as string, over.id as string);
     }
   };
 
   const handleAddNew = (data: AnnouncementItem) => {
-    State.addAnnouncement(data);
-    setEditingIndex(null);
+    State.push(data);
+    setEditingId(null);
   };
 
-  const handleEdit = (index: number) => {
-    setEditingIndex(index);
+  const handleEdit = (id: string) => {
+    setEditingId(id);
   };
 
-  const handleSaveItem = (index: number, data: AnnouncementItem) => {
-    State.updateAnnouncement(index, data);
-    setEditingIndex(null);
+  const handleSaveItem = (id: string, data: AnnouncementItem) => {
+    State.updateById(id, data);
+    setEditingId(null);
   };
 
   const handleCancelEdit = () => {
-    setEditingIndex(null);
+    setEditingId(null);
   };
 
-  const handleDelete = (index: number) => {
-    State.removeAnnouncement(index);
-    if (editingIndex === index) {
-      setEditingIndex(null);
+  const handleDelete = (id: string) => {
+    State.removeById(id);
+    if (editingId === id) {
+      setEditingId(null);
     }
   };
 
@@ -112,7 +110,7 @@ const DYouthAnnouncements: React.FC = observer(() => {
   };
 
 
-  if (State.isLoading && State.announcements.length === 0) {
+  if (State.isLoading && (!State.data || State.data.length === 0)) {
     return (
       <div className="flex justify-center items-center h-64">
         <LoadingSpinner />
@@ -186,20 +184,19 @@ const DYouthAnnouncements: React.FC = observer(() => {
         <CCardBody className="p-4" style={{ overflow: "visible" }}>
           <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
             <SortableContext
-              items={State.announcements.map((_, index) => `announcement-${index}`)}
+              items={(State.data || []).map((item) => item.id)}
               strategy={verticalListSortingStrategy}
             >
               <div style={{ overflow: "visible" }}>
-                {State.announcements.map((item, index) => (
+                {(State.data || []).map((item) => (
                   <SortableItem
-                    key={`announcement-${index}`}
+                    key={item.id}
                     item={item}
-                    index={index}
                     onSave={handleSaveItem}
                     onCancel={handleCancelEdit}
                     onDelete={handleDelete}
-                    isEditing={editingIndex === index}
-                    onStartEdit={() => handleEdit(index)}
+                    isEditing={editingId === item.id}
+                    onStartEdit={() => handleEdit(item.id)}
                   />
                 ))}
                 <NewAnnouncementCard onSave={handleAddNew} onCancel={handleCancelEdit} />
