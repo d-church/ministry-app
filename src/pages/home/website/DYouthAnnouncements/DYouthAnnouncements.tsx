@@ -74,6 +74,12 @@ const DYouthAnnouncements: React.FC = observer(() => {
     await State.saveAnnouncements();
   }, []);
 
+  useEffect(() => {
+    return () => {
+      State.removeData();
+    };
+}, []);
+
   return (
     <div className="px-2 sm:px-4 lg:px-6">
       <div className="sm:flex sm:items-center mb-4">

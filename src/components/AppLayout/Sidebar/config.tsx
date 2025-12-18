@@ -1,5 +1,7 @@
 import { CNavGroup, CNavItem, CNavTitle } from "@coreui/react";
-import { FaChurch, FaInternetExplorer, FaList, FaBullhorn } from "react-icons/fa6";
+// import { FaChurch, FaInternetExplorer, FaList, FaBullhorn } from "react-icons/fa6";
+import { FaChurch, FaInternetExplorer, FaBullhorn } from "react-icons/fa6";
+
 
 const config: SidebarNavConfigItem[] = [
   {
@@ -18,12 +20,12 @@ const config: SidebarNavConfigItem[] = [
     to: "/church/website",
     icon: <FaInternetExplorer className="nav-icon" />,
     items: [
-      {
-        component: CNavItem,
-        nameKey: "sidebar.posts",
-        to: "/church/website/posts",
-        icon: <FaList className="nav-icon" />,
-      },
+      // {
+      //   component: CNavItem,
+      //   nameKey: "sidebar.posts",
+      //   to: "/church/website/posts",
+      //   icon: <FaList className="nav-icon" />,
+      // },
       {
         component: CNavItem,
         nameKey: "sidebar.dyouthAnnouncements",

@@ -16,7 +16,6 @@ class State extends ArrayStore<AnnouncementItem> {
 
   @action public setLanguage(language: Language) {
     this.removeData();
-    this.announcementMeta = null;
     this.language = language;
   }
 
@@ -62,6 +61,14 @@ class State extends ArrayStore<AnnouncementItem> {
     } finally {
       this.isSaving = false;
     }
+  }
+
+  @action public removeData() {
+    super.removeData();
+    this.announcementMeta = null;
+    this.language = "uk";
+    this.saveError = null;
+    this.saveSuccess = false;
   }
 }
 
