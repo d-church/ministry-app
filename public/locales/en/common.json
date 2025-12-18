@@ -6,7 +6,8 @@
     "posts": "Posts",
     "newPost": "New Post",
     "editPost": "Edit Post",
-    "viewPost": "View Post"
+    "viewPost": "View Post",
+    "dyouthAnnouncements": "D.Youth Announcements"
   },
   "language": {
     "uk": "Українська",
@@ -17,7 +18,8 @@
     "church": "My Church",
     "ministries": "Ministries",
     "website": "Website",
-    "posts": "Posts"
+    "posts": "Posts",
+    "dyouthAnnouncements": "D.Youth Announcements"
   },
   "breadcrumb": {
     "home": "Home"
@@ -30,5 +32,10 @@
   "htmlEditor": {
     "visualMode": "Visual",
     "htmlMode": "HTML"
-  }
+  },
+  "save": "Save",
+  "saving": "Saving...",
+  "savedSuccessfully": "Saved successfully!",
+  "cancel": "Cancel",
+  "delete": "Delete"
 }

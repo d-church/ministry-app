@@ -6,7 +6,8 @@
     "posts": "Пости",
     "newPost": "Новий пост",
     "editPost": "Редагувати пост",
-    "viewPost": "Перегляд поста"
+    "viewPost": "Перегляд поста",
+    "dyouthAnnouncements": "Анонси D.Youth"
   },
   "language": {
     "uk": "Українська",
@@ -17,7 +18,8 @@
     "church": "Моя церква",
     "ministries": "Служіння",
     "website": "Вебсайт",
-    "posts": "Пости"
+    "posts": "Пости",
+    "dyouthAnnouncements": "Анонси D.Youth"
   },
   "breadcrumb": {
     "home": "Головна"
@@ -30,5 +32,10 @@
   "htmlEditor": {
     "visualMode": "Візуальний",
     "htmlMode": "HTML"
-  }
+  },
+  "save": "Зберегти",
+  "saving": "Збереження...",
+  "savedSuccessfully": "Збережено успішно!",
+  "cancel": "Скасувати",
+  "delete": "Видалити"
 }
