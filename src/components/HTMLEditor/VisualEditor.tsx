@@ -28,12 +28,35 @@ const VisualEditor: React.FC<{
   );
 };
 
+const colorPalette = [
+  "#000000", // black
+  "#FFFFFF", // white
+  "#FF0000", // red
+  "#00FF00", // green
+  "#0000FF", // blue
+  "#FFFF00", // yellow
+  "#FF00FF", // magenta
+  "#00FFFF", // cyan
+  "#800000", // maroon
+  "#008000", // green (dark)
+  "#000080", // navy
+  "#808000", // olive
+  "#800080", // purple
+  "#008080", // teal
+  "#C0C0C0", // silver
+  "#808080", // gray
+  "#FFA500", // orange
+  "#A52A2A", // brown
+  "#FFC0CB", // pink
+  "#4169E1", // royal blue
+];
+
 const modules = {
   toolbar: [
     [{ header: [1, 2, 3, 4, 5, 6, false] }],
     [{ size: ["small", false, "large", "huge"] }],
     ["bold", "italic", "underline", "strike"],
-    [{ color: [] as string[] }, { background: [] as string[] }],
+    [{ color: colorPalette }, { background: colorPalette }],
     [{ list: "ordered" }, { list: "bullet" }],
     [{ indent: "-1" }, { indent: "+1" }],
     [{ align: [] as string[] }],

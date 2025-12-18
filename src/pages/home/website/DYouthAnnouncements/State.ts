@@ -15,6 +15,8 @@ class State extends ArrayStore<AnnouncementItem> {
   @observable public accessor saveSuccess = false;
 
   @action public setLanguage(language: Language) {
+    this.removeData();
+    this.announcementMeta = null;
     this.language = language;
   }
 

@@ -15,13 +15,7 @@ import {
   sortableKeyboardCoordinates,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
-import {
-  CCard,
-  CCardBody,
-  CCardHeader,
-  CSpinner,
-  CAlert,
-} from "@coreui/react";
+import { CCard, CCardBody, CCardHeader, CSpinner, CAlert } from "@coreui/react";
 import { FaFloppyDisk } from "react-icons/fa6";
 import { useTranslation } from "react-i18next";
 
@@ -80,14 +74,6 @@ const DYouthAnnouncements: React.FC = observer(() => {
     await State.saveAnnouncements();
   }, []);
 
-  if (State.isLoading && (!State.data || State.data.length === 0)) {
-    return (
-      <div className="flex justify-center items-center h-64">
-        <LoadingSpinner />
-      </div>
-    );
-  }
-
   return (
     <div className="px-2 sm:px-4 lg:px-6">
       <div className="sm:flex sm:items-center mb-4">
@@ -125,19 +111,16 @@ const DYouthAnnouncements: React.FC = observer(() => {
           </button>
         </div>
       </div>
-
       {State.saveSuccess && (
         <CAlert color="success" className="mb-4">
           {t("savedSuccessfully", { ns: "common" })}
         </CAlert>
       )}
-
       {State.saveError && (
         <CAlert color="danger" className="mb-4">
           {State.saveError}
         </CAlert>
       )}
-
       <CCard className="shadow-lg border-0">
         <CCardHeader className="bg-gray-50 border-b border-gray-200">
           <div className="flex items-center justify-between">
@@ -145,30 +128,38 @@ const DYouthAnnouncements: React.FC = observer(() => {
           </div>
         </CCardHeader>
         <CCardBody className="p-4" style={{ overflow: "visible" }}>
-          <DndContext
-            sensors={sensors}
-            collisionDetection={closestCenter}
-            onDragEnd={handleDragEnd}
-          >
-            <SortableContext
-              items={(State.data || []).map((item) => item.id)}
-              strategy={verticalListSortingStrategy}
+          {State.isLoading && (
+            <div className="flex justify-center items-center h-64">
+              <LoadingSpinner />
+            </div>
+          )}
+          {!State.isLoading && (
+            <DndContext
+              sensors={sensors}
+              collisionDetection={closestCenter}
+              onDragEnd={handleDragEnd}
             >
-              <div style={{ overflow: "visible" }}>
-                {(State.data || []).map((item) => (
-                  <AnnounceCard
-                    key={item.id}
-                    item={item}
-                    onSave={handleSaveItem}
-                    onDelete={handleDelete}
-                  />
-                ))}
-                <NewAnnouncementCard onSave={handleAddNew} onCancel={() => {}} />
-              </div>
-            </SortableContext>
-          </DndContext>
+              <SortableContext
+                items={(State.data || []).map((item) => item.id)}
+                strategy={verticalListSortingStrategy}
+              >
+                <div style={{ overflow: "visible" }}>
+                  {(State.data || []).map((item) => (
+                    <AnnounceCard
+                      key={item.id}
+                      item={item}
+                      onSave={handleSaveItem}
+                      onDelete={handleDelete}
+                    />
+                  ))}
+                  <NewAnnouncementCard onSave={handleAddNew} onCancel={() => {}} />
+                </div>
+              </SortableContext>
+            </DndContext>
+          )}
         </CCardBody>
       </CCard>
+      )
     </div>
   );
 });
