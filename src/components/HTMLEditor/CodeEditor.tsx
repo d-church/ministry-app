@@ -13,13 +13,21 @@ const CodeEditor: React.FC<{
   value,
   onChange,
   hasError = false,
-  height = "400px",
+  height,
   theme = 'dark'
 }) => {
+  // Calculate height based on content if not provided
+  const calculatedHeight = height || (() => {
+    const lines = value.split('\n').length;
+    const lineHeight = 20;
+    const calculated = lines * lineHeight + 50; // Base height + content
+    return `${Math.max(100, Math.min(calculated, 600))}px`; // Min 100px, Max 600px
+  })();
+
   return (
     <div className={cn(hasError && "border border-red-500 rounded")}>
       <Editor
-        height={height}
+        height={calculatedHeight}
         language="html"
         theme={theme === 'dark' ? 'vs-dark' : 'vs'}
         value={value}

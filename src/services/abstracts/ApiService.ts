@@ -1,5 +1,11 @@
 import axios, { type AxiosInstance, type AxiosResponse, AxiosError } from "axios";
 import TokenStorage from "../../utils/TokenStorage";
+import i18n from "../../bootstrap/i18n";
+import type { Language } from "../../types";
+
+export interface ApiConfig {
+  language: Language;
+}
 
 abstract class ApiService {
   protected api: AxiosInstance = axios.create({
@@ -16,6 +22,15 @@ abstract class ApiService {
         if (TokenStorage.accessToken) {
           config.headers.Authorization = `Bearer ${TokenStorage.accessToken}`;
         }
+
+        /*
+         * Add language header if not manually set
+         */
+        if (!config.headers["x-locale"]) {
+          const currentLanguage = i18n.language || "uk";
+          config.headers["x-locale"] = currentLanguage;
+        }
+
         return config;
       },
       (error: AxiosError) => {

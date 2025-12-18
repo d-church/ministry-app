@@ -1,0 +1,20 @@
+{
+  "description": "Керуйте анонсами для сторінки D.Youth. Перетягуйте картки для зміни порядку.",
+  "list": "Список анонсів",
+  "noAnnouncements": "Немає анонсів. Додайте перший!",
+  "announcements": {
+    "addNew": "Додати новий анонс",
+    "title": "Заголовок",
+    "titlePlaceholder": "Введіть заголовок",
+    "content": "Контент",
+    "add": "Додати",
+    "titleRequired": "Заголовок обов'язковий",
+    "button": "Кнопка",
+    "buttonTitle": "Текст кнопки",
+    "buttonTitlePlaceholder": "Введіть текст кнопки",
+    "buttonUrl": "URL кнопки",
+    "buttonUrlPlaceholder": "https://example.com",
+    "removeButton": "Видалити кнопку"
+  }
+}
+
