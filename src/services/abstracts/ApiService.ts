@@ -1,6 +1,11 @@
 import axios, { type AxiosInstance, type AxiosResponse, AxiosError } from "axios";
 import TokenStorage from "../../utils/TokenStorage";
 import i18n from "../../bootstrap/i18n";
+import type { Language } from "../../types";
+
+export interface ApiConfig {
+  language: Language;
+}
 
 abstract class ApiService {
   protected api: AxiosInstance = axios.create({

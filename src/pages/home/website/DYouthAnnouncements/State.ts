@@ -1,8 +1,11 @@
 import { observable, action, runInAction } from "mobx";
 import ArrayStore from "src/store/abstracts/ArrayStore";
 import type { Language } from "src/types";
-import type { AnnouncementItem, Announcement } from "./DYouthAnnouncementsService";
-import DYouthAnnouncementsService from "./DYouthAnnouncementsService";
+
+import DYouthAnnouncementsService, {
+  type AnnouncementItem,
+  type Announcement,
+} from "./DYouthAnnouncementsService";
 
 class State extends ArrayStore<AnnouncementItem> {
   @observable public accessor isSaving = false;
@@ -18,7 +21,9 @@ class State extends ArrayStore<AnnouncementItem> {
   @action public async loadAnnouncements(): Promise<void> {
     this.isLoading = true;
     try {
-      const { announcements, ...meta } = await DYouthAnnouncementsService.getAnnouncements(this.language);
+      const { announcements, ...meta } = await DYouthAnnouncementsService.getAnnouncements({
+        language: this.language,
+      });
 
       this.setData(announcements);
       this.announcementMeta = meta;
@@ -35,8 +40,8 @@ class State extends ArrayStore<AnnouncementItem> {
     this.saveSuccess = false;
     try {
       const { announcements, ...meta } = await DYouthAnnouncementsService.updateAnnouncements(
-        this.language,
         this.data || [],
+        { language: this.language },
       );
 
       this.setData(announcements);
@@ -59,4 +64,3 @@ class State extends ArrayStore<AnnouncementItem> {
 }
 
 export default new State();
-

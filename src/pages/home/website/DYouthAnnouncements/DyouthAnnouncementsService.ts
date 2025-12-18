@@ -1,11 +1,11 @@
-import ApiService from "src/services/abstracts/ApiService";
+import ApiService, { type ApiConfig } from "src/services/abstracts/ApiService";
 import type { Language } from "src/types";
 
 class DYouthAnnouncementsService extends ApiService {
-  public async getAnnouncements(language: Language): Promise<Announcement> {
+  public async getAnnouncements(config: ApiConfig): Promise<Announcement> {
     const response = await this.api.get<Announcement[]>("/announcements", {
       headers: {
-        "x-locale": language,
+        "x-locale": config.language,
       },
     });
 
@@ -14,15 +14,15 @@ class DYouthAnnouncementsService extends ApiService {
   }
 
   public async updateAnnouncements(
-    language: Language,
     announcements: AnnouncementItem[],
+    config: ApiConfig,
   ): Promise<Announcement> {
     const response = await this.api.patch<Announcement>(
       "/announcements",
       { announcements },
       {
         headers: {
-          "x-locale": language,
+          "x-locale": config.language,
         },
       },
     );
