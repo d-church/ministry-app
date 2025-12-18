@@ -2,7 +2,7 @@ import React, { Suspense } from "react";
 import { CCard, CCardBody, CSpinner } from "@coreui/react";
 import { FaCheck, FaXmark } from "react-icons/fa6";
 import { useTranslation } from "react-i18next";
-import type { AnnouncementItem } from "../DYouthAnnouncementsService";
+import type { AnnouncementItem } from "src/services/DYouthAnnouncementsService";
 import HTMLEditor from "src/components/HTMLEditor";
 
 const AnnounceCardEdit: React.FC<{

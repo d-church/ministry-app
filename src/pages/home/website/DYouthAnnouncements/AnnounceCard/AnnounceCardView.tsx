@@ -1,7 +1,7 @@
 import React from "react";
 import { CCard, CCardBody } from "@coreui/react";
 import { useTranslation } from "react-i18next";
-import type { AnnouncementItem } from "../DYouthAnnouncementsService";
+import type { AnnouncementItem } from "src/services/DYouthAnnouncementsService";
 
 const AnnounceCardView: React.FC<{
   item: AnnouncementItem;

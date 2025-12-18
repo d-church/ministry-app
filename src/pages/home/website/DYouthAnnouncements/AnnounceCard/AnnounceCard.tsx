@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import type { AnnouncementItem } from "../DYouthAnnouncementsService";
+import type { AnnouncementItem } from "src/services/DYouthAnnouncementsService";
 import AnnounceCardView from "./AnnounceCardView";
 import AnnounceCardEdit from "./AnnounceCardEdit";
 

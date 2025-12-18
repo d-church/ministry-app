@@ -1,11 +1,12 @@
 import { observable, action, runInAction } from "mobx";
-import ArrayStore from "src/store/abstracts/ArrayStore";
 import type { Language } from "src/types";
+
+import ArrayStore from "src/store/abstracts/ArrayStore";
 
 import DYouthAnnouncementsService, {
   type AnnouncementItem,
   type Announcement,
-} from "./DYouthAnnouncementsService";
+} from "src/services/DYouthAnnouncementsService";
 
 class State extends ArrayStore<AnnouncementItem> {
   @observable public accessor isSaving = false;

@@ -19,10 +19,11 @@ import { CCard, CCardBody, CCardHeader, CSpinner, CAlert } from "@coreui/react";
 import { FaFloppyDisk } from "react-icons/fa6";
 import { useTranslation } from "react-i18next";
 
+import type { AnnouncementItem } from "src/services/DYouthAnnouncementsService";
+
 import { LoadingSpinner } from "src/components/common";
 import type { Language } from "src/types";
 import State from "./State";
-import type { AnnouncementItem } from "./DYouthAnnouncementsService";
 import AnnounceCard from "./AnnounceCard";
 import NewAnnouncementCard from "./NewAnnouncementCard";
 
