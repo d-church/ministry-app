@@ -23,7 +23,7 @@ const routes: {
   // { path: "/website/posts/create", nameKey: "navigation.newPost", element: <CreatePost /> },
   // { path: "/website/posts/:id", nameKey: "navigation.viewPost", element: <ViewPost /> },
   // { path: "/website/posts/:id/edit", nameKey: "navigation.editPost", element: <EditPost /> },
-  { path: "/website/dyouth-announcements", nameKey: "navigation.dyouthAnnouncements", element: <DYouthAnnouncements /> },
+  { path: "/website/d-youth-announcements", nameKey: "navigation.dyouthAnnouncements", element: <DYouthAnnouncements /> },
 ];
 
 export default routes;

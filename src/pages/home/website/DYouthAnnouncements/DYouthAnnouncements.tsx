@@ -27,7 +27,7 @@ import AnnounceCard from "./AnnounceCard";
 import NewAnnouncementCard from "./NewAnnouncementCard";
 
 const DYouthAnnouncements: React.FC = observer(() => {
-  const { t } = useTranslation("pages/dyouth-announcements");
+  const { t } = useTranslation("pages/d-youth-announcements");
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {

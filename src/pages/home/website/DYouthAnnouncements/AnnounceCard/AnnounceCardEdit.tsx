@@ -23,7 +23,7 @@ const AnnounceCardEdit: React.FC<{
   onCancel,
   onFormClick,
 }) => {
-  const { t } = useTranslation("pages/dyouth-announcements");
+  const { t } = useTranslation("pages/d-youth-announcements");
   return (
     <div style={dragStyle} className="mb-3">
       <CCard className="shadow-sm border-2 border-blue-500">
@@ -66,12 +66,12 @@ const AnnounceCardEdit: React.FC<{
 
             <div className="mb-2 border-t pt-2">
               <label className="block text-sm font-semibold mb-2">
-                {t("announcements.button", { ns: "pages/dyouth-announcements" })}
+                {t("announcements.button", { ns: "pages/d-youth-announcements" })}
               </label>
               <div className="space-y-2">
                 <div>
                   <label className="block text-xs text-gray-600 mb-1">
-                    {t("announcements.buttonTitle", { ns: "pages/dyouth-announcements" })}
+                    {t("announcements.buttonTitle", { ns: "pages/d-youth-announcements" })}
                   </label>
                   <input
                     type="text"
@@ -87,12 +87,12 @@ const AnnounceCardEdit: React.FC<{
                         },
                       })
                     }
-                    placeholder={t("announcements.buttonTitlePlaceholder", { ns: "pages/dyouth-announcements" })}
+                    placeholder={t("announcements.buttonTitlePlaceholder", { ns: "pages/d-youth-announcements" })}
                   />
                 </div>
                 <div>
                   <label className="block text-xs text-gray-600 mb-1">
-                    {t("announcements.buttonUrl", { ns: "pages/dyouth-announcements" })}
+                    {t("announcements.buttonUrl", { ns: "pages/d-youth-announcements" })}
                   </label>
                   <input
                     type="url"
@@ -108,7 +108,7 @@ const AnnounceCardEdit: React.FC<{
                         },
                       })
                     }
-                    placeholder={t("announcements.buttonUrlPlaceholder", { ns: "pages/dyouth-announcements" })}
+                    placeholder={t("announcements.buttonUrlPlaceholder", { ns: "pages/d-youth-announcements" })}
                   />
                 </div>
               </div>
