@@ -2,6 +2,7 @@
   "description": "Manage announcements for D.Youth page. Drag cards to reorder.",
   "list": "Announcements List",
   "noAnnouncements": "No announcements. Add the first one!",
+  "languageLabel": "Announcements Translation Language",
   "announcements": {
     "addNew": "Add new announcement",
     "title": "Title",
