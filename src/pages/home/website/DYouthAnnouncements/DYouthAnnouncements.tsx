@@ -15,8 +15,7 @@ import {
   sortableKeyboardCoordinates,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
-import { CCard, CCardBody, CCardHeader, CSpinner, CAlert } from "@coreui/react";
-import { FaFloppyDisk } from "react-icons/fa6";
+import { CCard, CCardBody, CCardHeader, CAlert } from "@coreui/react";
 import { useTranslation } from "react-i18next";
 
 import type { AnnouncementItem } from "src/services/DYouthAnnouncementsService";
@@ -55,25 +54,22 @@ const DYouthAnnouncements: React.FC = observer(() => {
     const { active, over } = event;
 
     if (over && active.id !== over.id) {
-      State.reorder(active.id as string, over.id as string);
+      State.reorderAndSave(active.id as string, over.id as string);
     }
   }, []);
 
   const handleAddNew = useCallback((data: AnnouncementItem) => {
-    State.push(data);
+    State.pushAndSave(data);
   }, []);
 
   const handleSaveItem = useCallback((id: string, data: AnnouncementItem) => {
-    State.updateById(id, data);
+    State.updateByIdAndSave(id, data);
   }, []);
 
   const handleDelete = useCallback((id: string) => {
-    State.removeById(id);
+    State.removeByIdAndSave(id);
   }, []);
 
-  const handleSave = useCallback(async () => {
-    await State.saveAnnouncements();
-  }, []);
 
   useEffect(() => {
     return () => {
@@ -90,7 +86,7 @@ const DYouthAnnouncements: React.FC = observer(() => {
           </h1>
           <p className="mt-2 text-sm text-gray-700">{t("description")}</p>
         </div>
-        <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none flex gap-2">
+        <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
           <select
             value={State.language}
             onChange={(e) => State.setLanguage(e.target.value as Language)}
@@ -99,23 +95,6 @@ const DYouthAnnouncements: React.FC = observer(() => {
             <option value="uk">{t("language.uk", { ns: "common" })}</option>
             <option value="en">{t("language.en", { ns: "common" })}</option>
           </select>
-          <button
-            onClick={handleSave}
-            disabled={State.isSaving}
-            className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-md shadow-sm hover:shadow-md transition-shadow disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {State.isSaving ? (
-              <>
-                <CSpinner size="sm" className="mr-2" />
-                <span>{t("saving", { ns: "common" })}</span>
-              </>
-            ) : (
-              <>
-                <FaFloppyDisk className="mr-2" />
-                <span>{t("save", { ns: "common" })}</span>
-              </>
-            )}
-          </button>
         </div>
       </div>
       {State.saveSuccess && (

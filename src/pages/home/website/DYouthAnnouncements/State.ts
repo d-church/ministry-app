@@ -15,9 +15,10 @@ class State extends ArrayStore<AnnouncementItem> {
   @observable public accessor saveError: string | null = null;
   @observable public accessor saveSuccess = false;
 
-  @action public setLanguage(language: Language) {
+  @action public async setLanguage(language: Language) {
     this.removeData();
     this.language = language;
+    await this.loadAnnouncements();
   }
 
   @action public async loadAnnouncements(): Promise<void> {
@@ -70,6 +71,40 @@ class State extends ArrayStore<AnnouncementItem> {
     this.language = "uk";
     this.saveError = null;
     this.saveSuccess = false;
+  }
+
+  @action public pushAndSave(newItem: AnnouncementItem): void {
+    super.push(newItem);
+    this.saveAnnouncements().catch((error) => {
+      console.error("Failed to auto-save after push:", error);
+    });
+  }
+
+  @action public updateByIdAndSave(id: string, updatedItem: AnnouncementItem): AnnouncementItem | null {
+    const result = super.updateById(id, updatedItem);
+    if (result) {
+      this.saveAnnouncements().catch((error) => {
+        console.error("Failed to auto-save after update:", error);
+      });
+    }
+    return result;
+  }
+
+  @action public removeByIdAndSave(id: string): AnnouncementItem {
+    const result = super.removeById(id);
+    if (result) {
+      this.saveAnnouncements().catch((error) => {
+        console.error("Failed to auto-save after remove:", error);
+      });
+    }
+    return result;
+  }
+
+  @action public reorderAndSave(start: number | string, end: number | string): void {
+    super.reorder(start, end);
+    this.saveAnnouncements().catch((error) => {
+      console.error("Failed to auto-save after reorder:", error);
+    });
   }
 }
 
