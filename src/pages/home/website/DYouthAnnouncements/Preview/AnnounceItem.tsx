@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import parse from "html-react-parser";
-import clsx from "clsx";
 import type { AnnouncementItem } from "src/services/DYouthAnnouncementsService";
 import { StarCircleIcon, TriangleDown, TriangleUp } from "./icons";
 import style from "./style.module.scss";
@@ -48,9 +46,10 @@ export const AnnounceItem: React.FC<{ data: AnnouncementItem }> = ({ data }) => 
             }}
           >
             <div className="space-y-4">
-              <div className={clsx("prose prose-sm max-w-none", style.content)}>
-                {parse(data.body)}
-              </div>
+              <div
+                className={`prose prose-sm max-w-none ${style.content}`}
+                dangerouslySetInnerHTML={{ __html: data.body || "" }}
+              />
               {data.button && data.button.title && data.button.url && (
                 <a
                   href={data.button.url}

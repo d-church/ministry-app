@@ -120,9 +120,9 @@ const DYouthAnnouncements: React.FC = observer(() => {
               color="primary"
               variant="outline"
               onClick={() => setShowPreview(true)}
-              className="flex items-center gap-2"
+              className="flex items-center gap-2 leading-none"
             >
-              <FaEye />
+              <FaEye className="w-4 h-4 flex-shrink-0" />
               Preview
             </CButton>
           </div>
