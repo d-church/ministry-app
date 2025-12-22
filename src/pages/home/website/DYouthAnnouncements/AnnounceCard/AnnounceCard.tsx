@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
+import { CModal, CModalBody, CModalFooter, CModalHeader, CModalTitle, CButton } from "@coreui/react";
+import { useTranslation } from "react-i18next";
 import type { AnnouncementItem } from "src/services/DYouthAnnouncementsService";
 import AnnounceCardView from "./AnnounceCardView";
 import AnnounceCardEdit from "./AnnounceCardEdit";
@@ -14,11 +16,14 @@ const AnnounceCard: React.FC<{
     id: item.id,
   });
 
+  const { t } = useTranslation("common");
+  const { t: tPage } = useTranslation("pages/d-youth-announcements");
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState<AnnouncementItem>(item);
   const [error, setError] = useState<string | null>(null);
   const [mouseDownPos, setMouseDownPos] = useState<{ x: number; y: number } | null>(null);
   const [hasMoved, setHasMoved] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   useEffect(() => {
     if (isEditing) {
@@ -98,21 +103,35 @@ const AnnounceCard: React.FC<{
 
   const handleMouseUp = (e: React.MouseEvent) => {
     const target = e.target as HTMLElement;
-    // Don't trigger edit if clicking on delete button
-    if (target.closest("[data-delete-button]") || target.closest("[data-delete-container]")) {
+    // Don't trigger edit if clicking on delete button or if modal is open
+    if (target.closest("[data-delete-button]") || target.closest("[data-delete-container]") || showDeleteModal) {
       setMouseDownPos(null);
       setHasMoved(false);
       return;
     }
 
-    // Wait a bit to check if drag happened, then trigger edit if it wasn't a drag
-    setTimeout(() => {
-      if (!hasMoved && !isDragging && mouseDownPos) {
+    // Check if we're still on the same element (not dragged)
+    if (mouseDownPos) {
+      const deltaX = Math.abs(e.clientX - mouseDownPos.x);
+      const deltaY = Math.abs(e.clientY - mouseDownPos.y);
+
+      // Only trigger edit if mouse didn't move much and it wasn't a drag
+      if (deltaX <= 5 && deltaY <= 5 && !hasMoved && !isDragging) {
         setIsEditing(true);
       }
-      setMouseDownPos(null);
-      setHasMoved(false);
-    }, 50);
+    }
+
+    setMouseDownPos(null);
+    setHasMoved(false);
+  };
+
+  const handleDeleteClick = () => {
+    setShowDeleteModal(true);
+  };
+
+  const handleDeleteConfirm = () => {
+    setShowDeleteModal(false);
+    onDelete(item.id);
   };
 
   return (
@@ -131,7 +150,7 @@ const AnnounceCard: React.FC<{
       ) : (
         <AnnounceCardView
           item={item}
-          onDelete={onDelete}
+          onDeleteClick={handleDeleteClick}
           dragAttributes={attributes}
           dragListeners={listeners}
           dragStyle={style}
@@ -139,6 +158,20 @@ const AnnounceCard: React.FC<{
           onMouseUp={handleMouseUp}
         />
       )}
+      <CModal visible={showDeleteModal} onClose={() => setShowDeleteModal(false)}>
+        <CModalHeader>
+          <CModalTitle>{tPage("announcements.deleteConfirmTitle")}</CModalTitle>
+        </CModalHeader>
+        <CModalBody>{tPage("announcements.deleteConfirm")}</CModalBody>
+        <CModalFooter>
+          <CButton color="secondary" onClick={() => setShowDeleteModal(false)}>
+            {t("cancel")}
+          </CButton>
+          <CButton color="danger" className="text-white" onClick={handleDeleteConfirm}>
+            {t("delete")}
+          </CButton>
+        </CModalFooter>
+      </CModal>
     </div>
   );
 };

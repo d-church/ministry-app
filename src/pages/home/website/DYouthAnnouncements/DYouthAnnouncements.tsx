@@ -67,6 +67,7 @@ const DYouthAnnouncements: React.FC = observer(() => {
   }, []);
 
   const handleDelete = useCallback((id: string) => {
+    console.log("handleDelete", id);
     State.removeByIdAndSave(id);
   }, []);
 

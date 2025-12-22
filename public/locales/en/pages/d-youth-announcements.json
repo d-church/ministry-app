@@ -15,7 +15,9 @@
     "buttonTitlePlaceholder": "Enter button text",
     "buttonUrl": "Button URL",
     "buttonUrlPlaceholder": "https://example.com",
-    "removeButton": "Remove button"
+    "removeButton": "Remove button",
+    "deleteConfirm": "Are you sure you want to delete this announcement?",
+    "deleteConfirmTitle": "Confirm Deletion"
   }
 }
 

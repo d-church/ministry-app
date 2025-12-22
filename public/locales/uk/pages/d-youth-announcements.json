@@ -15,7 +15,9 @@
     "buttonTitlePlaceholder": "Введіть текст кнопки",
     "buttonUrl": "URL кнопки",
     "buttonUrlPlaceholder": "https://example.com",
-    "removeButton": "Видалити кнопку"
+    "removeButton": "Видалити кнопку",
+    "deleteConfirm": "Ви впевнені, що хочете видалити цей анонс?",
+    "deleteConfirmTitle": "Підтвердження видалення"
   }
 }
 
