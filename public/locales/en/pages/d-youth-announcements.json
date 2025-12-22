@@ -1,5 +1,5 @@
 {
-  "description": "Manage announcements for D.Youth page. Drag cards to reorder.",
+  "description": "Announcements on the website are updated within 5 minutes after saving.",
   "list": "Announcements List",
   "noAnnouncements": "No announcements. Add the first one!",
   "languageLabel": "Announcements Translation Language",

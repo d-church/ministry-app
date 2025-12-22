@@ -1,4 +1,4 @@
-import { observable, action, runInAction } from "mobx";
+import { observable, action } from "mobx";
 import type { Language } from "src/types";
 
 import ArrayStore from "src/store/abstracts/ArrayStore";
@@ -13,7 +13,6 @@ class State extends ArrayStore<AnnouncementItem> {
   @observable public accessor language: Language = "uk";
   @observable public accessor announcementMeta: Omit<Announcement, "announcements"> | null = null;
   @observable public accessor saveError: string | null = null;
-  @observable public accessor saveSuccess = false;
 
   @action public async setLanguage(language: Language) {
     this.removeData();
@@ -40,7 +39,6 @@ class State extends ArrayStore<AnnouncementItem> {
   @action public async saveAnnouncements(): Promise<void> {
     this.isSaving = true;
     this.saveError = null;
-    this.saveSuccess = false;
     try {
       const { announcements, ...meta } = await DYouthAnnouncementsService.updateAnnouncements(
         this.data || [],
@@ -49,12 +47,6 @@ class State extends ArrayStore<AnnouncementItem> {
 
       this.setData(announcements);
       this.announcementMeta = meta;
-      this.saveSuccess = true;
-      setTimeout(() => {
-        runInAction(() => {
-          this.saveSuccess = false;
-        });
-      }, 3000);
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : String(error);
       console.error("Failed to save announcements:", errorMessage);
@@ -70,7 +62,6 @@ class State extends ArrayStore<AnnouncementItem> {
     this.announcementMeta = null;
     this.language = "uk";
     this.saveError = null;
-    this.saveSuccess = false;
   }
 
   @action public pushAndSave(newItem: AnnouncementItem): void {

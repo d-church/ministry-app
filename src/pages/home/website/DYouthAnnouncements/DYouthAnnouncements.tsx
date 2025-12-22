@@ -104,11 +104,6 @@ const DYouthAnnouncements: React.FC = observer(() => {
           </div>
         </div>
       </div>
-      {State.saveSuccess && (
-        <CAlert color="success" className="mb-4">
-          {t("savedSuccessfully", { ns: "common" })}
-        </CAlert>
-      )}
       {State.saveError && (
         <CAlert color="danger" className="mb-4">
           {State.saveError}
