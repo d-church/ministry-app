@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from "react";
+import React, { useEffect, useCallback, useState } from "react";
 import { observer } from "mobx-react-lite";
 import { reaction } from "mobx";
 import {
@@ -15,8 +15,9 @@ import {
   sortableKeyboardCoordinates,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
-import { CCard, CCardBody, CCardHeader, CAlert } from "@coreui/react";
+import { CCard, CCardBody, CCardHeader, CAlert, CButton } from "@coreui/react";
 import { useTranslation } from "react-i18next";
+import { FaEye } from "react-icons/fa6";
 
 import type { AnnouncementItem } from "src/services/DYouthAnnouncementsService";
 
@@ -25,9 +26,11 @@ import type { Language } from "src/types";
 import State from "./State";
 import AnnounceCard from "./AnnounceCard";
 import NewAnnouncementCard from "./NewAnnouncementCard";
+import Preview from "./Preview";
 
 const DYouthAnnouncements: React.FC = observer(() => {
   const { t } = useTranslation("pages/d-youth-announcements");
+  const [showPreview, setShowPreview] = useState(false);
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
@@ -113,6 +116,15 @@ const DYouthAnnouncements: React.FC = observer(() => {
         <CCardHeader className="bg-gray-50 border-b border-gray-200">
           <div className="flex items-center justify-between">
             <h3 className="text-lg font-medium text-gray-900">{t("list")}</h3>
+            <CButton
+              color="primary"
+              variant="outline"
+              onClick={() => setShowPreview(true)}
+              className="flex items-center gap-2"
+            >
+              <FaEye />
+              Preview
+            </CButton>
           </div>
         </CCardHeader>
         <CCardBody className="p-4" style={{ overflow: "visible" }}>
@@ -147,7 +159,12 @@ const DYouthAnnouncements: React.FC = observer(() => {
           )}
         </CCardBody>
       </CCard>
-      )
+      <Preview
+        announcements={State.data || []}
+        language={State.language}
+        isOpen={showPreview}
+        onClose={() => setShowPreview(false)}
+      />
     </div>
   );
 });
