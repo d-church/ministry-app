@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useState } from "react";
+import React, { useEffect, useCallback, useState, Suspense } from "react";
 import { observer } from "mobx-react-lite";
 import { reaction } from "mobx";
 import {
@@ -15,7 +15,7 @@ import {
   sortableKeyboardCoordinates,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
-import { CCard, CCardBody, CCardHeader, CAlert, CButton } from "@coreui/react";
+import { CCard, CCardBody, CCardHeader, CAlert, CButton, CSpinner } from "@coreui/react";
 import { useTranslation } from "react-i18next";
 import { FaEye } from "react-icons/fa6";
 
@@ -26,7 +26,8 @@ import type { Language } from "src/types";
 import State from "./State";
 import AnnounceCard from "./AnnounceCard";
 import NewAnnouncementCard from "./NewAnnouncementCard";
-import Preview from "./Preview";
+
+const Preview = React.lazy(() => import("./Preview"));
 
 const DYouthAnnouncements: React.FC = observer(() => {
   const { t } = useTranslation("pages/d-youth-announcements");
@@ -120,10 +121,10 @@ const DYouthAnnouncements: React.FC = observer(() => {
               color="primary"
               variant="outline"
               onClick={() => setShowPreview(true)}
-              className="flex items-center gap-2 leading-none"
+              className="flex items-center gap-2"
             >
-              <FaEye className="w-4 h-4 flex-shrink-0" />
-              Preview
+              <FaEye className="inline w-4 h-4 mr-1" />
+              <span>Preview</span>
             </CButton>
           </div>
         </CCardHeader>
@@ -159,12 +160,22 @@ const DYouthAnnouncements: React.FC = observer(() => {
           )}
         </CCardBody>
       </CCard>
-      <Preview
-        announcements={State.data || []}
-        language={State.language}
-        isOpen={showPreview}
-        onClose={() => setShowPreview(false)}
-      />
+      {showPreview && (
+        <Suspense
+          fallback={
+            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+              <CSpinner size="sm" />
+            </div>
+          }
+        >
+          <Preview
+            announcements={State.data || []}
+            language={State.language}
+            isOpen={showPreview}
+            onClose={() => setShowPreview(false)}
+          />
+        </Suspense>
+      )}
     </div>
   );
 });
