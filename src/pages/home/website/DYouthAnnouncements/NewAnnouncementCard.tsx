@@ -11,7 +11,7 @@ interface NewAnnouncementCardProps {
 }
 
 const NewAnnouncementCard: React.FC<NewAnnouncementCardProps> = ({ onSave, onCancel }) => {
-  const { t } = useTranslation("pages/dyouth-announcements");
+  const { t } = useTranslation("pages/d-youth-announcements");
   const [formData, setFormData] = useState<AnnouncementItem>({
     id: "",
     title: "",

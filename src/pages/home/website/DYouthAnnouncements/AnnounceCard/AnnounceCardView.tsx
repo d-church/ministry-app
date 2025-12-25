@@ -5,7 +5,7 @@ import type { AnnouncementItem } from "src/services/DYouthAnnouncementsService";
 
 const AnnounceCardView: React.FC<{
   item: AnnouncementItem;
-  onDelete: (id: string) => void;
+  onDeleteClick: () => void;
   dragAttributes: any;
   dragListeners: any;
   dragStyle: React.CSSProperties;
@@ -13,7 +13,7 @@ const AnnounceCardView: React.FC<{
   onMouseUp: (e: React.MouseEvent) => void;
 }> = ({
   item,
-  onDelete,
+  onDeleteClick,
   dragAttributes,
   dragListeners,
   dragStyle,
@@ -52,7 +52,7 @@ const AnnounceCardView: React.FC<{
                 onClick={(e) => {
                   e.stopPropagation();
                   e.preventDefault();
-                  onDelete(item.id);
+                  onDeleteClick();
                 }}
                 className="px-3 py-1.5 text-sm text-red-600 hover:text-red-900 hover:bg-red-50 rounded"
               >
