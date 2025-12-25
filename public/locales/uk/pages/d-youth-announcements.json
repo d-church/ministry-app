@@ -1,7 +1,8 @@
 {
-  "description": "Керуйте анонсами для сторінки D.Youth. Перетягуйте картки для зміни порядку.",
+  "description": "Анонси на вебсайті оновлюються в межах 5 хвилин після збереження.",
   "list": "Список анонсів",
   "noAnnouncements": "Немає анонсів. Додайте перший!",
+  "languageLabel": "Мова перекладу анонсів",
   "announcements": {
     "addNew": "Додати новий анонс",
     "title": "Заголовок",
@@ -14,7 +15,9 @@
     "buttonTitlePlaceholder": "Введіть текст кнопки",
     "buttonUrl": "URL кнопки",
     "buttonUrlPlaceholder": "https://example.com",
-    "removeButton": "Видалити кнопку"
+    "removeButton": "Видалити кнопку",
+    "deleteConfirm": "Ви впевнені, що хочете видалити цей анонс?",
+    "deleteConfirmTitle": "Підтвердження видалення"
   }
 }
 

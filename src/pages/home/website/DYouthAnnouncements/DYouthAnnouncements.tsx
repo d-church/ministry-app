@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from "react";
+import React, { useEffect, useCallback, useState, Suspense } from "react";
 import { observer } from "mobx-react-lite";
 import { reaction } from "mobx";
 import {
@@ -15,9 +15,9 @@ import {
   sortableKeyboardCoordinates,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
-import { CCard, CCardBody, CCardHeader, CSpinner, CAlert } from "@coreui/react";
-import { FaFloppyDisk } from "react-icons/fa6";
+import { CCard, CCardBody, CCardHeader, CAlert, CButton, CSpinner } from "@coreui/react";
 import { useTranslation } from "react-i18next";
+import { FaEye } from "react-icons/fa6";
 
 import type { AnnouncementItem } from "src/services/DYouthAnnouncementsService";
 
@@ -27,8 +27,11 @@ import State from "./State";
 import AnnounceCard from "./AnnounceCard";
 import NewAnnouncementCard from "./NewAnnouncementCard";
 
+const Preview = React.lazy(() => import("./Preview"));
+
 const DYouthAnnouncements: React.FC = observer(() => {
-  const { t } = useTranslation("pages/dyouth-announcements");
+  const { t } = useTranslation("pages/d-youth-announcements");
+  const [showPreview, setShowPreview] = useState(false);
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
@@ -55,25 +58,23 @@ const DYouthAnnouncements: React.FC = observer(() => {
     const { active, over } = event;
 
     if (over && active.id !== over.id) {
-      State.reorder(active.id as string, over.id as string);
+      State.reorderAndSave(active.id as string, over.id as string);
     }
   }, []);
 
   const handleAddNew = useCallback((data: AnnouncementItem) => {
-    State.push(data);
+    State.pushAndSave(data);
   }, []);
 
   const handleSaveItem = useCallback((id: string, data: AnnouncementItem) => {
-    State.updateById(id, data);
+    State.updateByIdAndSave(id, data);
   }, []);
 
   const handleDelete = useCallback((id: string) => {
-    State.removeById(id);
+    console.log("handleDelete", id);
+    State.removeByIdAndSave(id);
   }, []);
 
-  const handleSave = useCallback(async () => {
-    await State.saveAnnouncements();
-  }, []);
 
   useEffect(() => {
     return () => {
@@ -90,39 +91,23 @@ const DYouthAnnouncements: React.FC = observer(() => {
           </h1>
           <p className="mt-2 text-sm text-gray-700">{t("description")}</p>
         </div>
-        <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none flex gap-2">
-          <select
-            value={State.language}
-            onChange={(e) => State.setLanguage(e.target.value as Language)}
-            className="px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-          >
-            <option value="uk">{t("language.uk", { ns: "common" })}</option>
-            <option value="en">{t("language.en", { ns: "common" })}</option>
-          </select>
-          <button
-            onClick={handleSave}
-            disabled={State.isSaving}
-            className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-md shadow-sm hover:shadow-md transition-shadow disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {State.isSaving ? (
-              <>
-                <CSpinner size="sm" className="mr-2" />
-                <span>{t("saving", { ns: "common" })}</span>
-              </>
-            ) : (
-              <>
-                <FaFloppyDisk className="mr-2" />
-                <span>{t("save", { ns: "common" })}</span>
-              </>
-            )}
-          </button>
+        <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
+          <div className="flex flex-col">
+            <label htmlFor="announcements-language" className="block text-sm font-medium text-gray-700 mb-2">
+              {t("languageLabel")}
+            </label>
+            <select
+              id="announcements-language"
+              value={State.language}
+              onChange={(e) => State.setLanguage(e.target.value as Language)}
+              className="px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-gray-900 cursor-pointer hover:border-gray-400 transition-colors"
+            >
+              <option value="uk">{t("language.uk", { ns: "common" })}</option>
+              <option value="en">{t("language.en", { ns: "common" })}</option>
+            </select>
+          </div>
         </div>
       </div>
-      {State.saveSuccess && (
-        <CAlert color="success" className="mb-4">
-          {t("savedSuccessfully", { ns: "common" })}
-        </CAlert>
-      )}
       {State.saveError && (
         <CAlert color="danger" className="mb-4">
           {State.saveError}
@@ -132,6 +117,15 @@ const DYouthAnnouncements: React.FC = observer(() => {
         <CCardHeader className="bg-gray-50 border-b border-gray-200">
           <div className="flex items-center justify-between">
             <h3 className="text-lg font-medium text-gray-900">{t("list")}</h3>
+            <CButton
+              color="primary"
+              variant="outline"
+              onClick={() => setShowPreview(true)}
+              className="flex items-center gap-2"
+            >
+              <FaEye className="inline w-4 h-4 mr-1" />
+              <span>Preview</span>
+            </CButton>
           </div>
         </CCardHeader>
         <CCardBody className="p-4" style={{ overflow: "visible" }}>
@@ -166,7 +160,22 @@ const DYouthAnnouncements: React.FC = observer(() => {
           )}
         </CCardBody>
       </CCard>
-      )
+      {showPreview && (
+        <Suspense
+          fallback={
+            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+              <CSpinner size="sm" />
+            </div>
+          }
+        >
+          <Preview
+            announcements={State.data || []}
+            language={State.language}
+            isOpen={showPreview}
+            onClose={() => setShowPreview(false)}
+          />
+        </Suspense>
+      )}
     </div>
   );
 });

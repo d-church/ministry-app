@@ -29,7 +29,7 @@ const config: SidebarNavConfigItem[] = [
       {
         component: CNavItem,
         nameKey: "sidebar.dyouthAnnouncements",
-        to: "/church/website/dyouth-announcements",
+        to: "/church/website/d-youth-announcements",
         icon: <FaBullhorn className="nav-icon" />,
       },
     ],
