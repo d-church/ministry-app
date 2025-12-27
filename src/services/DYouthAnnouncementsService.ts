@@ -3,14 +3,13 @@ import type { Language } from "src/types";
 
 class DYouthAnnouncementsService extends ApiService {
   public async getAnnouncements(config: ApiConfig): Promise<Announcement> {
-    const response = await this.api.get<Announcement[]>("/announcements", {
+    const response = await this.api.get<Announcement>("/announcements", {
       headers: {
         "x-locale": config.language,
       },
     });
 
-    // TODO: Backend returns array, but we need only first element
-    return response.data[0];
+    return response.data;
   }
 
   public async updateAnnouncements(
@@ -42,7 +41,6 @@ export interface AnnouncementItem {
 }
 
 export interface Announcement {
-  id: string;
   language: Language;
   announcements: AnnouncementItem[];
   createdAt: string;
