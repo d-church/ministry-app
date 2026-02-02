@@ -1,2 +1,1 @@
-export type HTMLEditorEditorMode = "VISUAL" | "HTML";
-
+export type HTMLEditorEditorMode = "VISUAL" | "CODE";

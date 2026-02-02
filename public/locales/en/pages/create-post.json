@@ -12,5 +12,9 @@
   "cancel": "Cancel",
   "createPost": "Create new post",
   "newPost": "New post",
-  "addPost": "Create post"
+  "addPost": "Create post",
+  "previewImage": "Preview image",
+  "uploadPreview": "Upload image",
+  "uploading": "Uploading...",
+  "uploadError": "File upload error"
 }
