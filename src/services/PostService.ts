@@ -43,6 +43,7 @@ export interface Post {
   html: string;
   title: string;
   editorMode: EditorMode;
+  publishDate: string;
   createdAt: string;
   updatedAt: string;
   author: User;

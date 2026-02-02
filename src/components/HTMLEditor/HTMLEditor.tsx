@@ -84,12 +84,7 @@ const HTMLEditor: React.FC<{
       {mode === "VISUAL" ? (
         <VisualEditor value={value} onChange={onChange} hasError={hasError} />
       ) : (
-        <CodeEditor
-          value={value}
-          onChange={onChange}
-          hasError={hasError}
-          theme={editorTheme}
-        />
+        <CodeEditor value={value} onChange={onChange} hasError={hasError} theme={editorTheme} />
       )}
     </div>
   );
