@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useRef, type ChangeEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { observer } from "mobx-react-lite";
 import { useForm, Controller } from "react-hook-form";
@@ -13,11 +13,18 @@ import {
   CFormLabel,
   CSpinner,
 } from "@coreui/react";
-import { FaArrowLeft, FaFloppyDisk } from "react-icons/fa6";
+import { FaArrowLeft, FaFloppyDisk, FaUpload, FaTrash } from "react-icons/fa6";
 
 import { HOME_ROUTE } from "src/constants";
 import PostStore from "../Posts/PostStore";
 import HTMLEditor from "src/components/HTMLEditor";
+import type { HTMLEditorEditorMode } from "src/components/HTMLEditor/types";
+import type { EditorMode } from "src/services/PostService";
+
+interface SelectedFile {
+  file: File;
+  previewUrl: string;
+}
 
 interface PostFormData {
   title: string;
@@ -27,6 +34,10 @@ interface PostFormData {
 const CreatePost: React.FC = observer(() => {
   const navigate = useNavigate();
   const { t } = useTranslation("pages/create-post");
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const [selectedFile, setSelectedFile] = useState<SelectedFile | null>(null);
+  const [editorMode, setEditorMode] = useState<HTMLEditorEditorMode>("VISUAL");
 
   const {
     register,
@@ -36,9 +47,40 @@ const CreatePost: React.FC = observer(() => {
     control,
   } = useForm<PostFormData>();
 
+  const handleFileSelect = (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    const previewUrl = URL.createObjectURL(file);
+    setSelectedFile({ file, previewUrl });
+
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  };
+
+  const handleRemoveFile = () => {
+    if (selectedFile) {
+      URL.revokeObjectURL(selectedFile.previewUrl);
+    }
+    setSelectedFile(null);
+  };
+
+  const handleEditorModeChange = (mode: HTMLEditorEditorMode) => {
+    setEditorMode(mode);
+  };
+
   const onSubmit = async (data: PostFormData) => {
     try {
-      await PostStore.createPost(data);
+      const backendEditorMode: EditorMode = editorMode === "CODE" ? "CODE" : "VISUAL";
+      const files = selectedFile ? [selectedFile.file] : undefined;
+
+      await PostStore.createPost({
+        html: data.html,
+        title: data.title,
+        editorMode: backendEditorMode,
+        files,
+      });
       navigate(`${HOME_ROUTE}/website/posts`);
     } catch (error) {
       console.error("Failed to create post:", error);
@@ -83,8 +125,7 @@ const CreatePost: React.FC = observer(() => {
             onKeyDown={(e) => {
               if (e.key === "Enter" && !e.shiftKey) {
                 const target = e.target as HTMLElement;
-                // Don't prevent Enter in Monaco Editor (HTML/CSS modes)
-                if (target.closest('.monaco-editor')) {
+                if (target.closest(".monaco-editor")) {
                   return;
                 }
                 e.preventDefault();
@@ -115,6 +156,53 @@ const CreatePost: React.FC = observer(() => {
               </div>
 
               <div>
+                <CFormLabel className="text-sm font-medium text-gray-700">
+                  {t("previewImage")}
+                </CFormLabel>
+                <div className="mt-1">
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    accept="image/*"
+                    onChange={handleFileSelect}
+                    className="hidden"
+                    id="preview-file-input"
+                  />
+                  {!selectedFile ? (
+                    <CButton
+                      color="secondary"
+                      variant="outline"
+                      onClick={() => fileInputRef.current?.click()}
+                      className="flex items-center gap-2"
+                    >
+                      <FaUpload className="inline w-6 h-6 pr-2" />
+                      <span>{t("uploadPreview")}</span>
+                    </CButton>
+                  ) : (
+                    <div className="flex items-center gap-4 p-3 bg-gray-50 rounded-md border">
+                      <img
+                        src={selectedFile.previewUrl}
+                        alt="Preview"
+                        className="w-20 h-20 object-cover rounded"
+                      />
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm text-gray-700 truncate">{selectedFile.file.name}</p>
+                      </div>
+                      <CButton
+                        color="danger"
+                        variant="ghost"
+                        size="sm"
+                        onClick={handleRemoveFile}
+                        className="flex items-center"
+                      >
+                        <FaTrash className="w-4 h-4" />
+                      </CButton>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              <div>
                 <CFormLabel htmlFor="html" className="text-sm font-medium text-gray-700">
                   {t("content")} *
                 </CFormLabel>
@@ -130,6 +218,8 @@ const CreatePost: React.FC = observer(() => {
                         value={field.value || ""}
                         onChange={field.onChange}
                         hasError={!!errors.html}
+                        initialMode={editorMode}
+                        onModeChange={handleEditorModeChange}
                       />
                     )}
                   />

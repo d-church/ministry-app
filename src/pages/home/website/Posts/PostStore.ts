@@ -1,7 +1,7 @@
 import { observable } from "mobx";
 
 import ArrayStore from "src/store/abstracts/ArrayStore";
-import PostService, { type Post } from "src/services/PostService";
+import PostService, { type Post, type CreatePostData } from "src/services/PostService";
 
 class PostStore extends ArrayStore<Post> {
   @observable public accessor isLoading = false;
@@ -21,9 +21,10 @@ class PostStore extends ArrayStore<Post> {
     this.isLoading = false;
   }
 
-  public async createPost(postData: Partial<Post>): Promise<void> {
-    const newPost = await PostService.create(postData);
+  public async createPost(postData: CreatePostData): Promise<Post> {
+    const newPost = await PostService.createPost(postData);
     this.push(newPost);
+    return newPost;
   }
 
   public async updatePost(id: string, postData: Partial<Post>): Promise<void> {
