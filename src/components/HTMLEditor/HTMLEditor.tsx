@@ -19,7 +19,7 @@ const HTMLEditor: React.FC<{
 }> = ({ value = "", onChange, hasError = false, height, initialMode = "VISUAL", onModeChange }) => {
   const { t } = useTranslation("common");
   const [mode, setMode] = useState<HTMLEditorEditorMode>(initialMode);
-  const [editorTheme, setEditorTheme] = useState<'light' | 'dark'>('dark');
+  const [editorTheme, setEditorTheme] = useState<"light" | "dark">("dark");
 
   useEffect(() => {
     setMode(initialMode);
@@ -34,57 +34,56 @@ const HTMLEditor: React.FC<{
     <div>
       <div className="mb-2 flex justify-between items-center">
         <div className="flex gap-2">
-          {mode === 'HTML' && (
+          {mode === "CODE" && (
             <CButtonGroup size="sm">
               <CButton
-                color={editorTheme === 'light' ? 'primary' : 'secondary'}
-                variant={editorTheme === 'light' ? undefined : 'outline'}
-                onClick={() => setEditorTheme('light')}
-                className="flex items-center gap-1"
+                color={editorTheme === "light" ? "primary" : "secondary"}
+                variant={editorTheme === "light" ? undefined : "outline"}
+                onClick={() => setEditorTheme("light")}
               >
-                <FaSun className="inline w-3 h-3" />
-                Light
+                <span className="inline-flex items-center gap-1">
+                  <FaSun className="w-3 h-3" />
+                  Light
+                </span>
               </CButton>
               <CButton
-                color={editorTheme === 'dark' ? 'primary' : 'secondary'}
-                variant={editorTheme === 'dark' ? undefined : 'outline'}
-                onClick={() => setEditorTheme('dark')}
-                className="flex items-center gap-1"
+                color={editorTheme === "dark" ? "primary" : "secondary"}
+                variant={editorTheme === "dark" ? undefined : "outline"}
+                onClick={() => setEditorTheme("dark")}
               >
-                <FaMoon className="inline w-3 h-3" />
-                Dark
+                <span className="inline-flex items-center gap-1">
+                  <FaMoon className="w-3 h-3" />
+                  Dark
+                </span>
               </CButton>
             </CButtonGroup>
           )}
         </div>
         <CButtonGroup size="sm">
           <CButton
-            color={mode === 'VISUAL' ? 'primary' : 'secondary'}
-            variant={mode === 'VISUAL' ? undefined : 'outline'}
-            onClick={() => handleModeChange('VISUAL')}
-            className="flex items-center gap-1"
+            color={mode === "VISUAL" ? "primary" : "secondary"}
+            variant={mode === "VISUAL" ? undefined : "outline"}
+            onClick={() => handleModeChange("VISUAL")}
           >
-            <FaEye className="inline w-3 h-3" />
-            {t("htmlEditor.visualMode")}
+            <span className="inline-flex items-center gap-1">
+              <FaEye className="w-3 h-3" />
+              {t("htmlEditor.visualMode")}
+            </span>
           </CButton>
           <CButton
-            color={mode === 'HTML' ? 'primary' : 'secondary'}
-            variant={mode === 'HTML' ? undefined : 'outline'}
-            onClick={() => handleModeChange('HTML')}
-            className="flex items-center gap-1"
+            color={mode === "CODE" ? "primary" : "secondary"}
+            variant={mode === "CODE" ? undefined : "outline"}
+            onClick={() => handleModeChange("CODE")}
           >
-            <FaCode className="inline w-3 h-3" />
-            {t("htmlEditor.htmlMode")}
+            <span className="inline-flex items-center gap-1">
+              <FaCode className="w-3 h-3" />
+              {t("htmlEditor.htmlMode")}
+            </span>
           </CButton>
         </CButtonGroup>
       </div>
-      {mode === 'VISUAL' ? (
-        <VisualEditor
-          value={value}
-          onChange={onChange}
-          hasError={hasError}
-          height={height}
-        />
+      {mode === "VISUAL" ? (
+        <VisualEditor value={value} onChange={onChange} hasError={hasError} height={height} />
       ) : (
         <CodeEditor
           value={value}
