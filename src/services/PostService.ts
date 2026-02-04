@@ -21,7 +21,9 @@ class PostService extends RestService<Post> {
     }
 
     if (data.createdAt) {
-      formData.append("createdAt", data.createdAt.toISOString());
+      const dateOnly = new Date(data.createdAt);
+      dateOnly.setHours(0, 0, 0, 0);
+      formData.append("createdAt", dateOnly.toISOString());
     }
 
     if (data.slugs && data.slugs.length > 0) {

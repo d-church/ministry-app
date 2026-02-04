@@ -4,6 +4,7 @@ import { observer } from "mobx-react-lite";
 import { useForm, Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import DatePicker from "react-datepicker";
+import { uk, enUS } from "date-fns/locale";
 import {
   CCard,
   CCardBody,
@@ -26,7 +27,7 @@ import type { EditorMode } from "src/services/PostService";
 
 const CreatePost: React.FC = observer(() => {
   const navigate = useNavigate();
-  const { t } = useTranslation("pages/create-post");
+  const { t, i18n } = useTranslation("pages/create-post");
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [selectedFile, setSelectedFile] = useState<SelectedFile | null>(null);
@@ -212,9 +213,9 @@ const CreatePost: React.FC = observer(() => {
                     render={({ field }: { field: { value: Date | null; onChange: (date: Date | null) => void } }) => (
                       <DatePicker
                         selected={field.value}
-                        onChange={(date: Date) => field.onChange(date)}
-                        timeIntervals={15}
-                        dateFormat="MMMM d"
+                        onChange={(date: Date | null) => field.onChange(date)}
+                        dateFormat="d MMMM yyyy"
+                        locale={i18n.language === "uk" ? uk : enUS}
                         className="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                         placeholderText={t("publicationDatePlaceholder")}
                       />

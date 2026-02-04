@@ -4,6 +4,7 @@ import { observer } from "mobx-react-lite";
 import { useForm, Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import DatePicker from "react-datepicker";
+import { uk, enUS } from "date-fns/locale";
 import {
   CCard,
   CCardBody,
@@ -32,7 +33,7 @@ interface PostFormData {
 const EditPost: React.FC = observer(() => {
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
-  const { t } = useTranslation("pages/edit-post");
+  const { t, i18n } = useTranslation("pages/edit-post");
 
   const [post, setPost] = useState<Post | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -61,7 +62,13 @@ const EditPost: React.FC = observer(() => {
         reset({
           title: fetchedPost.title,
           html: fetchedPost.html,
-          createdAt: fetchedPost.createdAt ? new Date(fetchedPost.createdAt) : undefined,
+          createdAt: fetchedPost.createdAt
+            ? (() => {
+                const date = new Date(fetchedPost.createdAt);
+                date.setHours(0, 0, 0, 0);
+                return date;
+              })()
+            : undefined,
         });
       } catch (error) {
         console.error("Failed to load post:", error);
@@ -83,7 +90,9 @@ const EditPost: React.FC = observer(() => {
         html: data.html,
       };
       if (data.createdAt) {
-        updateData.createdAt = data.createdAt.toISOString();
+        const dateOnly = new Date(data.createdAt);
+        dateOnly.setHours(0, 0, 0, 0);
+        updateData.createdAt = dateOnly.toISOString();
       }
       await PostStore.updatePost(id, updateData);
       navigate(`${HOME_ROUTE}/website/posts`);
@@ -197,12 +206,12 @@ const EditPost: React.FC = observer(() => {
                   <Controller
                     name="createdAt"
                     control={control}
-                    render={({ field }) => (
+                    render={({ field }: { field: { value: Date | null; onChange: (date: Date | null) => void } }) => (
                       <DatePicker
                         selected={field.value}
-                        onChange={(date: Date) => field.onChange(date)}
-                        timeIntervals={15}
-                        dateFormat="MMMM d"
+                        onChange={(date: Date | null) => field.onChange(date)}
+                        dateFormat="d MMMM yyyy"
+                        locale={i18n.language === "uk" ? uk : enUS}
                         className="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                         placeholderText={t("publicationDatePlaceholder")}
                       />

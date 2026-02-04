@@ -15,5 +15,5 @@
   "postNotFound": "Пост не знайдено",
   "backToPosts": "Повернутися до списку постів",
   "publicationDate": "Дата публікації",
-  "publicationDatePlaceholder": "Виберіть дату та час"
+  "publicationDatePlaceholder": "Виберіть дату"
 }

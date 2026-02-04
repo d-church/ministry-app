@@ -15,5 +15,5 @@
   "postNotFound": "Post not found",
   "backToPosts": "Back to posts list",
   "publicationDate": "Publication date",
-  "publicationDatePlaceholder": "Select date and time"
+  "publicationDatePlaceholder": "Select date"
 }
