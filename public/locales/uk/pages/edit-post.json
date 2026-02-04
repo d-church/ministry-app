@@ -13,5 +13,7 @@
   "editPost": "Редагувати пост",
   "updatePost": "Оновити пост",
   "postNotFound": "Пост не знайдено",
-  "backToPosts": "Повернутися до списку постів"
+  "backToPosts": "Повернутися до списку постів",
+  "publicationDate": "Дата публікації",
+  "publicationDatePlaceholder": "Виберіть дату"
 }

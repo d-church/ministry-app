@@ -7,18 +7,14 @@ const CodeEditor: React.FC<{
   value: string;
   onChange: (value: string) => void;
   hasError?: boolean;
-  height?: string;
   theme?: "light" | "dark";
-}> = ({ value, onChange, hasError = false, height, theme = "dark" }) => {
-  // Calculate height based on content if not provided
-  const calculatedHeight =
-    height ||
-    (() => {
-      const lines = value.split("\n").length;
-      const lineHeight = 20;
-      const calculated = lines * lineHeight + 50; // Base height + content
-      return `${Math.max(150, Math.min(calculated, 600))}px`; // Min 150px, Max 600px
-    })();
+}> = ({ value, onChange, hasError = false, theme = "dark" }) => {
+  const calculatedHeight = (() => {
+    const lines = value.split("\n").length;
+    const lineHeight = 20;
+    const calculated = lines * lineHeight + 50;
+    return `${Math.max(150, Math.min(calculated, 600))}px`;
+  })();
 
   return (
     <div className={cn(hasError && "border border-red-500 rounded")}>

@@ -3,6 +3,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import { observer } from "mobx-react-lite";
 import { useForm, Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
+import DatePicker from "react-datepicker";
+import { uk, enUS } from "date-fns/locale";
 import {
   CCard,
   CCardBody,
@@ -15,6 +17,8 @@ import {
 } from "@coreui/react";
 import { FaArrowLeft, FaFloppyDisk } from "react-icons/fa6";
 
+import "react-datepicker/dist/react-datepicker.css";
+
 import { HOME_ROUTE } from "src/constants";
 import PostStore from "../Posts/PostStore";
 import PostService, { type Post } from "src/services/PostService";
@@ -23,12 +27,13 @@ import HTMLEditor from "src/components/HTMLEditor";
 interface PostFormData {
   title: string;
   html: string;
+  createdAt?: Date;
 }
 
 const EditPost: React.FC = observer(() => {
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
-  const { t } = useTranslation("pages/edit-post");
+  const { t, i18n } = useTranslation("pages/edit-post");
 
   const [post, setPost] = useState<Post | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -57,6 +62,13 @@ const EditPost: React.FC = observer(() => {
         reset({
           title: fetchedPost.title,
           html: fetchedPost.html,
+          createdAt: fetchedPost.createdAt
+            ? (() => {
+                const date = new Date(fetchedPost.createdAt);
+                date.setHours(0, 0, 0, 0);
+                return date;
+              })()
+            : undefined,
         });
       } catch (error) {
         console.error("Failed to load post:", error);
@@ -73,7 +85,16 @@ const EditPost: React.FC = observer(() => {
     if (!id) return;
 
     try {
-      await PostStore.updatePost(id, data);
+      const updateData: Partial<Post> = {
+        title: data.title,
+        html: data.html,
+      };
+      if (data.createdAt) {
+        const dateOnly = new Date(data.createdAt);
+        dateOnly.setHours(0, 0, 0, 0);
+        updateData.createdAt = dateOnly.toISOString();
+      }
+      await PostStore.updatePost(id, updateData);
       navigate(`${HOME_ROUTE}/website/posts`);
     } catch (error) {
       console.error("Failed to update post:", error);
@@ -175,6 +196,28 @@ const EditPost: React.FC = observer(() => {
                 {errors.title && (
                   <div className="mt-1 text-sm text-red-600">{errors.title.message}</div>
                 )}
+              </div>
+
+              <div>
+                <CFormLabel className="text-sm font-medium text-gray-700">
+                  {t("publicationDate")}
+                </CFormLabel>
+                <div className="mt-1">
+                  <Controller
+                    name="createdAt"
+                    control={control}
+                    render={({ field }: { field: { value: Date | null; onChange: (date: Date | null) => void } }) => (
+                      <DatePicker
+                        selected={field.value}
+                        onChange={(date: Date | null) => field.onChange(date)}
+                        dateFormat="d MMMM yyyy"
+                        locale={i18n.language === "uk" ? uk : enUS}
+                        className="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        placeholderText={t("publicationDatePlaceholder")}
+                      />
+                    )}
+                  />
+                </div>
               </div>
 
               <div>

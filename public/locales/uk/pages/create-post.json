@@ -16,5 +16,7 @@
   "previewImage": "Зображення для превью *",
   "uploadPreview": "Завантажити зображення",
   "uploading": "Завантаження...",
-  "uploadError": "Помилка завантаження файлу"
+  "uploadError": "Помилка завантаження файлу",
+  "publicationDate": "Дата публікації",
+  "publicationDatePlaceholder": "Виберіть дату"
 }

@@ -1,15 +1,7 @@
 import RestService from "./abstracts/RestService";
 import { type User } from "./UserService";
 
-export type EditorMode = "VISUAL" | "CODE";
 
-export interface CreatePostData {
-  html: string;
-  title: string;
-  slugs?: string[];
-  editorMode?: EditorMode;
-  files?: File[];
-}
 
 class PostService extends RestService<Post> {
   protected anchor = "posts";
@@ -26,6 +18,12 @@ class PostService extends RestService<Post> {
 
     if (data.editorMode) {
       formData.append("editorMode", data.editorMode);
+    }
+
+    if (data.createdAt) {
+      const dateOnly = new Date(data.createdAt);
+      dateOnly.setHours(0, 0, 0, 0);
+      formData.append("createdAt", dateOnly.toISOString());
     }
 
     if (data.slugs && data.slugs.length > 0) {
@@ -66,6 +64,15 @@ class PostService extends RestService<Post> {
   }
 }
 
+export interface CreatePostData {
+  html: string;
+  title: string;
+  slugs?: string[];
+  editorMode?: EditorMode;
+  files?: File[];
+  createdAt?: Date;
+}
+
 export interface Comment {
   id: string;
   postId: string;
@@ -89,6 +96,8 @@ export interface PostFile {
   createdAt: string;
   updatedAt: string;
 }
+
+export type EditorMode = "VISUAL" | "CODE";
 
 export interface Post {
   id: string;
