@@ -11,19 +11,17 @@ class PostService extends RestService<Post> {
     return response.data;
   }
 
-  public async createPost(data: {
-    html: string;
-    title: string;
-    slugs?: string[];
-    editorMode?: EditorMode;
-    files?: File[];
-  }): Promise<Post> {
+  public async createPost(data: CreatePostData): Promise<Post> {
     const formData = new FormData();
     formData.append("html", data.html);
     formData.append("title", data.title);
 
     if (data.editorMode) {
       formData.append("editorMode", data.editorMode);
+    }
+
+    if (data.createdAt) {
+      formData.append("createdAt", data.createdAt.toISOString());
     }
 
     if (data.slugs && data.slugs.length > 0) {
@@ -62,6 +60,15 @@ class PostService extends RestService<Post> {
     const response = await this.api.get<Comment[]>(`/${this.anchor}/comments/${postId}`);
     return response.data;
   }
+}
+
+export interface CreatePostData {
+  html: string;
+  title: string;
+  slugs?: string[];
+  editorMode?: EditorMode;
+  files?: File[];
+  createdAt?: Date;
 }
 
 export interface Comment {

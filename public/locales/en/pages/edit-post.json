@@ -13,5 +13,7 @@
   "editPost": "Edit post",
   "updatePost": "Update post",
   "postNotFound": "Post not found",
-  "backToPosts": "Back to posts list"
+  "backToPosts": "Back to posts list",
+  "publicationDate": "Publication date",
+  "publicationDatePlaceholder": "Select date and time"
 }

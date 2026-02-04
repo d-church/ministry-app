@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { observer } from "mobx-react-lite";
 import { useForm, Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
+import DatePicker from "react-datepicker";
 import {
   CCard,
   CCardBody,
@@ -14,6 +15,8 @@ import {
   CSpinner,
 } from "@coreui/react";
 import { FaArrowLeft, FaFloppyDisk, FaUpload, FaTrash } from "react-icons/fa6";
+
+import "react-datepicker/dist/react-datepicker.css";
 
 import { HOME_ROUTE } from "src/constants";
 import PostStore from "../Posts/PostStore";
@@ -35,7 +38,13 @@ const CreatePost: React.FC = observer(() => {
     formState: { errors, isSubmitting },
     setError,
     control,
-  } = useForm<PostFormData>();
+  } = useForm<PostFormData>({
+    defaultValues: {
+      title: "",
+      html: "",
+      createdAt: undefined,
+    },
+  });
 
   const handleFileSelect = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -193,6 +202,28 @@ const CreatePost: React.FC = observer(() => {
               </div>
 
               <div>
+                <CFormLabel className="text-sm font-medium text-gray-700">
+                  {t("publicationDate")}
+                </CFormLabel>
+                <div className="mt-1">
+                  <Controller
+                    name="createdAt"
+                    control={control}
+                    render={({ field }: { field: { value: Date | null; onChange: (date: Date | null) => void } }) => (
+                      <DatePicker
+                        selected={field.value}
+                        onChange={(date: Date) => field.onChange(date)}
+                        timeIntervals={15}
+                        dateFormat="MMMM d"
+                        className="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        placeholderText={t("publicationDatePlaceholder")}
+                      />
+                    )}
+                  />
+                </div>
+              </div>
+
+              <div>
                 <CFormLabel htmlFor="html" className="text-sm font-medium text-gray-700">
                   {t("content")} *
                 </CFormLabel>
@@ -270,6 +301,7 @@ interface SelectedFile {
 interface PostFormData {
   title: string;
   html: string;
+  createdAt?: Date;
 }
 
 export default CreatePost;
