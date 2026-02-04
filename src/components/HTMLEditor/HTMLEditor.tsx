@@ -13,10 +13,9 @@ const HTMLEditor: React.FC<{
   value?: string;
   onChange: (value: string) => void;
   hasError?: boolean;
-  height?: string;
   initialMode?: HTMLEditorEditorMode;
   onModeChange?: (mode: HTMLEditorEditorMode) => void;
-}> = ({ value = "", onChange, hasError = false, height, initialMode = "VISUAL", onModeChange }) => {
+}> = ({ value = "", onChange, hasError = false, initialMode = "VISUAL", onModeChange }) => {
   const { t } = useTranslation("common");
   const [mode, setMode] = useState<HTMLEditorEditorMode>(initialMode);
   const [editorTheme, setEditorTheme] = useState<"light" | "dark">("dark");
@@ -83,13 +82,12 @@ const HTMLEditor: React.FC<{
         </CButtonGroup>
       </div>
       {mode === "VISUAL" ? (
-        <VisualEditor value={value} onChange={onChange} hasError={hasError} height={height} />
+        <VisualEditor value={value} onChange={onChange} hasError={hasError} />
       ) : (
         <CodeEditor
           value={value}
           onChange={onChange}
           hasError={hasError}
-          height={height}
           theme={editorTheme}
         />
       )}

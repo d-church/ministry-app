@@ -21,16 +21,6 @@ import HTMLEditor from "src/components/HTMLEditor";
 import type { HTMLEditorEditorMode } from "src/components/HTMLEditor/types";
 import type { EditorMode } from "src/services/PostService";
 
-interface SelectedFile {
-  file: File;
-  previewUrl: string;
-}
-
-interface PostFormData {
-  title: string;
-  html: string;
-}
-
 const CreatePost: React.FC = observer(() => {
   const navigate = useNavigate();
   const { t } = useTranslation("pages/create-post");
@@ -270,5 +260,16 @@ const CreatePost: React.FC = observer(() => {
     </div>
   );
 });
+
+
+interface SelectedFile {
+  file: File;
+  previewUrl: string;
+}
+
+interface PostFormData {
+  title: string;
+  html: string;
+}
 
 export default CreatePost;

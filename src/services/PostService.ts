@@ -1,15 +1,7 @@
 import RestService from "./abstracts/RestService";
 import { type User } from "./UserService";
 
-export type EditorMode = "VISUAL" | "CODE";
 
-export interface CreatePostData {
-  html: string;
-  title: string;
-  slugs?: string[];
-  editorMode?: EditorMode;
-  files?: File[];
-}
 
 class PostService extends RestService<Post> {
   protected anchor = "posts";
@@ -19,7 +11,13 @@ class PostService extends RestService<Post> {
     return response.data;
   }
 
-  public async createPost(data: CreatePostData): Promise<Post> {
+  public async createPost(data: {
+    html: string;
+    title: string;
+    slugs?: string[];
+    editorMode?: EditorMode;
+    files?: File[];
+  }): Promise<Post> {
     const formData = new FormData();
     formData.append("html", data.html);
     formData.append("title", data.title);
@@ -89,6 +87,8 @@ export interface PostFile {
   createdAt: string;
   updatedAt: string;
 }
+
+export type EditorMode = "VISUAL" | "CODE";
 
 export interface Post {
   id: string;
