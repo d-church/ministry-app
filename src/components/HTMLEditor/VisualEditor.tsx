@@ -12,9 +12,7 @@ const VisualEditor: React.FC<{
   value: string;
   onChange: (value: string) => void;
   hasError?: boolean;
-  height?: string;
-}> = ({ value, onChange, hasError = false, height }) => {
-  const style = height ? { height } : {};
+}> = ({ value, onChange, hasError = false }) => {
   return (
     <ReactQuill
       theme="snow"
@@ -22,7 +20,6 @@ const VisualEditor: React.FC<{
       onChange={onChange}
       modules={modules}
       formats={formats}
-      style={style}
       className={cn("html-editor", hasError && "border-red-500")}
     />
   );

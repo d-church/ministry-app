@@ -16,5 +16,7 @@
   "previewImage": "Preview image",
   "uploadPreview": "Upload image",
   "uploading": "Uploading...",
-  "uploadError": "File upload error"
+  "uploadError": "File upload error",
+  "publicationDate": "Publication date",
+  "publicationDatePlaceholder": "Select date"
 }

@@ -130,7 +130,7 @@ const ViewPost: React.FC = observer(() => {
               onClick={handleEdit}
               className="flex items-center gap-2"
             >
-              <FaPen className="inline w-4 h-4" />
+              <FaPen className="inline w-4 h-4 mr-2" />
               {t("editPost")}
             </CButton>
             <CButton
@@ -139,7 +139,7 @@ const ViewPost: React.FC = observer(() => {
               onClick={handleDelete}
               className="flex items-center gap-2"
             >
-              <FaTrash className="inline w-4 h-4" />
+              <FaTrash className="inline w-4 h-4 mr-2" />
               {t("deletePost")}
             </CButton>
           </div>

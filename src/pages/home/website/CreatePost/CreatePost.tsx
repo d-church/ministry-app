@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { observer } from "mobx-react-lite";
 import { useForm, Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
+import DatePicker from "react-datepicker";
+import { uk, enUS } from "date-fns/locale";
 import {
   CCard,
   CCardBody,
@@ -15,25 +17,17 @@ import {
 } from "@coreui/react";
 import { FaArrowLeft, FaFloppyDisk, FaUpload, FaTrash } from "react-icons/fa6";
 
+import "react-datepicker/dist/react-datepicker.css";
+
 import { HOME_ROUTE } from "src/constants";
 import PostStore from "../Posts/PostStore";
 import HTMLEditor from "src/components/HTMLEditor";
 import type { HTMLEditorEditorMode } from "src/components/HTMLEditor/types";
 import type { EditorMode } from "src/services/PostService";
 
-interface SelectedFile {
-  file: File;
-  previewUrl: string;
-}
-
-interface PostFormData {
-  title: string;
-  html: string;
-}
-
 const CreatePost: React.FC = observer(() => {
   const navigate = useNavigate();
-  const { t } = useTranslation("pages/create-post");
+  const { t, i18n } = useTranslation("pages/create-post");
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [selectedFile, setSelectedFile] = useState<SelectedFile | null>(null);
@@ -45,7 +39,13 @@ const CreatePost: React.FC = observer(() => {
     formState: { errors, isSubmitting },
     setError,
     control,
-  } = useForm<PostFormData>();
+  } = useForm<PostFormData>({
+    defaultValues: {
+      title: "",
+      html: "",
+      createdAt: undefined,
+    },
+  });
 
   const handleFileSelect = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -203,6 +203,28 @@ const CreatePost: React.FC = observer(() => {
               </div>
 
               <div>
+                <CFormLabel className="text-sm font-medium text-gray-700">
+                  {t("publicationDate")}
+                </CFormLabel>
+                <div className="mt-1">
+                  <Controller
+                    name="createdAt"
+                    control={control}
+                    render={({ field }: { field: { value: Date | null; onChange: (date: Date | null) => void } }) => (
+                      <DatePicker
+                        selected={field.value}
+                        onChange={(date: Date | null) => field.onChange(date)}
+                        dateFormat="d MMMM yyyy"
+                        locale={i18n.language === "uk" ? uk : enUS}
+                        className="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        placeholderText={t("publicationDatePlaceholder")}
+                      />
+                    )}
+                  />
+                </div>
+              </div>
+
+              <div>
                 <CFormLabel htmlFor="html" className="text-sm font-medium text-gray-700">
                   {t("content")} *
                 </CFormLabel>
@@ -270,5 +292,17 @@ const CreatePost: React.FC = observer(() => {
     </div>
   );
 });
+
+
+interface SelectedFile {
+  file: File;
+  previewUrl: string;
+}
+
+interface PostFormData {
+  title: string;
+  html: string;
+  createdAt?: Date;
+}
 
 export default CreatePost;
