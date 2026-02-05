@@ -1,7 +1,63 @@
 import RestService from "./abstracts/RestService";
 import { type User } from "./UserService";
 
+export type EditorMode = "VISUAL" | "CODE";
 
+export interface CreatePostData {
+  html: string;
+  title: string;
+  publishDate: string;
+  slugs?: string[];
+  editorMode?: EditorMode;
+  files?: File[];
+  createdAt?: Date;
+}
+
+export interface Comment {
+  id: string;
+  postId: string;
+  userId: string;
+  content: string;
+  createdAt: string;
+  updatedAt: string;
+  user: {
+    id: string;
+    first_name: string;
+    last_name: string;
+    photo: string | null;
+  };
+  likesCount: number;
+  isLiked: boolean;
+}
+
+export interface PostFile {
+  id: string;
+  url: string;
+  path: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface Post {
+  id: string;
+  authorId: string;
+  html: string;
+  title: string;
+  editorMode: EditorMode;
+  createdAt: string;
+  updatedAt: string;
+  author: User;
+  slugs: string[];
+  likesCount: number;
+  commentsCount: number;
+  isLiked: boolean;
+  comments: Comment[];
+  files: PostFile[];
+  _count?: {
+    likes: number;
+    comments: number;
+  };
+}
 
 class PostService extends RestService<Post> {
   protected anchor = "posts";
@@ -15,6 +71,7 @@ class PostService extends RestService<Post> {
     const formData = new FormData();
     formData.append("html", data.html);
     formData.append("title", data.title);
+    formData.append("publishDate", data.publishDate);
 
     if (data.editorMode) {
       formData.append("editorMode", data.editorMode);
@@ -62,62 +119,6 @@ class PostService extends RestService<Post> {
     const response = await this.api.get<Comment[]>(`/${this.anchor}/comments/${postId}`);
     return response.data;
   }
-}
-
-export interface CreatePostData {
-  html: string;
-  title: string;
-  slugs?: string[];
-  editorMode?: EditorMode;
-  files?: File[];
-  createdAt?: Date;
-}
-
-export interface Comment {
-  id: string;
-  postId: string;
-  userId: string;
-  content: string;
-  createdAt: string;
-  updatedAt: string;
-  user: {
-    id: string;
-    first_name: string;
-    last_name: string;
-    photo: string | null;
-  };
-  likesCount: number;
-  isLiked: boolean;
-}
-export interface PostFile {
-  id: string;
-  url: string;
-  path: string;
-  createdAt: string;
-  updatedAt: string;
-}
-
-export type EditorMode = "VISUAL" | "CODE";
-
-export interface Post {
-  id: string;
-  authorId: string;
-  html: string;
-  title: string;
-  editorMode: EditorMode;
-  createdAt: string;
-  updatedAt: string;
-  author: User;
-  slugs: string[];
-  likesCount: number;
-  commentsCount: number;
-  isLiked: boolean;
-  comments: Comment[];
-  files: PostFile[];
-  _count?: {
-    likes: number;
-    comments: number;
-  };
 }
 
 export default new PostService();
