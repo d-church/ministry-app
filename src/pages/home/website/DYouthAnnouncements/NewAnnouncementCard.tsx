@@ -1,5 +1,4 @@
 import React, { useState, Suspense } from "react";
-import { CCard, CCardBody, CSpinner } from "@coreui/react";
 import { FaPlus, FaCheck, FaXmark } from "react-icons/fa6";
 import { useTranslation } from "react-i18next";
 import type { AnnouncementItem } from "src/services/DYouthAnnouncementsService";
@@ -45,29 +44,27 @@ const NewAnnouncementCard: React.FC<NewAnnouncementCardProps> = ({ onSave, onCan
 
   const handleFormClick = (e: React.MouseEvent) => {
     const target = e.target as HTMLElement;
-    // Don't close if clicking on interactive elements
     if (
-      target.closest('input') ||
-      target.closest('button') ||
-      target.closest('textarea') ||
-      target.closest('.ql-editor') ||
-      target.closest('.ql-toolbar') ||
-      target.closest('.monaco-editor') ||
-      target.closest('label') ||
-      target.closest('select') ||
-      target.closest('a')
+      target.closest("input") ||
+      target.closest("button") ||
+      target.closest("textarea") ||
+      target.closest(".ql-editor") ||
+      target.closest(".ql-toolbar") ||
+      target.closest(".monaco-editor") ||
+      target.closest("label") ||
+      target.closest("select") ||
+      target.closest("a")
     ) {
       return;
     }
-    // Close form if clicking on form background
     handleCancel();
   };
 
   if (!isOpen) {
     return (
       <div className="mb-3">
-        <CCard className="shadow-sm border-2 border-dashed border-gray-300 hover:border-blue-500 transition-colors">
-          <CCardBody className="p-4">
+        <div className="rounded-lg border-2 border-dashed border-gray-300 bg-white shadow-sm hover:border-blue-500 transition-colors">
+          <div className="p-4">
             <button
               onClick={() => setIsOpen(true)}
               className="w-full text-left text-gray-600 hover:text-blue-600 flex items-center gap-2"
@@ -75,16 +72,16 @@ const NewAnnouncementCard: React.FC<NewAnnouncementCardProps> = ({ onSave, onCan
               <FaPlus />
               <span>{t("announcements.addNew")}</span>
             </button>
-          </CCardBody>
-        </CCard>
+          </div>
+        </div>
       </div>
     );
   }
 
   return (
     <div className="mb-3">
-      <CCard className="shadow-sm border-2 border-blue-500">
-        <CCardBody className="p-3" style={{ overflow: "visible" }}>
+      <div className="rounded-lg border-2 border-blue-500 bg-white shadow-sm">
+        <div className="p-3" style={{ overflow: "visible" }}>
           <form onClick={handleFormClick}>
             <div className="mb-2">
               <label className="block text-sm font-semibold mb-1">
@@ -106,8 +103,11 @@ const NewAnnouncementCard: React.FC<NewAnnouncementCardProps> = ({ onSave, onCan
               </label>
               <Suspense
                 fallback={
-                  <div className="flex justify-center items-center p-2" style={{ minHeight: "150px" }}>
-                    <CSpinner size="sm" />
+                  <div
+                    className="flex justify-center items-center p-2"
+                    style={{ minHeight: "150px" }}
+                  >
+                    <span className="inline-block h-5 w-5 animate-spin rounded-full border-2 border-current border-t-transparent text-blue-500" />
                   </div>
                 }
               >
@@ -181,7 +181,7 @@ const NewAnnouncementCard: React.FC<NewAnnouncementCardProps> = ({ onSave, onCan
               <button
                 type="button"
                 onClick={handleCancel}
-                className="flex items-center gap-1 px-3 py-1.5 text-sm bg-gray-200 text-gray-700 rounded hover:bg-gray-300"
+                className="flex items-center gap-1 px-3 py-1.5 text-sm bg-[#f4f4f5] text-[#18181B] rounded-md hover:bg-[#e4e4e7] transition-colors"
               >
                 <FaXmark className="mr-1" />
                 <span>{t("cancel", { ns: "common" })}</span>
@@ -189,15 +189,15 @@ const NewAnnouncementCard: React.FC<NewAnnouncementCardProps> = ({ onSave, onCan
               <button
                 type="button"
                 onClick={handleSave}
-                className="flex items-center gap-1 px-3 py-1.5 text-sm bg-blue-600 text-white rounded hover:bg-blue-700"
+                className="flex items-center gap-1 px-3 py-1.5 text-sm bg-[#18181B] text-white rounded-md hover:bg-[#18181B]/90 transition-colors"
               >
                 <FaCheck className="mr-1" />
                 <span>{t("announcements.add")}</span>
               </button>
             </div>
           </form>
-        </CCardBody>
-      </CCard>
+        </div>
+      </div>
     </div>
   );
 };

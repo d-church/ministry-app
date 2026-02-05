@@ -15,5 +15,7 @@
   "postNotFound": "Пост не знайдено",
   "backToPosts": "Повернутися до списку постів",
   "publicationDate": "Дата публікації",
-  "publicationDatePlaceholder": "Виберіть дату"
+  "publicationDatePlaceholder": "Виберіть дату",
+  "previewImage": "Зображення для прев'ю",
+  "uploadPreview": "Завантажити зображення"
 }

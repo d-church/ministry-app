@@ -5,16 +5,6 @@ import { useForm, Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import DatePicker from "react-datepicker";
 import { uk, enUS } from "date-fns/locale";
-import {
-  CCard,
-  CCardBody,
-  CCardHeader,
-  CButton,
-  CForm,
-  CFormInput,
-  CFormLabel,
-  CSpinner,
-} from "@coreui/react";
 import { FaArrowLeft, FaFloppyDisk, FaUpload, FaTrash } from "react-icons/fa6";
 
 import "react-datepicker/dist/react-datepicker.css";
@@ -110,209 +100,182 @@ const CreatePost: React.FC = observer(() => {
   };
 
   return (
-    <div className="px-2 sm:px-4 lg:px-6">
-      <div className="sm:flex sm:items-center mb-4">
-        <div className="sm:flex-auto">
-          <div className="flex items-center space-x-3">
-            <CButton
-              color="ghost"
-              size="sm"
-              onClick={handleBack}
-              className="text-gray-600 hover:text-gray-900"
-            >
-              <FaArrowLeft className="w-4 h-4" />
-            </CButton>
-            <h1 className="text-2xl font-semibold text-gray-900">{t("createPost")}</h1>
-          </div>
+    <div>
+      <div className="flex items-center justify-between mb-8">
+        <div className="flex items-center gap-3">
+          <button
+            onClick={handleBack}
+            className="p-2 text-[#18181B] hover:bg-[#f4f4f5] rounded-md transition-colors"
+          >
+            <FaArrowLeft className="w-4 h-4" />
+          </button>
+          <h1 className="text-xl font-semibold text-gray-900">{t("createPost")}</h1>
         </div>
       </div>
 
-      <CCard className="shadow-lg border-0">
-        <CCardHeader className="bg-gray-50 border-b border-gray-200">
-          <div className="flex items-center justify-between">
-            <h3 className="text-lg font-medium text-gray-900">{t("newPost")}</h3>
-          </div>
-        </CCardHeader>
-        <CCardBody className="p-6">
-          <CForm
+      <div className="rounded-lg border bg-white shadow-sm">
+        <div className="flex flex-col space-y-1.5 p-6">
+          <h2 className="text-lg font-semibold text-gray-900">{t("newPost")}</h2>
+        </div>
+        <div className="p-6 pt-0">
+          <form
             onSubmit={handleSubmit(onSubmit)}
             onKeyDown={(e) => {
               if (e.key === "Enter" && !e.shiftKey) {
                 const target = e.target as HTMLElement;
-                if (target.closest(".monaco-editor")) {
-                  return;
-                }
+                if (target.closest(".monaco-editor")) return;
                 e.preventDefault();
               }
             }}
           >
             <div className="space-y-6">
               <div>
-                <CFormLabel htmlFor="title" className="text-sm font-medium text-gray-700">
+                <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-1">
                   {t("title")} *
-                </CFormLabel>
-                <CFormInput
+                </label>
+                <input
                   type="text"
                   id="title"
+                  placeholder={t("titlePlaceholder")}
+                  className={`h-10 w-full rounded-md border bg-white px-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 ${errors.title ? "border-red-500" : "border-gray-200"}`}
                   {...register("title", {
                     required: t("titleRequired"),
-                    minLength: {
-                      value: 3,
-                      message: t("titleMinLength"),
-                    },
+                    minLength: { value: 3, message: t("titleMinLength") },
                   })}
-                  className={`mt-1 ${errors.title ? "border-red-500" : ""}`}
-                  placeholder={t("titlePlaceholder")}
                 />
                 {errors.title && (
-                  <div className="mt-1 text-sm text-red-600">{errors.title.message}</div>
+                  <p className="mt-1 text-sm text-red-600">{errors.title.message}</p>
                 )}
               </div>
 
-              <div>
-                <CFormLabel className="text-sm font-medium text-gray-700">
+              <div className="flex flex-column w-1/8">
+                <label className="block text-sm font-medium text-gray-700 mb-1">
                   {t("previewImage")}
-                </CFormLabel>
-                <div className="mt-1">
-                  <input
-                    ref={fileInputRef}
-                    type="file"
-                    accept="image/*"
-                    onChange={handleFileSelect}
-                    className="hidden"
-                    id="preview-file-input"
-                  />
-                  {!selectedFile ? (
-                    <CButton
-                      color="secondary"
-                      variant="outline"
-                      onClick={() => fileInputRef.current?.click()}
-                      className="flex items-center gap-2"
-                    >
-                      <FaUpload className="inline w-6 h-6 pr-2" />
-                      <span>{t("uploadPreview")}</span>
-                    </CButton>
-                  ) : (
-                    <div className="flex items-center gap-4 p-3 bg-gray-50 rounded-md border">
-                      <img
-                        src={selectedFile.previewUrl}
-                        alt="Preview"
-                        className="w-20 h-20 object-cover rounded"
-                      />
-                      <div className="flex-1 min-w-0">
-                        <p className="text-sm text-gray-700 truncate">{selectedFile.file.name}</p>
-                      </div>
-                      <CButton
-                        color="danger"
-                        variant="ghost"
-                        size="sm"
-                        onClick={handleRemoveFile}
-                        className="flex items-center"
-                      >
-                        <FaTrash className="w-4 h-4" />
-                      </CButton>
+                </label>
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/*"
+                  onChange={handleFileSelect}
+                  className="hidden"
+                  id="preview-file-input"
+                />
+                {!selectedFile ? (
+                  <button
+                    type="button"
+                    onClick={() => fileInputRef.current?.click()}
+                    className="inline-flex items-center gap-2 px-4 h-10 border border-[#e4e4e7] rounded-md bg-white text-sm font-medium text-[#18181B] hover:bg-[#f4f4f5] transition-colors"
+                  >
+                    <FaUpload className="w-4 h-4" />
+                    {t("uploadPreview")}
+                  </button>
+                ) : (
+                  <div className="flex items-center gap-4 p-3 bg-gray-50 rounded-md border border-gray-200">
+                    <img
+                      src={selectedFile.previewUrl}
+                      alt="Preview"
+                      className="w-20 h-20 object-cover rounded"
+                    />
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm text-gray-700 truncate">{selectedFile.file.name}</p>
                     </div>
-                  )}
-                </div>
-              </div>
-
-              <div>
-                <CFormLabel className="text-sm font-medium text-gray-700">
-                  {t("publishDate")} *
-                </CFormLabel>
-                <div className="mt-1">
-                  <Controller
-                    name="publishDate"
-                    control={control}
-                    rules={{
-                      required: t("publishDateRequired"),
-                    }}
-                    render={({
-                      field,
-                    }: {
-                      field: { value: Date | null; onChange: (date: Date | null) => void };
-                    }) => (
-                      <DatePicker
-                        selected={field.value}
-                        onChange={(date: Date | null) => field.onChange(date)}
-                        dateFormat="d MMMM yyyy"
-                        locale={i18n.language === "uk" ? uk : enUS}
-                        className={`w-full px-3 py-2 text-sm border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${errors.publishDate ? "border-red-500" : "border-gray-300"}`}
-                        placeholderText={t("publishDateRequired")}
-                      />
-                    )}
-                  />
-                  {errors.publishDate && (
-                    <div className="mt-1 text-sm text-red-600">{errors.publishDate.message}</div>
-                  )}
-                </div>
-              </div>
-
-              <div>
-                <CFormLabel htmlFor="html" className="text-sm font-medium text-gray-700">
-                  {t("content")} *
-                </CFormLabel>
-                <div className="mt-1">
-                  <Controller
-                    name="html"
-                    control={control}
-                    rules={{
-                      required: t("contentRequired"),
-                    }}
-                    render={({ field }) => (
-                      <HTMLEditor
-                        value={field.value || ""}
-                        onChange={field.onChange}
-                        hasError={!!errors.html}
-                        initialMode={editorMode}
-                        onModeChange={handleEditorModeChange}
-                      />
-                    )}
-                  />
-                </div>
-                {errors.html && (
-                  <div className="mt-1 text-sm text-red-600">{errors.html.message}</div>
+                    <button
+                      type="button"
+                      onClick={handleRemoveFile}
+                      className="p-1.5 text-red-600 hover:bg-red-50 rounded-md transition-colors"
+                    >
+                      <FaTrash className="w-4 h-4" />
+                    </button>
+                  </div>
                 )}
+              </div>
+
+              <div className="flex flex-column w-1/8">
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  {t("publishDate")} *
+                </label>
+                <Controller
+                  name="publishDate"
+                  control={control}
+                  rules={{ required: t("publishDateRequired") }}
+                  render={({
+                    field,
+                  }: {
+                    field: { value: Date | null; onChange: (date: Date | null) => void };
+                  }) => (
+                    <DatePicker
+                      selected={field.value}
+                      onChange={(date: Date | null) => field.onChange(date)}
+                      dateFormat="d MMMM yyyy"
+                      locale={i18n.language === "uk" ? uk : enUS}
+                      className={`w-full px-3 py-2 text-sm border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${errors.publishDate ? "border-red-500" : "border-gray-300"}`}
+                      placeholderText={t("publishDateRequired")}
+                    />
+                  )}
+                />
+                {errors.publishDate && (
+                  <p className="mt-1 text-sm text-red-600">{errors.publishDate.message}</p>
+                )}
+              </div>
+
+              <div>
+                <label htmlFor="html" className="block text-sm font-medium text-gray-700 mb-1">
+                  {t("content")} *
+                </label>
+                <Controller
+                  name="html"
+                  control={control}
+                  rules={{ required: t("contentRequired") }}
+                  render={({ field }) => (
+                    <HTMLEditor
+                      value={field.value || ""}
+                      onChange={field.onChange}
+                      hasError={!!errors.html}
+                      initialMode={editorMode}
+                      onModeChange={handleEditorModeChange}
+                    />
+                  )}
+                />
+                {errors.html && <p className="mt-1 text-sm text-red-600">{errors.html.message}</p>}
               </div>
 
               {errors.root && (
                 <div className="p-4 bg-red-50 border border-red-200 rounded-md">
-                  <div className="text-sm text-red-600">{errors.root.message}</div>
+                  <p className="text-sm text-red-600">{errors.root.message}</p>
                 </div>
               )}
 
               <div className="flex items-center justify-end gap-3 pt-4">
-                <CButton
-                  color="secondary"
-                  variant="outline"
+                <button
+                  type="button"
                   onClick={handleBack}
                   disabled={isSubmitting}
+                  className="px-4 h-10 border border-[#e4e4e7] rounded-md bg-white text-sm font-medium text-[#18181B] hover:bg-[#f4f4f5] disabled:opacity-50 transition-colors"
                 >
                   {t("cancel")}
-                </CButton>
-                <CButton
-                  color="primary"
+                </button>
+                <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="flex items-center gap-2"
+                  className="inline-flex items-center gap-2 px-4 h-10 rounded-md bg-[#18181B] text-white text-sm font-medium hover:bg-[#18181B]/90 disabled:opacity-60 transition-colors"
                 >
                   {isSubmitting ? (
                     <>
-                      <CSpinner size="sm" className="inline w-4 h-4 mr-2" />
-                      <span>{t("creating")}</span>
+                      <span className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
+                      {t("creating")}
                     </>
                   ) : (
                     <>
-                      <FaFloppyDisk className="inline w-4 h-4 mr-2" />
-                      <span>{t("addPost")}</span>
+                      <FaFloppyDisk className="w-4 h-4" />
+                      {t("addPost")}
                     </>
                   )}
-                </CButton>
+                </button>
               </div>
             </div>
-          </CForm>
-        </CCardBody>
-      </CCard>
+          </form>
+        </div>
+      </div>
     </div>
   );
 });

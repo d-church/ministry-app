@@ -1,32 +1,37 @@
-import { CSpinner } from "@coreui/react";
-import cn from "clsx";
+import clsx from "clsx";
 
 const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({
   size,
-  color = "primary",
-  variant = "grow",
   centered = false,
   fullHeight = false,
   className,
 }) => (
   <div
-    className={cn(
+    className={clsx(
       {
-        "d-flex align-items-center justify-content-center": centered,
-        "min-vh-100": fullHeight,
+        "flex items-center justify-center": centered,
+        "min-h-screen": fullHeight,
         "pt-3 text-center": !centered && !fullHeight,
       },
       className,
     )}
   >
-    <CSpinner color={color} variant={variant} size={size} />
+    <div
+      className={clsx(
+        "inline-block animate-spin rounded-full border-solid border-current border-t-transparent text-blue-500",
+        size === "sm" ? "h-4 w-4 border-2" : "h-8 w-8 border-4",
+      )}
+      role="status"
+    >
+      <span className="sr-only">Loading...</span>
+    </div>
   </div>
 );
 
 interface LoadingSpinnerProps {
   size?: "sm";
-  color?: "primary" | "secondary" | "success" | "danger" | "warning" | "info" | "light" | "dark";
-  variant?: "border" | "grow";
+  color?: string;
+  variant?: string;
   centered?: boolean;
   fullHeight?: boolean;
   className?: string;

@@ -12,6 +12,15 @@ export interface CreatePostData {
   files?: File[];
 }
 
+export interface UpdatePostData {
+  html: string;
+  title: string;
+  publishDate?: string;
+  slugs?: string[];
+  editorMode?: EditorMode;
+  files?: File[];
+}
+
 export interface Comment {
   id: string;
   postId: string;
@@ -89,6 +98,40 @@ class PostService extends RestService<Post> {
     }
 
     const response = await this.api.post<Post>(`/${this.anchor}`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    return response.data;
+  }
+
+  public async updatePost(id: string, data: UpdatePostData): Promise<Post> {
+    const formData = new FormData();
+    formData.append("html", data.html);
+    formData.append("title", data.title);
+
+    if (data.publishDate) {
+      formData.append("publishDate", data.publishDate);
+    }
+
+    if (data.editorMode) {
+      formData.append("editorMode", data.editorMode);
+    }
+
+    if (data.slugs && data.slugs.length > 0) {
+      data.slugs.forEach((slug) => {
+        formData.append("slugs", slug);
+      });
+    }
+
+    if (data.files && data.files.length > 0) {
+      data.files.forEach((file) => {
+        formData.append("files", file);
+      });
+    }
+
+    const response = await this.api.patch<Post>(`/${this.anchor}/${id}`, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },

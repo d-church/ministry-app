@@ -1,31 +1,21 @@
 import { Suspense, type FC } from "react";
-import { CContainer } from "@coreui/react";
 
 import { LoadingSpinner } from "../common";
-
 import Sidebar from "./Sidebar";
-import Footer from "./Footer";
-import Header from "./Header";
 import ErrorBoundary from "../ErrorBoundary";
 
 const DefaultLayout: FC<{
   content: JSX.Element;
 }> = ({ content }) => (
-  <div>
+  <div className="flex h-screen bg-white">
     <Sidebar />
-    <div className="wrapper d-flex flex-column min-vh-100">
-      <Header />
-
-      <div className="body flex-grow-1">
-        <CContainer className="px-4" lg>
-          <ErrorBoundary>
-            <Suspense fallback={<LoadingSpinner />}>{content}</Suspense>
-          </ErrorBoundary>
-        </CContainer>
+    <main className="flex-1 overflow-hidden flex flex-col">
+      <div className="p-8 h-full flex flex-col overflow-auto">
+        <ErrorBoundary>
+          <Suspense fallback={<LoadingSpinner />}>{content}</Suspense>
+        </ErrorBoundary>
       </div>
-
-      <Footer />
-    </div>
+    </main>
   </div>
 );
 

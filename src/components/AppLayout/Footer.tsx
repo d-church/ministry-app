@@ -1,5 +1,3 @@
-import { CFooter } from "@coreui/react";
-
-const Footer = () => <CFooter className="px-4" />;
-
+/* Footer removed — fa-admin-panel has no footer. */
+const Footer = () => null;
 export default Footer;

@@ -1,5 +1,4 @@
 import React from "react";
-import { CCard, CCardBody } from "@coreui/react";
 import { useTranslation } from "react-i18next";
 import type { AnnouncementItem } from "src/services/DYouthAnnouncementsService";
 
@@ -30,8 +29,8 @@ const AnnounceCardView: React.FC<{
       onMouseDown={onMouseDown}
       onMouseUp={onMouseUp}
     >
-      <CCard className="shadow-sm hover:shadow-md transition-shadow cursor-grab active:cursor-grabbing">
-        <CCardBody className="p-4">
+      <div className="rounded-lg border bg-white shadow-sm hover:shadow-md transition-shadow cursor-grab active:cursor-grabbing">
+        <div className="p-4">
           <div className="flex items-start gap-3">
             <div className="flex-1">
               <h4 className="font-semibold text-lg text-gray-900 mb-2">{item.title}</h4>
@@ -54,17 +53,16 @@ const AnnounceCardView: React.FC<{
                   e.preventDefault();
                   onDeleteClick();
                 }}
-                className="px-3 py-1.5 text-sm text-red-600 hover:text-red-900 hover:bg-red-50 rounded"
+                className="px-3 py-1.5 text-sm text-red-600 hover:bg-red-50 rounded-md transition-colors"
               >
                 {t("delete")}
               </button>
             </div>
           </div>
-        </CCardBody>
-      </CCard>
+        </div>
+      </div>
     </div>
   );
 };
 
 export default AnnounceCardView;
-
