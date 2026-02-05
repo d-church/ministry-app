@@ -13,6 +13,8 @@
   "createPost": "Створити новий пост",
   "newPost": "Новий пост",
   "addPost": "Створити пост",
+  "publishDate": "Дата публікації",
+  "publishDateRequired": "Дата публікації є обов'язковою",
   "previewImage": "Зображення для превью *",
   "uploadPreview": "Завантажити зображення",
   "uploading": "Завантаження...",

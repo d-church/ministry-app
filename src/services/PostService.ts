@@ -6,6 +6,7 @@ export type EditorMode = "VISUAL" | "CODE";
 export interface CreatePostData {
   html: string;
   title: string;
+  publishDate: string;
   slugs?: string[];
   editorMode?: EditorMode;
   files?: File[];
@@ -23,6 +24,7 @@ class PostService extends RestService<Post> {
     const formData = new FormData();
     formData.append("html", data.html);
     formData.append("title", data.title);
+    formData.append("publishDate", data.publishDate);
 
     if (data.editorMode) {
       formData.append("editorMode", data.editorMode);

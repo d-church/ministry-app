@@ -29,6 +29,7 @@ interface SelectedFile {
 interface PostFormData {
   title: string;
   html: string;
+  publishDate: string;
 }
 
 const CreatePost: React.FC = observer(() => {
@@ -78,6 +79,7 @@ const CreatePost: React.FC = observer(() => {
       await PostStore.createPost({
         html: data.html,
         title: data.title,
+        publishDate: new Date(data.publishDate).toISOString(),
         editorMode: backendEditorMode,
         files,
       });
@@ -152,6 +154,23 @@ const CreatePost: React.FC = observer(() => {
                 />
                 {errors.title && (
                   <div className="mt-1 text-sm text-red-600">{errors.title.message}</div>
+                )}
+              </div>
+
+              <div>
+                <CFormLabel htmlFor="publishDate" className="text-sm font-medium text-gray-700">
+                  {t("publishDate")} *
+                </CFormLabel>
+                <CFormInput
+                  type="date"
+                  id="publishDate"
+                  {...register("publishDate", {
+                    required: t("publishDateRequired"),
+                  })}
+                  className={`mt-1 ${errors.publishDate ? "border-red-500" : ""}`}
+                />
+                {errors.publishDate && (
+                  <div className="mt-1 text-sm text-red-600">{errors.publishDate.message}</div>
                 )}
               </div>
 
