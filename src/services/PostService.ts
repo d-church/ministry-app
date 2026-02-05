@@ -10,7 +10,6 @@ export interface CreatePostData {
   slugs?: string[];
   editorMode?: EditorMode;
   files?: File[];
-  createdAt?: Date;
 }
 
 export interface Comment {
@@ -75,12 +74,6 @@ class PostService extends RestService<Post> {
 
     if (data.editorMode) {
       formData.append("editorMode", data.editorMode);
-    }
-
-    if (data.createdAt) {
-      const dateOnly = new Date(data.createdAt);
-      dateOnly.setHours(0, 0, 0, 0);
-      formData.append("createdAt", dateOnly.toISOString());
     }
 
     if (data.slugs && data.slugs.length > 0) {
