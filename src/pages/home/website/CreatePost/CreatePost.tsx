@@ -170,23 +170,6 @@ const CreatePost: React.FC = observer(() => {
               </div>
 
               <div>
-                <CFormLabel htmlFor="publishDate" className="text-sm font-medium text-gray-700">
-                  {t("publishDate")} *
-                </CFormLabel>
-                <CFormInput
-                  type="date"
-                  id="publishDate"
-                  {...register("publishDate", {
-                    required: t("publishDateRequired"),
-                  })}
-                  className={`mt-1 ${errors.publishDate ? "border-red-500" : ""}`}
-                />
-                {errors.publishDate && (
-                  <div className="mt-1 text-sm text-red-600">{errors.publishDate.message}</div>
-                )}
-              </div>
-
-              <div>
                 <CFormLabel className="text-sm font-medium text-gray-700">
                   {t("previewImage")}
                 </CFormLabel>
