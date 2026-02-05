@@ -27,7 +27,7 @@ import HTMLEditor from "src/components/HTMLEditor";
 interface PostFormData {
   title: string;
   html: string;
-  createdAt?: Date;
+  publishDate?: Date;
 }
 
 const EditPost: React.FC = observer(() => {
@@ -62,9 +62,9 @@ const EditPost: React.FC = observer(() => {
         reset({
           title: fetchedPost.title,
           html: fetchedPost.html,
-          createdAt: fetchedPost.createdAt
+          publishDate: fetchedPost.publishDate
             ? (() => {
-                const date = new Date(fetchedPost.createdAt);
+                const date = new Date(fetchedPost.publishDate);
                 date.setHours(0, 0, 0, 0);
                 return date;
               })()
@@ -89,10 +89,10 @@ const EditPost: React.FC = observer(() => {
         title: data.title,
         html: data.html,
       };
-      if (data.createdAt) {
-        const dateOnly = new Date(data.createdAt);
+      if (data.publishDate) {
+        const dateOnly = new Date(data.publishDate);
         dateOnly.setHours(0, 0, 0, 0);
-        updateData.createdAt = dateOnly.toISOString();
+        updateData.publishDate = dateOnly.toISOString();
       }
       await PostStore.updatePost(id, updateData);
       navigate(`${HOME_ROUTE}/website/posts`);
@@ -168,7 +168,7 @@ const EditPost: React.FC = observer(() => {
               if (e.key === "Enter" && !e.shiftKey) {
                 const target = e.target as HTMLElement;
                 // Don't prevent Enter in Monaco Editor (HTML/CSS modes)
-                if (target.closest('.monaco-editor')) {
+                if (target.closest(".monaco-editor")) {
                   return;
                 }
                 e.preventDefault();
@@ -204,9 +204,13 @@ const EditPost: React.FC = observer(() => {
                 </CFormLabel>
                 <div className="mt-1">
                   <Controller
-                    name="createdAt"
+                    name="publishDate"
                     control={control}
-                    render={({ field }: { field: { value: Date | null; onChange: (date: Date | null) => void } }) => (
+                    render={({
+                      field,
+                    }: {
+                      field: { value: Date | null; onChange: (date: Date | null) => void };
+                    }) => (
                       <DatePicker
                         selected={field.value}
                         onChange={(date: Date | null) => field.onChange(date)}
