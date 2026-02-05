@@ -13,6 +13,8 @@
   "createPost": "Create new post",
   "newPost": "New post",
   "addPost": "Create post",
+  "publishDate": "Publication date",
+  "publishDateRequired": "Publication date is required",
   "previewImage": "Preview image",
   "uploadPreview": "Upload image",
   "uploading": "Uploading...",

@@ -25,6 +25,17 @@ import HTMLEditor from "src/components/HTMLEditor";
 import type { HTMLEditorEditorMode } from "src/components/HTMLEditor/types";
 import type { EditorMode } from "src/services/PostService";
 
+interface SelectedFile {
+  file: File;
+  previewUrl: string;
+}
+
+interface PostFormData {
+  title: string;
+  html: string;
+  publishDate: Date | null;
+}
+
 const CreatePost: React.FC = observer(() => {
   const navigate = useNavigate();
   const { t, i18n } = useTranslation("pages/create-post");
@@ -43,7 +54,7 @@ const CreatePost: React.FC = observer(() => {
     defaultValues: {
       title: "",
       html: "",
-      createdAt: undefined,
+      publishDate: null,
     },
   });
 
@@ -78,6 +89,9 @@ const CreatePost: React.FC = observer(() => {
       await PostStore.createPost({
         html: data.html,
         title: data.title,
+        publishDate: data.publishDate
+          ? `${data.publishDate.getFullYear()}-${String(data.publishDate.getMonth() + 1).padStart(2, "0")}-${String(data.publishDate.getDate()).padStart(2, "0")}`
+          : "",
         editorMode: backendEditorMode,
         files,
       });
@@ -204,23 +218,33 @@ const CreatePost: React.FC = observer(() => {
 
               <div>
                 <CFormLabel className="text-sm font-medium text-gray-700">
-                  {t("publicationDate")}
+                  {t("publishDate")} *
                 </CFormLabel>
                 <div className="mt-1">
                   <Controller
-                    name="createdAt"
+                    name="publishDate"
                     control={control}
-                    render={({ field }: { field: { value: Date | null; onChange: (date: Date | null) => void } }) => (
+                    rules={{
+                      required: t("publishDateRequired"),
+                    }}
+                    render={({
+                      field,
+                    }: {
+                      field: { value: Date | null; onChange: (date: Date | null) => void };
+                    }) => (
                       <DatePicker
                         selected={field.value}
                         onChange={(date: Date | null) => field.onChange(date)}
                         dateFormat="d MMMM yyyy"
                         locale={i18n.language === "uk" ? uk : enUS}
-                        className="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                        placeholderText={t("publicationDatePlaceholder")}
+                        className={`w-full px-3 py-2 text-sm border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${errors.publishDate ? "border-red-500" : "border-gray-300"}`}
+                        placeholderText={t("publishDateRequired")}
                       />
                     )}
                   />
+                  {errors.publishDate && (
+                    <div className="mt-1 text-sm text-red-600">{errors.publishDate.message}</div>
+                  )}
                 </div>
               </div>
 
@@ -292,17 +316,5 @@ const CreatePost: React.FC = observer(() => {
     </div>
   );
 });
-
-
-interface SelectedFile {
-  file: File;
-  previewUrl: string;
-}
-
-interface PostFormData {
-  title: string;
-  html: string;
-  createdAt?: Date;
-}
 
 export default CreatePost;
