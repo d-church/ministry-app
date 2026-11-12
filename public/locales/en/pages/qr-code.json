@@ -1,0 +1,12 @@
+{
+  "content": "Link or text",
+  "format": "Aspect ratio",
+  "background": "Background color",
+  "foreground": "QR code color",
+  "caption": "Caption (optional)",
+  "preview": "QR code preview",
+  "download": "Download PNG",
+  "sameColor": "Choose different colors for the background and the QR code.",
+  "tooLong": "This text is too long for a single QR code.",
+  "exportFailed": "Could not save the PNG. Try again."
+}
