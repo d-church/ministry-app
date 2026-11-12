@@ -7,7 +7,9 @@
     "newPost": "New Post",
     "editPost": "Edit Post",
     "viewPost": "View Post",
-    "dyouthAnnouncements": "D.Youth Announcements"
+    "dyouthAnnouncements": "D.Youth Announcements",
+    "tools": "Tools",
+    "qrCodes": "QR codes"
   },
   "language": {
     "uk": "Ukrainian",
@@ -19,7 +21,9 @@
     "ministries": "Ministries",
     "website": "Website",
     "posts": "Posts",
-    "dyouthAnnouncements": "D.Youth Announcements"
+    "dyouthAnnouncements": "D.Youth Announcements",
+    "tools": "Tools",
+    "qrCodes": "QR codes"
   },
   "breadcrumb": {
     "home": "Home"

@@ -7,7 +7,9 @@
     "newPost": "Новий пост",
     "editPost": "Редагувати пост",
     "viewPost": "Перегляд поста",
-    "dyouthAnnouncements": "Анонси D.Youth"
+    "dyouthAnnouncements": "Анонси D.Youth",
+    "tools": "Інструменти",
+    "qrCodes": "QR-коди"
   },
   "language": {
     "uk": "Українська",
@@ -19,7 +21,9 @@
     "ministries": "Служіння",
     "website": "Вебсайт",
     "posts": "Пости",
-    "dyouthAnnouncements": "Анонси D.Youth"
+    "dyouthAnnouncements": "Анонси D.Youth",
+    "tools": "Інструменти",
+    "qrCodes": "QR-коди"
   },
   "breadcrumb": {
     "home": "Головна"

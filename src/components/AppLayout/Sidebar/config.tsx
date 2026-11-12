@@ -1,6 +1,12 @@
 import { CNavGroup, CNavItem, CNavTitle } from "@coreui/react";
-import { FaChurch, FaInternetExplorer, FaList, FaBullhorn } from "react-icons/fa6";
-
+import {
+  FaChurch,
+  FaInternetExplorer,
+  FaList,
+  FaBullhorn,
+  FaQrcode,
+  FaScrewdriverWrench,
+} from "react-icons/fa6";
 
 const config: SidebarNavConfigItem[] = [
   {
@@ -30,6 +36,19 @@ const config: SidebarNavConfigItem[] = [
         nameKey: "sidebar.dyouthAnnouncements",
         to: "/church/website/d-youth-announcements",
         icon: <FaBullhorn className="nav-icon" />,
+      },
+    ],
+  },
+  {
+    component: CNavGroup,
+    nameKey: "sidebar.tools",
+    icon: <FaScrewdriverWrench className="nav-icon" />,
+    items: [
+      {
+        component: CNavItem,
+        nameKey: "sidebar.qrCodes",
+        to: "/church/tools/qr-code",
+        icon: <FaQrcode className="nav-icon" />,
       },
     ],
   },

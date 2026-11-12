@@ -7,6 +7,7 @@ const CreatePost = React.lazy(() => import("../pages/home/website/CreatePost"));
 const ViewPost = React.lazy(() => import("../pages/home/website/ViewPost"));
 const EditPost = React.lazy(() => import("../pages/home/website/EditPost"));
 const DYouthAnnouncements = React.lazy(() => import("../pages/home/website/DYouthAnnouncements"));
+const QrCode = React.lazy(() => import("../pages/home/tools/QrCode"));
 
 const routes: {
   path: string;
@@ -24,6 +25,8 @@ const routes: {
   { path: "/website/posts/:id", nameKey: "navigation.viewPost", element: <ViewPost /> },
   { path: "/website/posts/:id/edit", nameKey: "navigation.editPost", element: <EditPost /> },
   { path: "/website/d-youth-announcements", nameKey: "navigation.dyouthAnnouncements", element: <DYouthAnnouncements /> },
+  { path: "/tools", nameKey: "navigation.tools", element: <Navigate to="qr-code" replace /> },
+  { path: "/tools/qr-code", nameKey: "navigation.qrCodes", element: <QrCode /> },
 ];
 
 export default routes;
