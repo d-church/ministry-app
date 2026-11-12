@@ -8,7 +8,6 @@ import {
   FaScrewdriverWrench,
 } from "react-icons/fa6";
 
-
 const config: SidebarNavConfigItem[] = [
   {
     component: CNavItem,
